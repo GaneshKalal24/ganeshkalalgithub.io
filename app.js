@@ -191,8 +191,91 @@ function renderSimpleList(id, items){
   });
 }
 
+/* Theme toggle */
+function applyTheme(theme) {
+  if (theme === "light") {
+    document.documentElement.setAttribute("data-theme", "light");
+  } else {
+    document.documentElement.removeAttribute("data-theme");
+  }
+}
+
+function getInitialTheme() {
+  const saved = localStorage.getItem("theme");
+  if (saved === "light" || saved === "dark") return saved;
+  const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+  return prefersLight ? "light" : "dark";
+}
+
+function updateToggleLabel(theme) {
+  const btn = $("themeToggle");
+  if (!btn) return;
+  btn.textContent = theme === "light" ? "Dark mode" : "Light mode";
+}
+
+function initThemeToggle() {
+  let theme = getInitialTheme();
+  applyTheme(theme);
+  updateToggleLabel(theme);
+
+  const btn = $("themeToggle");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    theme = (theme === "light") ? "dark" : "light";
+    localStorage.setItem("theme", theme);
+    applyTheme(theme);
+    updateToggleLabel(theme);
+  });
+}
+
+/* Mobile hamburger menu */
+function setMenu(open){
+  const menu = $("mobileMenu");
+  const btn = $("navToggle");
+  if (!menu || !btn) return;
+
+  if (open) {
+    menu.classList.add("open");
+    menu.setAttribute("aria-hidden", "false");
+    btn.setAttribute("aria-expanded", "true");
+    btn.setAttribute("aria-label", "Close menu");
+  } else {
+    menu.classList.remove("open");
+    menu.setAttribute("aria-hidden", "true");
+    btn.setAttribute("aria-expanded", "false");
+    btn.setAttribute("aria-label", "Open menu");
+  }
+}
+
+function initMobileMenu(){
+  const btn = $("navToggle");
+  const menu = $("mobileMenu");
+  if (!btn || !menu) return;
+
+  setMenu(false);
+
+  btn.addEventListener("click", () => {
+    const isOpen = menu.classList.contains("open");
+    setMenu(!isOpen);
+  });
+
+  // Close when clicking a link
+  document.querySelectorAll(".mobile-link").forEach(a => {
+    a.addEventListener("click", () => setMenu(false));
+  });
+
+  // Close when switching to desktop
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 900) setMenu(false);
+  });
+}
+
 (async function init(){
   try{
+    initThemeToggle();
+    initMobileMenu();
+
     const data = await loadContent();
 
     setText("name", data.name);
@@ -206,18 +289,20 @@ function renderSimpleList(id, items){
     setText("aboutStory", data.aboutStory);
     setText("signatureLine", data.signatureLine);
 
-    // Photo (defaults to profile.png if you keep it)
     setImage("profilePhoto", data.profilePhotoUrl || "./profile.png");
 
-    // Links
+    // Links desktop + mobile
     setLink("linkedinLink", data.contact?.linkedin || null);
+    setLink("mobileLinkedinLink", data.contact?.linkedin || null);
     setLink("contactLinkedinBtn", data.contact?.linkedin || null);
 
     if (data.contact?.email){
       setLink("emailLink", `mailto:${data.contact.email}`);
+      setLink("mobileEmailLink", `mailto:${data.contact.email}`);
       setLink("contactEmailBtn", `mailto:${data.contact.email}`);
     } else {
       setLink("emailLink", null);
+      setLink("mobileEmailLink", null);
       setLink("contactEmailBtn", null);
     }
 
@@ -274,9 +359,9 @@ function renderSimpleList(id, items){
     const c = $("contactLines");
     c.innerHTML = "";
     const lines = [
-      data.contact?.location ? `📍 ${data.contact.location}` : null,
-      data.contact?.phone ? `📞 ${data.contact.phone}` : null,
-      data.contact?.email ? `✉️ ${data.contact.email}` : null
+      data.contact?.location ? `Location ${data.contact.location}` : null,
+      data.contact?.phone ? `Phone ${data.contact.phone}` : null,
+      data.contact?.email ? `Email ${data.contact.email}` : null
     ].filter(Boolean);
 
     lines.forEach(line => {
@@ -286,20 +371,16 @@ function renderSimpleList(id, items){
     });
 
     const year = new Date().getFullYear();
-    setText("footerText", `© ${year} ${data.name} — Personal website hosted on GitHub Pages`);
+    setText("footerText", `Copyright ${year} ${data.name}. Hosted on GitHub Pages.`);
 
-    // Modal close wiring
-    document.querySelectorAll("[data-close='1']").forEach(el => {
-      el.addEventListener("click", closeModal);
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeModal();
-    });
+    // Modal close
+    document.querySelectorAll("[data-close='1']").forEach(el => el.addEventListener("click", closeModal));
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
 
   } catch (e){
     console.error(e);
     document.body.innerHTML = `
-      <div style="max-width:900px;margin:40px auto;padding:16px;color:#fff;font-family:system-ui">
+      <div style="max-width:900px;margin:40px auto;padding:16px;color:#111;font-family:system-ui">
         <h2>Site error</h2>
         <p>Could not load <code>content.json</code>. Make sure it is in the same folder as <code>index.html</code>.</p>
       </div>`;
