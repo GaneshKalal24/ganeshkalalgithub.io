@@ -215,11 +215,8 @@ function systemTheme(){
 
 function applyTheme(mode){
   const theme = mode === "auto" ? systemTheme() : mode;
-  if (theme === "light") {
-    document.documentElement.setAttribute("data-theme", "light");
-  } else {
-    document.documentElement.removeAttribute("data-theme");
-  }
+  if (theme === "light") document.documentElement.setAttribute("data-theme", "light");
+  else document.documentElement.removeAttribute("data-theme");
 }
 
 function getThemeMode(){
@@ -241,16 +238,16 @@ function modeIcon(mode){
 }
 
 function updateThemeIcons(mode){
+  const icon = modeIcon(mode);
+
   const m = $("themeIconMobile");
   const d = $("themeIconDesktop");
-  const icon = modeIcon(mode);
   if (m) m.innerHTML = icon;
   if (d) d.innerHTML = icon;
 
-  // update aria labels so it is accessible
+  const label = mode === "auto" ? "Theme Auto" : (mode === "light" ? "Theme Light" : "Theme Dark");
   const b1 = $("themeToggle");
   const b2 = $("themeToggleDesktop");
-  const label = mode === "auto" ? "Theme Auto" : (mode === "light" ? "Theme Light" : "Theme Dark");
   if (b1) b1.setAttribute("aria-label", label);
   if (b2) b2.setAttribute("aria-label", label);
 }
@@ -276,7 +273,6 @@ function initThemeToggle(){
   if (b1) b1.addEventListener("click", handler);
   if (b2) b2.addEventListener("click", handler);
 
-  // live update if user chose auto
   if (window.matchMedia) {
     const mq = window.matchMedia("(prefers-color-scheme: light)");
     mq.addEventListener?.("change", () => {
