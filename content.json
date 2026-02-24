@@ -1,0 +1,59 @@
+{
+  "name": "Ganesh Kalal",
+  "headline": "Project Engineer – Civil & Infrastructure",
+  "summary": "Project Engineer with experience across demolition, remediation and civil works. Strong focus on safety, QA/QC, planning, stakeholder coordination and site delivery. Comfortable working with subcontractors, consultants and authorities to deliver safe, compliant outcomes.",
+  "highlightChips": [
+    "Demolition & Remediation",
+    "QA/QC & ITPs",
+    "Permits & Stakeholders",
+    "Program & Cost Control",
+    "Site Supervision"
+  ],
+  "skills": [
+    "Site engineering, set-out coordination, and subcontractor management",
+    "Method statements, SWMS, risk assessments and permit-to-work processes",
+    "QA/QC documentation: ITPs, checklists, lot tracking, NCRs and close-out",
+    "Civil works coordination: excavation, services, concrete and reinstatement",
+    "Reporting: daily diaries, progress updates, RFIs and variations"
+  ],
+  "projects": [
+    {
+      "title": "Key Projects (Sample)",
+      "meta": "Melbourne, VIC",
+      "bullets": [
+        "Planned and coordinated staged demolition activities to maintain safety and minimise disruption",
+        "Managed subcontractors, site access, inductions, and exclusion zones",
+        "Coordinated waste streams, separation, tracking and disposal documentation",
+        "Maintained QA records and supported inspections and close-out"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "roleCompany": "Project Engineer | Company Name",
+      "dates": "202X – Present | Melbourne, VIC",
+      "bullets": [
+        "Delivered site works with strong focus on safety, quality and schedule",
+        "Prepared daily reports and coordinated subcontractor sequencing",
+        "Supported stakeholder coordination and permit requirements"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "title": "Bachelor of Engineering (Civil) – University Name",
+      "meta": "Year | Location",
+      "bullets": [
+        "Key subjects: Structures, Geotechnical, Construction Management",
+        "Professional goal: progress toward CPEng / RPEV (as applicable)"
+      ]
+    }
+  ],
+  "contact": {
+    "location": "Melbourne, VIC",
+    "phone": "Your phone here",
+    "email": "your.email@example.com",
+    "linkedin": "https://linkedin.com/in/your-link"
+  },
+  "downloadCvUrl": ""
+}
