@@ -1,21 +1,21 @@
 {
-  "name": "Ganesh Kalal",
+  "name": "Ganesh Kalal (MIEAust)",
   "role": "Project Engineer",
-  "tagline": "Project Engineer in Demolition, Remediation and Civil Infrastructure",
-  "kicker": "Melbourne VIC  Demolition  Remediation  Civil Works",
+  "tagline": "Project Engineer in Civil, Demolition, Remediation and Infrastructure",
+  "kicker": "Melbourne VIC, Safety, QA, Procurement, Delivery",
 
   "profilePhotoUrl": "./profile.png",
 
   "heroTitle": "I deliver complex demolition and civil works safely, compliantly and on program.",
-  "heroSubtitle": "Project Engineer with experience across demolition, refinery closures and major infrastructure projects. Strong in subcontractor coordination, procurement, QA documentation and statutory approvals.",
-  "signatureLine": "Plan the job. Control the risks. Deliver it right.",
+  "heroSubtitle": "Civil and Structural Engineer with 5 plus years of experience delivering major infrastructure and industrial projects across Tier 1 and Tier 2 environments. Strong in subcontractor management, tender evaluation, SOW and RFQ preparation, design review and site supervision. Engineers Australia member, progressing toward NER pathway.",
+  "signatureLine": "Clear sequence. Strong controls. Clean QA. Deliver it right.",
 
   "pills": [
-    "Safety focused delivery",
-    "QA and compliance",
-    "Subcontractor coordination",
+    "Demolition and remediation",
     "Procurement and contracts",
-    "Program control"
+    "QA and compliance",
+    "Design review",
+    "Site delivery"
   ],
 
   "stats": [
@@ -24,126 +24,150 @@
     { "label": "Council approvals supported", "value": "20 plus" }
   ],
 
-  "aboutLead": "A professional overview presented as a personal website rather than a traditional resume.",
-  "aboutStory": "I am a Melbourne based Project Engineer working across demolition, remediation and civil infrastructure packages. I focus on structured planning, disciplined site control and maintaining clean QA documentation. I work closely with subcontractors, consultants and authorities to deliver safe and compliant outcomes in complex environments.",
+  "aboutLead": "A personal website view of my work, presented in a simple and clear way.",
+  "aboutStory": "I am a Melbourne based Project Engineer working across demolition, industrial closures, remediation interfaces and civil and structural packages. I focus on structured planning, subcontractor coordination, quality verification and maintaining audit ready documentation. I work closely with clients, consultants and authorities to deliver safe and compliant outcomes.",
 
   "knownFor": [
-    "Staged demolition planning and sequencing",
-    "Preparation of SOW and RFQ packages",
-    "Tender evaluation and subcontractor onboarding",
-    "ITPs, inspections and NCR close out",
-    "Cost tracking, reporting and variations support"
+    "Planning and sequencing of heavy civil and structural works on industrial projects",
+    "SOW and RFQ preparation and tender evaluation",
+    "Technical review and compliance checks to Australian Standards",
+    "Site inspections, hold points, safety audits and conformance reporting",
+    "Cost and schedule reporting, variations and EOT support"
   ],
 
   "tools": [
-    "MS Project, Primavera P6, Procore, Oracle NetSuite",
-    "AutoCAD 2D, Civil 3D, Bluebeam, SketchUp",
-    "SpaceGass, Microstran, Structural Toolkit",
-    "Australian Standards and NCC compliance"
+    "Project and reporting: MS Project, P6, Procore, Oracle NetSuite, MS Office",
+    "Design and drafting: AutoCAD 2D, Civil 3D, 12d, Bluebeam, SketchUp",
+    "Structural analysis: SpaceGass, Structural Toolkit, Microstran, MS Tower, RAPT, Inducta",
+    "Standards: NCC, Australian Standards, VicRoads"
   ],
 
   "bento": [
     {
       "title": "How I run a site",
-      "meta": "Delivery approach",
-      "preview": "Clear sequence, controlled risks and structured execution.",
-      "fullText": "My approach focuses on early risk identification, clear subcontractor briefings, defined hold points and ongoing documentation. I maintain visibility across safety, cost and program.",
+      "meta": "Planning and delivery",
+      "preview": "Clear sequence, controlled risks, disciplined coordination and clean close out.",
+      "fullText": "I focus on planning, sequencing and daily control so delivery stays safe and predictable. I keep documentation current and capture evidence progressively.",
       "bullets": [
-        "Daily prestart and constraint review",
-        "Clear exclusion zones and access planning",
+        "Daily prestart and constraints check",
         "Subcontractor coordination and sequencing",
-        "Progress tracking and reporting"
+        "Clear access and exclusion zones",
+        "Progress reporting and close out evidence"
       ]
     },
     {
-      "title": "Safety and compliance",
-      "meta": "High risk environments",
-      "preview": "Practical controls and strong documentation for demolition and civil works.",
-      "fullText": "I support safe delivery through SWMS preparation, permit coordination, inspection hold points and compliance with relevant Australian Standards and authority requirements.",
+      "title": "Procurement and contracts",
+      "meta": "SOW, RFQ, tender evaluation",
+      "preview": "Scope clarity and technical and commercial evaluation to support award and delivery control.",
+      "fullText": "I prepare SOW and RFQ packages, evaluate submissions, support negotiations and administer progress claims and variations during delivery.",
       "bullets": [
-        "SWMS and risk assessments",
-        "Permit coordination",
-        "Hold point verification",
-        "Authority interface support"
+        "SOW and RFQ preparation",
+        "Tender evaluation and comparisons",
+        "Progress claims verification",
+        "Variations and EOT support"
       ]
     },
     {
-      "title": "QA and documentation",
-      "meta": "Inspection and traceability",
-      "preview": "Inspection planning and evidence based close out.",
-      "fullText": "I maintain structured QA systems including ITPs, inspection records, photo evidence and NCR tracking to ensure clean project handover.",
+      "title": "QA and compliance",
+      "meta": "ITPs, inspections, hold points",
+      "preview": "Evidence based QA that stands up during review and handover.",
+      "fullText": "I maintain ITPs, inspection evidence, RFI tracking and close out documentation progressively so the project is handover ready.",
       "bullets": [
         "ITPs and inspection checklists",
-        "NCR tracking and corrective actions",
-        "RFI management",
-        "Close out documentation"
+        "Hold point verification and reporting",
+        "RFI and NCR close out",
+        "Close out packs and traceability"
       ]
     }
   ],
 
   "projects": [
     {
-      "title": "ExxonMobil Refinery Closure",
-      "meta": "Altona VIC",
-      "preview": "Subcontractor management, procurement and statutory approvals for demolition packages.",
+      "title": "ExxonMobil Oil Refinery Demolition",
+      "meta": "Altona VIC, 2024 to Present, 65 million",
+      "preview": "Project Engineer managing subcontractor packages and on site civil and structural works, procurement and approvals.",
       "tags": ["Demolition", "Industrial", "Contracts"],
-      "fullText": "Supported planning and execution of refinery demolition works including procurement, subcontractor coordination and authority approvals.",
+      "fullText": "Delivery support for refinery demolition packages including procurement, design review, site supervision and statutory approvals.",
       "bullets": [
-        "Prepared SOW and RFQ documentation",
-        "Reviewed contractor designs and resolved RFIs",
-        "Administered progress claims and variations",
-        "Coordinated council approvals"
+        "Prepared SOW and RFQ packages and evaluated 15 plus tender submissions",
+        "Reviewed and approved contractor designs and technical queries",
+        "Negotiated contract variations totaling 8 million plus",
+        "Coordinated statutory approvals with Hobsons Bay City Council"
       ]
     },
     {
-      "title": "Rio Tinto Refinery Closure",
-      "meta": "Gove NT",
-      "preview": "Large scale industrial closure with remote delivery support.",
-      "tags": ["Industrial", "Remote delivery", "QA"],
-      "fullText": "Supported structural design reviews, procurement coordination and QA verification on a major refinery closure program.",
+      "title": "Rio Tinto Refinery Demolition and Land Remediation",
+      "meta": "Gove NT, 2024 to 2025, 300 million",
+      "preview": "Project Engineer on a major industrial closure project with procurement, design compliance review and quality verification.",
+      "tags": ["Industrial closure", "Remediation", "QA"],
+      "fullText": "Supported procurement documentation and structural design package review for compliance, plus contractor coordination and progress claims.",
       "bullets": [
-        "Reviewed structural packages for compliance",
-        "Coordinated contractor interfaces",
-        "Supported procurement and supplier onboarding",
-        "Maintained reporting and quality verification"
+        "Prepared procurement documentation for subcontract packages",
+        "Reviewed structural design packages for AS 3600 and AS 4100 compliance",
+        "Managed contractor coordination and quality verification",
+        "Supported progress claims across multiple subcontractors"
       ]
     },
     {
-      "title": "National 5G Upgrade Program",
-      "meta": "Victoria",
-      "preview": "Structural upgrades across multiple telecom sites.",
+      "title": "National 5G Telecom Upgrade Program",
+      "meta": "Victoria, 2023 to 2024, 50 million",
+      "preview": "Led structural design coordination for 150 plus tower upgrades and completed 100 plus site inspections.",
       "tags": ["Telecom", "Structural", "Approvals"],
-      "fullText": "Delivered structural design coordination and site inspections for telecom tower and pole upgrades across Victoria.",
+      "fullText": "Delivered design coordination, technical evaluation, field inspections and approvals support across multiple council jurisdictions.",
       "bullets": [
-        "Delivered over 150 site upgrades",
-        "Completed over 100 inspections",
-        "Reviewed drawings for compliance",
-        "Supported council approvals"
+        "Structural design coordination for 150 plus tower upgrades",
+        "Completed 100 plus site inspections to confirm compliance",
+        "Technical evaluation of subcontractor proposals",
+        "Secured statutory approvals from 20 plus councils"
+      ]
+    },
+    {
+      "title": "West Gate Freeway Upgrade",
+      "meta": "Melbourne, 2022 to 2023",
+      "preview": "Structural design and construction oversight for crash barriers and precast noise walls to VicRoads standards and AS 5100.",
+      "tags": ["Roads", "Concrete", "QA"],
+      "fullText": "Delivered structural design support and site supervision including shop drawing reviews, pours, installation and QA verification.",
+      "bullets": [
+        "Reviewed shop drawings and supervised concrete pours and panel installation",
+        "Quality assurance including concrete testing and reinforcement verification",
+        "Delivered work to VicRoads standards and AS 5100 requirements",
+        "Achieved zero non conformances across 100 plus installations"
       ]
     }
   ],
 
   "timeline": [
     {
-      "roleCompany": "Project Engineer Structures Liberty Industrial",
-      "dates": "2024 to Present",
-      "location": "Melbourne VIC",
+      "roleCompany": "Project Engineer, Structures, Liberty Industrial",
+      "dates": "02 2024 to Present",
+      "location": "Altona VIC",
       "bullets": [
-        "Planning and delivery of demolition and civil packages",
-        "Procurement and subcontractor management",
-        "QA documentation and reporting",
-        "Safety and compliance coordination"
+        "Planned sequencing and delivery of heavy civil and structural works on 100 million plus industrial projects",
+        "Prepared SOW, RFQ, ITPs and managed technical queries, RFIs and engineering coordination",
+        "Produced weekly progress reporting including cost, schedule and risk, supported statutory approvals with councils and WorkSafe",
+        "Conducted site inspections, verified hold points, led safety audits and supported budget forecasting and variations"
       ]
     },
     {
-      "roleCompany": "Structural Engineer Indara Digital Infrastructures",
-      "dates": "2023 to 2024",
+      "roleCompany": "Structural Engineer, Telecom Upgrades, Indara Digital Infrastructures",
+      "dates": "04 2023 to 03 2024",
       "location": "Melbourne VIC",
       "bullets": [
-        "Structural analysis and design coordination",
-        "Field inspections and reporting",
-        "Standards compliance review",
-        "Council approval coordination"
+        "Delivered 150 plus lattice tower upgrades and steel and timber pole upgrades including design, analysis and fabrication coordination",
+        "Reviewed drawings and ITPs for AS NZS 1170 and AS 4100 compliance and conducted field inspections",
+        "Supported tender evaluation and provided technical input to contract negotiations",
+        "Supported statutory approvals across 20 plus councils"
+      ]
+    },
+    {
+      "roleCompany": "Graduate Structural Engineer, Clive Steele Partners",
+      "dates": "11 2021 to 03 2023",
+      "location": "Clayton VIC",
+      "bullets": [
+        "Designed reinforced concrete elements to AS 3600 and prepared construction drawings",
+        "Reviewed subcontractor shop drawings and supervised on site concrete works including quality testing and verification",
+        "Coordinated council approvals and organised geotechnical surveys and DBYD searches",
+        "Conducted asset inspections and prepared rectification recommendations for municipal infrastructure"
       ]
     }
   ],
