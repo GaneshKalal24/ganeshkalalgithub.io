@@ -191,8 +191,30 @@ function renderSimpleList(id, items){
   });
 }
 
-/* Theme toggle */
-function applyTheme(theme) {
+/* Theme icons */
+const ICON_AUTO = `
+<svg viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M7 2h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3Zm0 2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H7Zm1 14h8v2H8v-2Z"/>
+</svg>`;
+
+const ICON_LIGHT = `
+<svg viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12Zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM11 2h2v3h-2V2Zm0 17h2v3h-2v-3ZM2 11h3v2H2v-2Zm17 0h3v2h-3v-2ZM4.22 5.64l1.41-1.41 2.12 2.12-1.41 1.41-2.12-2.12Zm12.03 12.03 1.41-1.41 2.12 2.12-1.41 1.41-2.12-2.12ZM18.36 4.22l1.41 1.41-2.12 2.12-1.41-1.41 2.12-2.12ZM5.64 18.36l1.41 1.41-2.12 2.12-1.41-1.41 2.12-2.12Z"/>
+</svg>`;
+
+const ICON_DARK = `
+<svg viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M21 14.6A8.5 8.5 0 0 1 9.4 3a7 7 0 1 0 11.6 11.6ZM12 20a8 8 0 0 0 7.74-6.02 9 9 0 1 1-9.72-9.72A8 8 0 0 0 12 20Z"/>
+</svg>`;
+
+/* Theme: Auto / Light / Dark */
+function systemTheme(){
+  const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+  return prefersLight ? "light" : "dark";
+}
+
+function applyTheme(mode){
+  const theme = mode === "auto" ? systemTheme() : mode;
   if (theme === "light") {
     document.documentElement.setAttribute("data-theme", "light");
   } else {
@@ -200,36 +222,74 @@ function applyTheme(theme) {
   }
 }
 
-function getInitialTheme() {
-  const saved = localStorage.getItem("theme");
-  if (saved === "light" || saved === "dark") return saved;
-  const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
-  return prefersLight ? "light" : "dark";
+function getThemeMode(){
+  const saved = localStorage.getItem("themeMode");
+  if (saved === "light" || saved === "dark" || saved === "auto") return saved;
+  return "auto";
 }
 
-function updateToggleLabel(theme) {
-  const btn = $("themeToggle");
-  if (!btn) return;
-  btn.textContent = theme === "light" ? "Dark mode" : "Light mode";
+function cycleMode(mode){
+  if (mode === "auto") return "light";
+  if (mode === "light") return "dark";
+  return "auto";
 }
 
-function initThemeToggle() {
-  let theme = getInitialTheme();
-  applyTheme(theme);
-  updateToggleLabel(theme);
-
-  const btn = $("themeToggle");
-  if (!btn) return;
-
-  btn.addEventListener("click", () => {
-    theme = (theme === "light") ? "dark" : "light";
-    localStorage.setItem("theme", theme);
-    applyTheme(theme);
-    updateToggleLabel(theme);
-  });
+function modeIcon(mode){
+  if (mode === "auto") return ICON_AUTO;
+  if (mode === "light") return ICON_LIGHT;
+  return ICON_DARK;
 }
 
-/* Mobile hamburger menu */
+function updateThemeIcons(mode){
+  const m = $("themeIconMobile");
+  const d = $("themeIconDesktop");
+  const icon = modeIcon(mode);
+  if (m) m.innerHTML = icon;
+  if (d) d.innerHTML = icon;
+
+  // update aria labels so it is accessible
+  const b1 = $("themeToggle");
+  const b2 = $("themeToggleDesktop");
+  const label = mode === "auto" ? "Theme Auto" : (mode === "light" ? "Theme Light" : "Theme Dark");
+  if (b1) b1.setAttribute("aria-label", label);
+  if (b2) b2.setAttribute("aria-label", label);
+}
+
+function setThemeMode(mode){
+  localStorage.setItem("themeMode", mode);
+  applyTheme(mode);
+  updateThemeIcons(mode);
+}
+
+function initThemeToggle(){
+  let mode = getThemeMode();
+  applyTheme(mode);
+  updateThemeIcons(mode);
+
+  const handler = () => {
+    mode = cycleMode(mode);
+    setThemeMode(mode);
+  };
+
+  const b1 = $("themeToggle");
+  const b2 = $("themeToggleDesktop");
+  if (b1) b1.addEventListener("click", handler);
+  if (b2) b2.addEventListener("click", handler);
+
+  // live update if user chose auto
+  if (window.matchMedia) {
+    const mq = window.matchMedia("(prefers-color-scheme: light)");
+    mq.addEventListener?.("change", () => {
+      const current = getThemeMode();
+      if (current === "auto") {
+        applyTheme("auto");
+        updateThemeIcons("auto");
+      }
+    });
+  }
+}
+
+/* Mobile menu */
 function setMenu(open){
   const menu = $("mobileMenu");
   const btn = $("navToggle");
@@ -260,12 +320,10 @@ function initMobileMenu(){
     setMenu(!isOpen);
   });
 
-  // Close when clicking a link
   document.querySelectorAll(".mobile-link").forEach(a => {
     a.addEventListener("click", () => setMenu(false));
   });
 
-  // Close when switching to desktop
   window.addEventListener("resize", () => {
     if (window.innerWidth >= 900) setMenu(false);
   });
@@ -291,7 +349,6 @@ function initMobileMenu(){
 
     setImage("profilePhoto", data.profilePhotoUrl || "./profile.png");
 
-    // Links desktop + mobile
     setLink("linkedinLink", data.contact?.linkedin || null);
     setLink("mobileLinkedinLink", data.contact?.linkedin || null);
     setLink("contactLinkedinBtn", data.contact?.linkedin || null);
@@ -308,21 +365,17 @@ function initMobileMenu(){
 
     setLink("downloadCvLink", data.downloadCvUrl || null);
 
-    // Pills
     const pillRow = $("pillRow");
     pillRow.innerHTML = "";
     (data.pills || []).forEach(p => pillRow.appendChild(createPill(p)));
 
-    // Stats
     const stats = $("stats");
     stats.innerHTML = "";
     (data.stats || []).forEach(s => stats.appendChild(createStat(s.label, s.value)));
 
-    // About lists
     renderSimpleList("knownFor", data.knownFor);
     renderSimpleList("tools", data.tools);
 
-    // Bento
     const bento = $("bentoGrid");
     bento.innerHTML = "";
     (data.bento || []).forEach(item => {
@@ -336,7 +389,6 @@ function initMobileMenu(){
       }));
     });
 
-    // Projects
     const projects = $("projectsGrid");
     projects.innerHTML = "";
     (data.projects || []).forEach(p => {
@@ -350,12 +402,10 @@ function initMobileMenu(){
       }));
     });
 
-    // Timeline
     const tl = $("timelineList");
     tl.innerHTML = "";
     (data.timeline || []).forEach(t => tl.appendChild(createTimelineItem(t)));
 
-    // Contact
     const c = $("contactLines");
     c.innerHTML = "";
     const lines = [
@@ -373,7 +423,6 @@ function initMobileMenu(){
     const year = new Date().getFullYear();
     setText("footerText", `Copyright ${year} ${data.name}. Hosted on GitHub Pages.`);
 
-    // Modal close
     document.querySelectorAll("[data-close='1']").forEach(el => el.addEventListener("click", closeModal));
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
 
