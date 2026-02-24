@@ -4,6 +4,8 @@
   "tagline": "Project Engineer — Civil, Demolition & Remediation",
   "kicker": "Melbourne, VIC • Demolition • Remediation • Civil Works",
 
+  "profilePhotoUrl": "./profile.png",
+
   "heroTitle": "I deliver complex demolition & civil works — safely, compliantly, and on program.",
   "heroSubtitle": "Project Engineer with strong site delivery experience across demolition, remediation and civil infrastructure. I coordinate subcontractors, manage QA/QC systems, and work with authorities to achieve safe outcomes in live environments.",
 
@@ -31,7 +33,7 @@
   "tools": [
     "ITPs, checklists, lot tracking, NCRs and close-out packs",
     "Daily diaries, progress reporting, RFIs and variations",
-    "Permits, exclusions zones, traffic and pedestrian management",
+    "Permits, exclusion zones, traffic and pedestrian management",
     "Waste tracking and compliant disposal documentation"
   ],
 
@@ -107,7 +109,7 @@
     "location": "Melbourne, VIC",
     "phone": "Your phone",
     "email": "your.email@example.com",
-    "linkedin": "https://linkedin.com/in/your-link"
+    "linkedin": "https://www.linkedin.com/in/ganesh-kalal/"
   },
 
   "downloadCvUrl": ""
