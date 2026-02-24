@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ganesh Kalal | Digital CV</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">
+        <div class="avatar" aria-hidden="true">GK</div>
+        <div>
+          <h1 id="name">Ganesh Kalal</h1>
+          <p id="headline" class="muted">Project Engineer – Civil & Infrastructure</p>
+        </div>
+      </div>
+
+      <nav class="actions">
+        <a id="emailLink" class="btn" href="#">Email</a>
+        <a id="linkedinLink" class="btn btn-ghost" href="#" target="_blank" rel="noopener">LinkedIn</a>
+        <a id="downloadCvLink" class="btn btn-primary" href="#" target="_blank" rel="noopener">Download CV</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container grid">
+    <section class="card">
+      <h2>Summary</h2>
+      <p id="summary" class="lead"></p>
+      <div class="chips" id="chips"></div>
+    </section>
+
+    <section class="card">
+      <h2>Core Skills</h2>
+      <ul id="skills" class="list"></ul>
+    </section>
+
+    <section class="card">
+      <h2>Key Projects</h2>
+      <div id="projects" class="stack"></div>
+    </section>
+
+    <section class="card">
+      <h2>Experience</h2>
+      <div id="experience" class="stack"></div>
+    </section>
+
+    <section class="card">
+      <h2>Education & Certifications</h2>
+      <div id="education" class="stack"></div>
+    </section>
+
+    <section class="card">
+      <h2>Contact</h2>
+      <div class="contact" id="contact"></div>
+      <p class="muted small">
+        Tip: Share this link with recruiters. Update content anytime by editing <code>content.json</code>.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container muted small">
+      <span id="footerText">© </span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
