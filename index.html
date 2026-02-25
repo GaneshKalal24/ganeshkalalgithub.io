@@ -1,68 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ganesh Kalal | Civil & Structural Engineer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ganesh Kalal | Telecom & Infrastructure Engineer</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
-
-<div id="scrollBar" class="scroll-progress"></div>
-
-<div class="bg-animation">
+<body data-theme="dark">
+    <div class="mesh-bg"></div>
     <div class="grid-overlay"></div>
-    <div class="glow-orb orb-1"></div>
-</div>
 
-<nav class="nav">
-    <div class="wrap nav-inner">
-        <div class="logo">
-            <div class="logo-badge">GK</div>
-            <div class="logo-text"><strong>Ganesh Kalal</strong></div>
+    <nav class="nav">
+        <div class="wrap nav-inner">
+            <div class="logo">
+                <span class="logo-text">G.<strong>KALAL</strong></span>
+            </div>
+            <div class="nav-links">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#experience" class="nav-link">Career</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#dashboard" class="nav-link">Metrics</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                <i data-lucide="moon" id="themeIcon"></i>
+            </button>
         </div>
-        <button id="themeToggle" class="btn btn-icon">🌓</button>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero" id="home">
+            <div class="wrap">
+                <div class="hero-content reveal">
+                    <div class="positioning-line" id="heroPositioning"></div>
+                    <h1 id="heroName" class="hero-name glitch"></h1>
+                    <h2 id="heroTitle" class="gradient-text"></h2>
+                    <p id="heroTagline" class="tagline"></p>
+                    <div class="hero-cta">
+                        <a href="#projects" class="btn btn-primary glow-effect">View Projects</a>
+                        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <div class="wrap">
+                <div class="about-grid">
+                    <div class="about-visual reveal">
+                        <div class="profile-frame">
+                            <div class="shimmer"></div>
+                            <img id="profilePhoto" src="profile.png" alt="Ganesh Kalal" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOTRhM2I4IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE5IDIxdi0yYTRgIDAgMCAwLTQtNEg5YTQgNCAwIDAgMC00IDR2MiIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iNyIgcj0iNCIvPjwvc3ZnPg=='">
+                        </div>
+                    </div>
+                    <div class="about-details reveal">
+                        <h3 class="section-label">01. Profile</h3>
+                        <div id="aboutSummary" class="summary-list">
+                            </div>
+                        <div id="statsGrid" class="stats-row">
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="experience" id="experience">
+            <div class="wrap">
+                <h3 class="section-label">02. Career Journey</h3>
+                <div id="timeline" class="timeline">
+                    </div>
+            </div>
+        </section>
+
+        <section class="projects" id="projects">
+            <div class="wrap">
+                <div class="projects-header reveal">
+                    <h3 class="section-label">03. Key Projects</h3>
+                    <div class="filter-group" id="projectFilters">
+                        </div>
+                </div>
+                <div id="projectsBento" class="bento-grid">
+                    </div>
+            </div>
+        </section>
+
+        <section class="dashboard" id="dashboard">
+            <div class="wrap reveal">
+                <h3 class="section-label">04. Analytics & Impact</h3>
+                <div class="dashboard-grid">
+                    <div class="chart-card glass">
+                        <h4>Capital Expenditure Handled ($M)</h4>
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+                    <div class="chart-card glass">
+                        <h4>Portfolio Distribution</h4>
+                        <canvas id="typeChart"></canvas>
+                    </div>
+                    <div class="chart-card glass stat-highlight">
+                        <i data-lucide="radio-tower" class="accent-icon"></i>
+                        <div class="big-number">150+</div>
+                        <div class="stat-label">Telecom Sites Upgraded</div>
+                        <p class="stat-sub">Across metro & regional Victoria</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="achievements" id="achievements">
+            <div class="wrap reveal">
+                <h3 class="section-label">05. Milestones</h3>
+                <div class="scroll-container">
+                    <div id="achievementsList" class="scroll-track">
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <div class="wrap">
+                <div class="contact-card glass reveal">
+                    <div class="contact-info">
+                        <h3>Connect</h3>
+                        <p>Open to discussions regarding Project Engineering roles in Telecom, Civil, and Major Infrastructure.</p>
+                        <div class="contact-links" id="socialLinks">
+                            </div>
+                    </div>
+                    <form class="contact-form" id="contactForm" onsubmit="event.preventDefault(); window.location.href='mailto:ganesh.r.kalal24@gmail.com';">
+                        <div class="input-group">
+                            <input type="text" placeholder="Name" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-group">
+                            <textarea placeholder="Project / Role Inquiry" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Initiate Contact</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="wrap">
+            <p id="footerText"></p>
+        </div>
+    </footer>
+
+    <div id="projectModal" class="modal">
+        <div class="modal-backdrop" onclick="closeModal()"></div>
+        <div class="modal-content glass">
+            <button class="modal-close" onclick="closeModal()"><i data-lucide="x"></i></button>
+            <div id="modalBody"></div>
+        </div>
     </div>
-</nav>
 
-<div class="wrap main-content">
-    <header class="hero reveal">
-        <span class="kicker" id="kicker"></span>
-        <h1 class="gradient-text" id="heroTitle"></h1>
-        <p class="sub" id="heroSubtitle"></p>
-        
-        <div id="stats" class="stats"></div>
-    </header>
-
-    <section class="section">
-        <div class="section-head reveal">
-            <h2>Major Project Delivery</h2>
-            <p class="muted">High-stakes civil and structural works.</p>
-        </div>
-        <div id="projectsGrid" class="projects"></div>
-    </section>
-
-    <section class="section">
-        <div class="section-head reveal">
-            <h2>Career Progression</h2>
-            <p class="muted">A visual journey of professional growth.</p>
-        </div>
-        <div id="timelineList" class="timeline"></div>
-    </section>
-</div>
-
-<div id="modal" class="modal" aria-hidden="true">
-    <div class="modal-backdrop" id="modalBackdrop"></div>
-    <div class="modal-card">
-        <button id="closeModalBtn" class="modal-x">✕</button>
-        <div class="modal-content">
-            <h2 id="modalTitle" class="modal-title gradient-text"></h2>
-            <p id="modalText" class="modal-text"></p>
-            <ul id="modalList" class="modal-list"></ul>
-        </div>
-    </div>
-</div>
-
-<script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
