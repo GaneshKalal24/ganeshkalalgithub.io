@@ -2,7 +2,7 @@
   "name": "Ganesh Kalal (MIEAust)",
   "role": "Project Engineer",
   "tagline": "Civil & Telecom Infrastructure | Major Project Delivery",
-  "kicker": "Melbourne VIC • Telecom • Infrastructure • QA Compliance",
+  "kicker": "Melbourne VIC • Telecom • Infrastructure",
   "profilePhotoUrl": "./profile.png",
   "heroTitle": "Specializing in 5G network upgrades, land access coordination, and structural delivery.",
   "heroSubtitle": "Civil and Telecom Project Engineer with 5+ years of experience across Tier-1/Tier-2 environments. Proven expertise in managing complex stakeholder environments, statutory approvals, and end-to-end commercial execution.",
@@ -133,13 +133,6 @@
         "Monitored tunnel alignment (TBM) and installation of precast bridge elements."
       ]
     }
-  ],
-  "achievements": [
-    { "icon": "radio-tower", "text": "Successfully delivered design coordination for 150+ 5G telecom tower upgrades." },
-    { "icon": "file-check-2", "text": "Secured land access and planning permits across 20+ municipal councils." },
-    { "icon": "shield-check", "text": "Maintained an absolute zero LTI record across all high-risk Tier-1 environments." },
-    { "icon": "check-square", "text": "Achieved zero non-conformances on 100+ West Gate Freeway structural installations." },
-    { "icon": "trending-up", "text": "Administered and justified $8M+ in complex contract variations." }
   ],
   "contact": {
     "location": "Melbourne, VIC",
