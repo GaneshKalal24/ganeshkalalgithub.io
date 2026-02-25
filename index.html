@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ganesh Kalal | Engineering Portfolio</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,11 +25,11 @@
     <div class="cursor-dot" id="cursorDot"></div>
     <div class="cursor-ring" id="cursorRing"></div>
 
-    <nav class="floating-nav">
+    <nav class="floating-nav desktop-nav">
         <div class="nav-inner glass-panel">
             <div class="logo magnetic" data-strength="20">G<strong>K</strong></div>
             <div class="nav-links">
-                <a href="#about" class="magnetic" data-strength="15">About</a>
+                <a href="#about" class="magnetic" data-strength="15">Profile</a>
                 <a href="#projects" class="magnetic" data-strength="15">Projects</a>
                 <a href="#career" class="magnetic" data-strength="15">Career</a>
             </div>
@@ -43,11 +43,25 @@
         </div>
     </nav>
 
+    <nav class="mobile-nav glass-panel">
+        <a href="#hero" class="nav-item"><i data-lucide="home"></i></a>
+        <a href="#about" class="nav-item"><i data-lucide="user"></i></a>
+        <a href="#projects" class="nav-item"><i data-lucide="briefcase"></i></a>
+        <a href="#contact" class="nav-item"><i data-lucide="mail"></i></a>
+        <button id="themeToggleMobile" class="nav-item theme-btn-mobile">
+            <i data-lucide="sun" class="sun-icon"></i>
+            <i data-lucide="moon" class="moon-icon"></i>
+        </button>
+    </nav>
+
     <main>
         <section id="hero" class="hero">
             <div class="wrap">
                 <div class="hero-grid">
                     <div class="hero-text">
+                        <div class="visa-badge gsap-fade-up" id="visaBadge">
+                            <span class="pulse-dot"></span> <span id="visaText"></span>
+                        </div>
                         <div class="hero-kicker gsap-fade-up" id="heroPositioning"></div>
                         <h1 class="hero-title gsap-fade-up">
                             Hi, I'm <span class="accent-text" id="heroName"></span>.
@@ -78,10 +92,30 @@
                         <p class="lead-text" id="aboutLead"></p>
                         <ul class="bullet-list" id="aboutBullets"></ul>
                         
-                        <h4 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--accent);">Licenses & Certifications</h4>
-                        <div class="cert-grid" id="certGrid"></div>
+                        <h4 class="sub-heading mt-2">Site Clearances & Logistics</h4>
+                        <div class="logistics-grid" id="logisticsGrid"></div>
                     </div>
-                    <div class="about-stats grid-2 gsap-fade-up" id="statsGrid"></div>
+                    <div class="about-stats grid-2 gsap-fade-up">
+                        <div id="statsGrid" style="display: contents;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="credentials" class="section bg-alt">
+            <div class="wrap">
+                <h2 class="section-title gsap-fade-up">Credentials & Arsenal</h2>
+                <div class="credentials-grid gsap-fade-up">
+                    <div class="glass-panel p-3 spotlight-card">
+                        <h4 class="sub-heading"><i data-lucide="graduation-cap"></i> Academic Background</h4>
+                        <div id="educationList" class="edu-list"></div>
+                        <h4 class="sub-heading mt-2"><i data-lucide="award"></i> Professional Affiliations</h4>
+                        <div id="affiliationsList" class="affil-list"></div>
+                    </div>
+                    <div class="glass-panel p-3 spotlight-card">
+                        <h4 class="sub-heading"><i data-lucide="cpu"></i> Technical Stack</h4>
+                        <div id="techStackGrid" class="tech-stack"></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -107,8 +141,8 @@
             <div class="wrap">
                 <div class="contact-container glass-panel spotlight-card gsap-fade-up">
                     <div class="contact-left">
-                        <h2 class="section-title">Initiate Contact</h2>
-                        <p class="contact-desc">Open for discussions regarding Project Engineering roles in Telecom, Civil, and Major Infrastructure delivery.</p>
+                        <h2 class="section-title" style="margin-bottom: 1rem;">Initiate Contact</h2>
+                        <p class="contact-desc">Ready to deliver major infrastructure. Open to Project Engineering roles.</p>
                         <div class="social-links" id="socialLinks"></div>
                     </div>
                     <div class="contact-right">
