@@ -1,8 +1,7 @@
-// --- FAIL-SAFE DATABASE ---
 const fallbackData = {
     "name": "Ganesh Kalal (MIEAust)",
     "role": "Project Engineer",
-    "kicker": "Melbourne VIC • Civil Infrastructure",
+    "kicker": "Melbourne VIC • Telecom • Civil Infrastructure",
     "heroSubtitle": "Delivering Tier-1 projects with structural precision. Specializing in 5G rollouts, statutory approvals, and complex brownfield execution.",
     "visaStatus": "Australian Permanent Resident",
     "aboutLead": "Strategy-driven engineer balancing technical oversight with commercial discipline.",
@@ -16,7 +15,10 @@ const fallbackData = {
     "logistics": [
         { "name": "White Card", "icon": "hard-hat" },
         { "name": "Victorian Driver's License", "icon": "car" },
-        { "name": "Working at Heights", "icon": "triangle-right" }
+        { "name": "Working at Heights", "icon": "triangle-right" },
+        { "name": "Confined Spaces", "icon": "box" },
+        { "name": "Asbestos Safety", "icon": "shield-alert" },
+        { "name": "Mental Health First Aider", "icon": "heart-pulse" }
     ],
     "education": [
         { "degree": "Master of Engineering Science (Structural)", "school": "Swinburne University of Technology", "date": "2019 - 2021" },
@@ -27,7 +29,7 @@ const fallbackData = {
         { "org": "Project Management Institute", "status": "Working towards PMP" }
     ],
     "techStack": [
-        "MS Project", "Primavera P6", "Procore", "AutoCAD 3D", "Civil 3D", "SpaceGass", "Microstran", "RAPT"
+        "MS Project", "Primavera P6", "Procore", "AutoCAD 3D", "Civil 3D", "SpaceGass", "Microstran", "MS Tower", "RAPT", "Inducta", "12d"
     ],
     "stats": [
       { "label": "Portfolio Value", "value": "$400M+" },
@@ -56,7 +58,7 @@ const fallbackData = {
         "bullets": [
           "Managed subcontractor packages and regulatory interfaces.",
           "Negotiated contract variations totaling $8M+.",
-          "Updated Primavera P6 schedules reflecting sequencing impacts."
+          "Introduced GPS and Drone topographic surveying for remediation earthworks, improving accuracy by 25%."
         ],
         "links": [
           { "title": "World's Most Powerful Shear Unveiled", "url": "https://libertyindustrial.com/worlds-most-powerful-shear-unveiled-in-australia/" },
@@ -131,18 +133,14 @@ let siteData = fallbackData;
 
 document.addEventListener('DOMContentLoaded', async () => {
     
-    // --- 1. DATA LOADING ---
     try {
         const res = await fetch('./content.json', { cache: 'no-store' });
         if(res.ok) {
             const fetchedData = await res.json();
             siteData = { ...fallbackData, ...fetchedData }; 
         }
-    } catch (e) {
-        console.warn("Fetch failed, using fail-safe internal data.");
-    }
+    } catch (e) {}
 
-    // --- 2. THEME TOGGLE ---
     function initTheme() {
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.body.setAttribute('data-theme', savedTheme);
@@ -161,9 +159,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if(mBtn) mBtn.addEventListener('click', toggleTheme);
     }
 
-    // --- 3. POPULATE DOM ---
     function populateDOM() {
-        // Hero
         const nameNode = document.getElementById('heroName');
         if(nameNode) nameNode.textContent = (siteData.name || "Ganesh Kalal").split(' (')[0];
         
@@ -182,7 +178,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const visaText = document.getElementById('visaText');
         if(visaText && siteData.visaStatus) visaText.textContent = siteData.visaStatus;
 
-        // About
         const leadNode = document.getElementById('aboutLead');
         if(leadNode) leadNode.innerHTML = `<strong>${siteData.aboutLead || ''}</strong><br><br>${siteData.aboutStory || ''}`;
         
@@ -195,7 +190,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-        // Logistics
         const logGrid = document.getElementById('logisticsGrid');
         if(logGrid && siteData.logistics) {
             siteData.logistics.forEach(log => {
@@ -206,7 +200,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-        // Education & Affiliations
         const eduList = document.getElementById('educationList');
         if(eduList && siteData.education) {
             siteData.education.forEach(edu => {
@@ -227,7 +220,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-        // Tech Stack
         const stackGrid = document.getElementById('techStackGrid');
         if(stackGrid && siteData.techStack) {
             siteData.techStack.forEach(tech => {
@@ -238,7 +230,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-        // Stats
         const statsGrid = document.getElementById('statsGrid');
         if(statsGrid) {
             (siteData.stats || []).forEach(stat => {
@@ -249,7 +240,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-        // Projects
         const projGrid = document.getElementById('projectsBento');
         const filters = document.getElementById('projectFilters');
         if(projGrid && filters) {
@@ -298,7 +288,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             renderProjects('All');
         }
 
-        // Timeline
         const tl = document.getElementById('careerTimeline');
         if(tl) {
             (siteData.timeline || []).forEach((job, i) => {
@@ -329,7 +318,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-        // Contact
         const socialLinks = document.getElementById('socialLinks');
         if(socialLinks && siteData.contact) {
             socialLinks.innerHTML = `
@@ -341,7 +329,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if(fText) fText.innerHTML = `&copy; ${new Date().getFullYear()} ${(siteData.name || "Ganesh").split(' ')[0]}. Engineering Precision.`;
     }
 
-    // --- 4. MODAL LOGIC ---
     window.openModal = function(p) {
         document.getElementById('modalTitle').textContent = p.title || 'Project Details';
         document.getElementById('modalTags').innerHTML = (p.tags || []).map(t => `<span class="bento-tag">${t}</span>`).join('');
@@ -387,7 +374,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // --- 5. UI/UX INTERACTIVITY ---
+    // --- 5. GSAP ANIMATIONS & INTERACTIVITY ---
+    function initFibreOptics() {
+        if(typeof gsap === 'undefined') return;
+        const pulsesH = document.querySelectorAll('.cable-horizontal .pulse');
+        pulsesH.forEach(pulse => {
+            gsap.to(pulse, {
+                x: window.innerWidth + 300,
+                duration: "random(2, 4)",
+                ease: "power1.inOut",
+                repeat: -1,
+                delay: "random(0, 3)"
+            });
+        });
+        const pulsesV = document.querySelectorAll('.cable-vertical .pulse');
+        pulsesV.forEach(pulse => {
+            gsap.to(pulse, {
+                y: window.innerHeight + 300,
+                duration: "random(3, 5)",
+                ease: "power1.inOut",
+                repeat: -1,
+                delay: "random(0, 3)"
+            });
+        });
+    }
+
     function initCustomCursor() {
         const cursorDot = document.getElementById('cursorDot');
         const cursorRing = document.getElementById('cursorRing');
@@ -474,7 +485,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // --- RUN EVERYTHING ---
     initTheme();
     populateDOM();
     
@@ -485,6 +495,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         initCardSpotlights();
         init3DTilt();
         initGSAPReveals();
+        initFibreOptics();
     }, 100);
 
 });
