@@ -4,49 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ganesh Kalal | Engineering Portfolio</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <link rel="stylesheet" href="styles.css">
+    <script src="[https://cdn.jsdelivr.net/npm/chart.js](https://cdn.jsdelivr.net/npm/chart.js)"></script>
+    <script src="[https://unpkg.com/lucide@latest](https://unpkg.com/lucide@latest)"></script>
+    <link href="[https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap)" rel="stylesheet">
 </head>
 <body data-theme="dark">
     <div class="mesh-bg"></div>
-    <div class="blueprint-overlay"></div>
+    <div class="grid-overlay"></div>
 
-    <nav id="navbar" class="glass-nav">
-        <div class="nav-content wrap">
-            <div class="logo">G.<strong>KALAL</strong></div>
-            <ul class="nav-links">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#career" class="nav-link">Career</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#metrics" class="nav-link">Metrics</a></li>
-            </ul>
+    <nav id="navbar" class="nav glass">
+        <div class="wrap nav-inner">
+            <div class="logo">
+                <span class="logo-text">G.<strong>KALAL</strong></span>
+            </div>
+            <div class="nav-links">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#experience" class="nav-link">Career</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#metrics" class="nav-link">Metrics</a>
+            </div>
             <div class="nav-actions">
-                <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">
+                <button id="themeToggle" class="theme-toggle glass" aria-label="Toggle theme">
                     <i data-lucide="moon" id="themeIcon"></i>
                 </button>
-                <a href="#contact" class="btn btn-primary btn-sm glow-effect">Contact</a>
+                <a href="#contact" class="btn btn-primary btn-sm">Contact</a>
             </div>
         </div>
     </nav>
 
     <main class="main-content">
-        <section id="home" class="hero section">
-            <div class="wrap hero-wrap">
+        <section id="hero" class="hero section">
+            <div class="wrap">
                 <div class="hero-content reveal">
                     <div class="positioning-line" id="heroPositioning"></div>
-                    <h1 class="hero-name" id="heroName"></h1>
-                    <h2 class="gradient-text hero-title" id="heroTitle"></h2>
-                    <p class="hero-tagline" id="heroTagline"></p>
+                    <h1 id="heroName" class="hero-name"></h1>
+                    <h2 id="heroTitle" class="gradient-text hero-title"></h2>
+                    <p id="heroTagline" class="tagline"></p>
                     <div class="hero-cta">
                         <a href="#projects" class="btn btn-primary glow-effect">View Projects</a>
-                        <a href="#about" class="btn btn-ghost">Explore Profile</a>
+                        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
                     </div>
                 </div>
             </div>
@@ -56,63 +53,57 @@
             <div class="wrap">
                 <div class="about-grid">
                     <div class="about-visual reveal">
-                        <div class="glass-panel profile-wrapper">
-                            <img id="profilePhoto" src="profile.png" alt="Profile" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOTRhM2I4IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTE5IDIxdi0yYTRgIDAgMCAwLTQtNEg5YTQgNCAwIDAgMC00IDR2MiIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iNyIgcj0iNCIvPjwvc3ZnPg=='">
-                            <div class="image-glow"></div>
+                        <div class="profile-frame glass">
+                            <img id="profilePhoto" src="profile.png" alt="Profile" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="fallback-avatar" style="display:none;">
+                                <i data-lucide="user" style="width: 64px; height: 64px;"></i>
+                            </div>
                         </div>
                     </div>
-                    <div class="about-details reveal" style="transition-delay: 0.2s;">
-                        <h3 class="section-label">01 // Profile</h3>
-                        <p class="about-lead" id="aboutLead"></p>
-                        <ul class="bullet-summary" id="aboutBullets"></ul>
-                        <div class="stats-grid" id="statsGrid">
-                            </div>
+                    <div class="about-details reveal">
+                        <h3 class="section-label">01. Profile</h3>
+                        <p id="aboutLead" class="about-lead"></p>
+                        <div id="aboutSummary" class="summary-list"></div>
+                        <div id="statsGrid" class="stats-row"></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="career" class="career section">
+        <section id="experience" class="career section">
             <div class="wrap">
-                <h3 class="section-label reveal">02 // Career Journey</h3>
-                <div id="timeline" class="timeline">
-                    </div>
+                <h3 class="section-label reveal">02. Career Journey</h3>
+                <div id="timeline" class="timeline"></div>
             </div>
         </section>
 
         <section id="projects" class="projects section">
             <div class="wrap">
                 <div class="projects-header reveal">
-                    <h3 class="section-label">03 // Key Projects</h3>
-                    <div class="filter-group" id="projectFilters">
-                        <button class="filter-chip active" data-filter="all">All</button>
-                        <button class="filter-chip" data-filter="Industrial">Industrial</button>
-                        <button class="filter-chip" data-filter="Civil">Civil</button>
-                        <button class="filter-chip" data-filter="Telecom">Telecom</button>
-                    </div>
+                    <h3 class="section-label">03. Key Projects</h3>
+                    <div class="filter-group" id="projectFilters"></div>
                 </div>
-                <div id="projectsBento" class="bento-grid">
-                    </div>
+                <div id="projectsBento" class="bento-grid"></div>
             </div>
         </section>
 
         <section id="metrics" class="metrics section">
             <div class="wrap reveal">
-                <h3 class="section-label">04 // Analytics & Impact</h3>
+                <h3 class="section-label">04. Project Metrics Dashboard</h3>
                 <div class="dashboard-grid">
-                    <div class="chart-card glass-panel">
-                        <h4>Project Value Distribution ($M)</h4>
-                        <div class="canvas-wrapper"><canvas id="budgetChart"></canvas></div>
+                    <div class="chart-card glass">
+                        <h4>Capital Expenditure ($M)</h4>
+                        <div class="chart-wrapper"><canvas id="budgetChart"></canvas></div>
                     </div>
-                    <div class="chart-card glass-panel">
-                        <h4>QA Pass Rate / Compliance (%)</h4>
-                        <div class="canvas-wrapper"><canvas id="efficiencyChart"></canvas></div>
+                    <div class="chart-card glass">
+                        <h4>Project Distribution</h4>
+                        <div class="chart-wrapper"><canvas id="typeChart"></canvas></div>
                     </div>
-                    <div class="chart-card glass-panel stat-highlight">
+                    <div class="chart-card glass stat-highlight">
                         <i data-lucide="shield-check" class="accent-icon"></i>
                         <div class="big-number">0</div>
                         <div class="stat-label">Lost Time Injuries (LTIs)</div>
-                        <p class="stat-sub">Maintained across Tier-1 high-risk demolition environments</p>
+                        <p class="stat-sub">Across all high-risk environments</p>
                     </div>
                 </div>
             </div>
@@ -120,24 +111,22 @@
 
         <section id="achievements" class="achievements section">
             <div class="wrap reveal">
-                <h3 class="section-label">05 // Milestones</h3>
+                <h3 class="section-label">05. Milestones</h3>
                 <div class="scroll-container">
-                    <div id="achievementsList" class="scroll-track">
-                        </div>
+                    <div id="achievementsList" class="scroll-track"></div>
                 </div>
             </div>
         </section>
 
         <section id="contact" class="contact section">
             <div class="wrap">
-                <div class="contact-card glass-panel reveal">
+                <div class="contact-card glass reveal">
                     <div class="contact-info">
-                        <h3 class="section-label">06 // Connect</h3>
+                        <h3 class="section-label">06. Connect</h3>
                         <p>Open for opportunities in civil, structural, and major infrastructure delivery.</p>
-                        <div class="social-links" id="socialLinks">
-                            </div>
+                        <div class="contact-links" id="socialLinks"></div>
                     </div>
-                    <form class="contact-form" id="contactForm" onsubmit="event.preventDefault();">
+                    <form class="contact-form" id="contactForm" onsubmit="event.preventDefault(); window.location.href='mailto:ganesh.r.kalal24@gmail.com';">
                         <div class="input-group">
                             <input type="text" id="name" required placeholder=" ">
                             <label for="name">Name</label>
@@ -150,7 +139,7 @@
                             <textarea id="message" required rows="4" placeholder=" "></textarea>
                             <label for="message">Project Inquiry</label>
                         </div>
-                        <button type="submit" class="btn btn-primary w-full glow-effect">Initiate Transmission</button>
+                        <button type="submit" class="btn btn-primary glow-effect w-full">Initiate Contact</button>
                     </form>
                 </div>
             </div>
@@ -158,15 +147,13 @@
     </main>
 
     <footer class="footer">
-        <div class="wrap">
-            <p id="footerText"></p>
-        </div>
+        <div class="wrap"><p id="footerText"></p></div>
     </footer>
 
     <div id="projectModal" class="modal" aria-hidden="true">
-        <div class="modal-backdrop" id="modalBackdrop"></div>
-        <div class="modal-content glass-panel">
-            <button class="modal-close" id="modalClose" aria-label="Close"><i data-lucide="x"></i></button>
+        <div class="modal-backdrop" onclick="closeModal()"></div>
+        <div class="modal-content glass">
+            <button class="modal-close glass" onclick="closeModal()"><i data-lucide="x"></i></button>
             <div class="modal-scroll-area">
                 <div class="modal-header">
                     <div class="modal-tags" id="modalTags"></div>
@@ -186,10 +173,6 @@
                         <h4 class="mt-4">Engineering Outcomes</h4>
                         <ul id="modalOutcomes" class="modal-list"></ul>
                     </div>
-                </div>
-                <div class="modal-gallery">
-                    <div class="gallery-placeholder"><i data-lucide="image"></i><span>Visual Asset Restricted</span></div>
-                    <div class="gallery-placeholder"><i data-lucide="file-check-2"></i><span>Documentation Verified</span></div>
                 </div>
             </div>
         </div>
