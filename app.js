@@ -1,6 +1,6 @@
 // --- FAIL-SAFE DATABASE (Bulletproof Fallback) ---
 const fallbackData = {
-    "name": "Ganesh Kalal (MIEAust)",
+    "name": "Ganesh Kalal",
     "role": "Project Engineer",
     "kicker": "Melbourne VIC • Telecom • Infrastructure",
     "heroSubtitle": "Civil and Telecom Project Engineer delivering Tier-1 projects. Specializing in 5G rollouts, statutory approvals, and precision structural execution.",
@@ -103,7 +103,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const res = await fetch('./content.json', { cache: 'no-store' });
         if(res.ok) {
             const fetchedData = await res.json();
-            // Merge to ensure no arrays are ever completely empty if missing in JSON
             siteData = { ...fallbackData, ...fetchedData }; 
         }
     } catch (e) {
@@ -116,11 +115,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         const nameNode = document.getElementById('heroName');
         if(nameNode) nameNode.textContent = (siteData.name || "Ganesh Kalal").split(' (')[0];
         
+        const roleNode = document.getElementById('heroRole');
+        if(roleNode) roleNode.textContent = siteData.role || "Project Engineer";
+
         const posNode = document.getElementById('heroPositioning');
         if(posNode) posNode.textContent = siteData.kicker || "Civil & Structural Engineer";
         
         const tagNode = document.getElementById('heroTagline');
         if(tagNode) tagNode.textContent = siteData.heroSubtitle || siteData.tagline || "";
+
+        const photoNode = document.getElementById('heroPhoto');
+        if(photoNode && siteData.profilePhotoUrl) photoNode.src = siteData.profilePhotoUrl;
 
         // About
         const leadNode = document.getElementById('aboutLead');
@@ -349,7 +354,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function initCardSpotlights() {
         if(!window.matchMedia("(pointer: fine)").matches) return;
-        document.querySelectorAll('.spotlight-card, .bento-tile').forEach(card => {
+        document.querySelectorAll('.spotlight-card, .bento-tile, .profile-frame').forEach(card => {
             card.addEventListener('mousemove', e => {
                 const rect = card.getBoundingClientRect();
                 card.style.setProperty('--x', `${e.clientX - rect.left}px`);
