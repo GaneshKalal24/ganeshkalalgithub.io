@@ -21,7 +21,6 @@
     <div class="noise-overlay"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
 
     <div class="cursor-dot" id="cursorDot"></div>
     <div class="cursor-ring" id="cursorRing"></div>
@@ -34,7 +33,13 @@
                 <a href="#projects" class="magnetic" data-strength="15">Projects</a>
                 <a href="#career" class="magnetic" data-strength="15">Career</a>
             </div>
-            <a href="#contact" class="btn btn-primary btn-sm magnetic" data-strength="30">Connect <i data-lucide="arrow-right" class="btn-icon-right"></i></a>
+            <div class="nav-actions">
+                <button id="themeToggle" class="theme-btn magnetic" data-strength="20">
+                    <i data-lucide="sun" class="sun-icon"></i>
+                    <i data-lucide="moon" class="moon-icon"></i>
+                </button>
+                <a href="#contact" class="btn btn-primary btn-sm magnetic" data-strength="30">Connect</a>
+            </div>
         </div>
     </nav>
 
@@ -51,33 +56,19 @@
                         <p class="hero-subtitle gsap-fade-up" id="heroTagline"></p>
                         <div class="hero-actions gsap-fade-up">
                             <a href="#projects" class="btn btn-primary magnetic" data-strength="40">Explore Projects</a>
-                            <a href="#about" class="btn btn-ghost magnetic" data-strength="40">View Profile</a>
+                            <a href="https://www.linkedin.com/in/ganesh-kalal/" target="_blank" class="btn btn-ghost magnetic" data-strength="40">LinkedIn</a>
                         </div>
                     </div>
                     <div class="hero-visual gsap-fade-up">
                         <div class="profile-frame glass-panel tilt-card">
-                            <img id="heroPhoto" src="profile.png" alt="Profile Photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="fallback-avatar" style="display:none;">
-                                <i data-lucide="user" style="width: 64px; height: 64px;"></i>
-                            </div>
+                            <img id="heroPhoto" src="profile.png" alt="Ganesh Kalal" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="fallback-avatar" style="display:none;"><i data-lucide="user" style="width: 64px; height: 64px;"></i></div>
                             <div class="photo-glow"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="scroll-indicator">
-                <div class="mouse">
-                    <div class="wheel"></div>
-                </div>
-            </div>
         </section>
-
-        <div class="marquee-section">
-            <div class="marquee-content">
-                <span>TELECOM UPGRADES • CIVIL INFRASTRUCTURE • STRUCTURAL DESIGN • QA/QC COMPLIANCE • TIER-1 DELIVERY • </span>
-                <span>TELECOM UPGRADES • CIVIL INFRASTRUCTURE • STRUCTURAL DESIGN • QA/QC COMPLIANCE • TIER-1 DELIVERY • </span>
-            </div>
-        </div>
 
         <section id="about" class="section">
             <div class="wrap">
@@ -86,6 +77,9 @@
                         <h2 class="section-title">Professional Profile</h2>
                         <p class="lead-text" id="aboutLead"></p>
                         <ul class="bullet-list" id="aboutBullets"></ul>
+                        
+                        <h4 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--accent);">Licenses & Certifications</h4>
+                        <div class="cert-grid" id="certGrid"></div>
                     </div>
                     <div class="about-stats grid-2 gsap-fade-up" id="statsGrid"></div>
                 </div>
@@ -99,28 +93,6 @@
                     <div class="filter-chips" id="projectFilters"></div>
                 </div>
                 <div class="bento-grid" id="projectsBento"></div>
-            </div>
-        </section>
-
-        <section id="metrics" class="section">
-            <div class="wrap">
-                <h2 class="section-title gsap-fade-up">Analytics & Milestones</h2>
-                <div class="dashboard-grid gsap-fade-up">
-                    <div class="glass-panel chart-card spotlight-card">
-                        <h4>Capital Expenditure Handled ($M)</h4>
-                        <div class="chart-wrapper"><canvas id="budgetChart"></canvas></div>
-                    </div>
-                    <div class="glass-panel stat-card spotlight-card accent-card tilt-card">
-                        <i data-lucide="shield-check" class="huge-icon"></i>
-                        <div class="stat-number">0</div>
-                        <div class="stat-label">Lost Time Injuries (LTIs)</div>
-                        <p class="stat-desc">Maintained strictly across all high-risk operations.</p>
-                    </div>
-                    <div class="glass-panel chart-card spotlight-card">
-                        <h4>Project Distribution</h4>
-                        <div class="chart-wrapper"><canvas id="typeChart"></canvas></div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -188,8 +160,8 @@
                     <div class="modal-col">
                         <h4>Constraints</h4>
                         <ul id="modalConstraints" class="modal-list"></ul>
-                        <h4 class="mt-2">Outcomes</h4>
-                        <ul id="modalOutcomes" class="modal-list"></ul>
+                        <h4 class="mt-2">External Links / Media</h4>
+                        <div id="modalLinks" class="modal-links-container"></div>
                     </div>
                 </div>
             </div>
