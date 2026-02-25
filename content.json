@@ -2,7 +2,7 @@
   "name": "Ganesh Kalal (MIEAust)",
   "role": "Project Engineer",
   "tagline": "Civil & Telecom Infrastructure | Major Project Delivery",
-  "kicker": "Melbourne VIC • Telecom • Infrastructure",
+  "kicker": "Melbourne VIC • Telecom • Civil Infrastructure",
   "profilePhotoUrl": "./profile.png",
   "heroTitle": "Specializing in 5G network upgrades, land access coordination, and structural delivery.",
   "heroSubtitle": "Civil and Telecom Project Engineer with 5+ years of experience across Tier-1/Tier-2 environments. Proven expertise in managing complex stakeholder environments, statutory approvals, and end-to-end commercial execution.",
@@ -20,6 +20,11 @@
     "Fibre Backhaul, Trenching & Civil Works Coordination",
     "Structural Tower Design & Audits (AS/NZS 1170.2)",
     "Subcontractor Management & Commercial Execution"
+  ],
+  "certifications": [
+    { "name": "Oracle Primavera P6 Professional", "issuer": "Compass Consult", "icon": "calendar-days" },
+    { "name": "Generative AI for Project Managers", "issuer": "Project Management Institute (PMI)", "icon": "bot" },
+    { "name": "Leadership Development", "issuer": "Osprey International", "icon": "award" }
   ],
   "tools": [
     "Management: MS Project, P6, Procore, InEight",
@@ -44,14 +49,19 @@
     {
       "title": "Tier-1 Industrial Closures",
       "tags": ["Industrial", "Demolition", "Civil"],
-      "meta": "VIC & NT | 2024 - Present | $300M+",
+      "meta": "VIC & NT | 2024 - Present | $365M+",
       "preview": "Project Engineer contributing to full lifecycle delivery of large-scale brownfield infrastructure and remediation projects.",
-      "fullText": "End-to-end commercial and delivery oversight in live operational and remote environments (ExxonMobil & Rio Tinto), coordinating multi-disciplinary stakeholders.",
+      "fullText": "End-to-end commercial and delivery oversight in live operational and remote environments (ExxonMobil & Rio Tinto), coordinating multi-disciplinary stakeholders. Involving explosive demolition events, 142,000 tonnes of steel, and 300,000 tonnes of concrete.",
       "bullets": [
         "Managed subcontractor packages, procurement processes, and regulatory interfaces.",
         "Negotiated and justified contract variations totaling $8M+.",
         "Updated Primavera P6 schedules to reflect sequencing, progress and delay impacts.",
         "Maintained stringent safety and environmental standards in high-risk zones."
+      ],
+      "links": [
+        { "title": "World's Most Powerful Shear Unveiled (Liberty Industrial)", "url": "https://libertyindustrial.com/worlds-most-powerful-shear-unveiled-in-australia/" },
+        { "title": "Rio Tinto Recycling Record Steel (Gove NT)", "url": "https://libertyindustrial.com/rio-tinto-starts-recycling-steel-from-australias-largest-ever-demolition-project-on-the-northern-territorys-gove-peninsula/" },
+        { "title": "ExxonMobil Altona Demolition Works", "url": "https://corporate.exxonmobil.com/locations/australia/australia-newsroom/mobil-community-outreach/2025/altona-refinery-facilities-to-begin-demolition-works" }
       ]
     },
     {
@@ -84,7 +94,7 @@
   "timeline": [
     {
       "roleCompany": "Project Engineer, Liberty Industrial",
-      "dates": "02/2024 - Present",
+      "dates": "03/2024 - Present",
       "location": "Altona VIC / Gove NT",
       "bullets": [
         "Supported end-to-end delivery of $100M+ industrial and infrastructure projects.",
@@ -94,7 +104,7 @@
       ]
     },
     {
-      "roleCompany": "Structural Project Engineer (Telecom), Indara Digital Infrastructures",
+      "roleCompany": "Structural Project Engineer (Telecom), Indara",
       "dates": "04/2023 - 03/2024",
       "location": "Melbourne VIC",
       "bullets": [
@@ -115,7 +125,7 @@
       ]
     },
     {
-      "roleCompany": "Graduate Civil Engineer, Structcom Consulting Engineers",
+      "roleCompany": "Graduate Civil Engineer, Structcom",
       "dates": "06/2020 - 10/2021",
       "location": "Caulfield VIC",
       "bullets": [
@@ -124,8 +134,8 @@
       ]
     },
     {
-      "roleCompany": "Civil Site Engineer, Tata Projects (Mumbai Metro)",
-      "dates": "02/2018 - 07/2019",
+      "roleCompany": "Engineering Cadet / Site Eng, Tata Projects",
+      "dates": "01/2019 - 07/2019",
       "location": "Mumbai, India",
       "bullets": [
         "Supported QA/QC teams on elevated viaduct and station construction.",
@@ -133,13 +143,6 @@
         "Monitored tunnel alignment (TBM) and installation of precast bridge elements."
       ]
     }
-  ],
-  "achievements": [
-    { "icon": "radio-tower", "text": "Successfully delivered design coordination for 150+ 5G telecom tower upgrades." },
-    { "icon": "file-check-2", "text": "Secured land access and planning permits across 20+ municipal councils." },
-    { "icon": "shield-check", "text": "Maintained an absolute zero LTI record across all high-risk Tier-1 environments." },
-    { "icon": "check-square", "text": "Achieved zero non-conformances on 100+ West Gate Freeway structural installations." },
-    { "icon": "trending-up", "text": "Administered and justified $8M+ in complex contract variations." }
   ],
   "contact": {
     "location": "Melbourne, VIC",
