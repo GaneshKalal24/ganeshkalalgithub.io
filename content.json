@@ -5,15 +5,15 @@
   "kicker": "Melbourne VIC • Telecom • Infrastructure",
   "profilePhotoUrl": "./profile.png",
   "heroTitle": "Specializing in 5G network upgrades, land access coordination, and structural delivery.",
-  "heroSubtitle": "Civil and Telecom Project Engineer with 5+ years of experience across Tier-1/Tier-2 environments. Proven expertise in managing complex stakeholder environments, statutory approvals, and end-to-end commercial execution.",
+  "heroSubtitle": "Civil and Telecom Project Engineer delivering Tier-1 projects. Specializing in 5G rollouts, statutory approvals, and precision structural execution.",
   "signatureLine": "Precision Planning. Rigorous Quality. Reliable Delivery.",
   "stats": [
     { "label": "Portfolio Value", "value": "$400M+" },
     { "label": "Telecom Sites", "value": "150+" },
-    { "label": "QA Non-Conformances", "value": "Zero" }
+    { "label": "QA Defects", "value": "Zero" }
   ],
-  "aboutLead": "A strategy-driven engineer balancing technical oversight with commercial discipline.",
-  "aboutStory": "Based in Melbourne, I lead major telecommunications upgrades and civil infrastructure packages. I bridge the gap between structural engineering theory and site execution, specializing in 5G infrastructure, statutory approvals, and strict conformance reporting.",
+  "aboutLead": "Strategy-driven engineer balancing technical oversight with commercial discipline.",
+  "aboutStory": "I bridge the gap between structural engineering theory and site execution, with over 5 years of experience across metro rail, live-traffic freeways, and large-scale industrial closures.",
   "knownFor": [
     "5G Infrastructure Rollouts & Upgrades",
     "Site Acquisition, Permitting & Council Approvals",
@@ -32,12 +32,11 @@
       "title": "National 5G Telecom Upgrade",
       "tags": ["Telecom", "Structural", "Design"],
       "meta": "Victoria | 2023 - 2024 | $50M",
-      "preview": "Led structural design coordination for 150+ tower upgrades and completed 100+ site inspections.",
-      "fullText": "Delivered design coordination, structural analysis, field inspections, and approvals support for critical telecom infrastructure across multiple council jurisdictions.",
+      "preview": "Structural design coordination for 150+ tower upgrades and 100+ site inspections.",
+      "fullText": "Delivered design coordination, structural analysis, field inspections, and approvals support for critical telecom infrastructure.",
       "bullets": [
         "Delivered 150+ lattice tower and steel/timber pole upgrades.",
-        "Managed trenching interfaces, pit-and-pipe readiness and civil coordination for fibre backhaul.",
-        "Prepared BoQ/BOM, supported procurement and fabrication reviews.",
+        "Managed trenching interfaces and civil coordination for fibre backhaul.",
         "Secured statutory planning approvals from 20+ councils."
       ]
     },
@@ -45,39 +44,36 @@
       "title": "Tier-1 Industrial Closures",
       "tags": ["Industrial", "Demolition", "Civil"],
       "meta": "VIC & NT | 2024 - Present | $300M+",
-      "preview": "Project Engineer contributing to full lifecycle delivery of large-scale brownfield infrastructure and remediation projects.",
-      "fullText": "End-to-end commercial and delivery oversight in live operational and remote environments (ExxonMobil & Rio Tinto), coordinating multi-disciplinary stakeholders.",
+      "preview": "Project Engineer contributing to full lifecycle delivery of large-scale brownfield remediation.",
+      "fullText": "End-to-end commercial and delivery oversight in live operational environments (ExxonMobil & Rio Tinto).",
       "bullets": [
-        "Managed subcontractor packages, procurement processes, and regulatory interfaces.",
-        "Negotiated and justified contract variations totaling $8M+.",
-        "Updated Primavera P6 schedules to reflect sequencing, progress and delay impacts.",
-        "Maintained stringent safety and environmental standards in high-risk zones."
+        "Managed subcontractor packages and regulatory interfaces.",
+        "Negotiated contract variations totaling $8M+.",
+        "Updated Primavera P6 schedules reflecting sequencing impacts."
       ]
     },
     {
       "title": "West Gate Freeway Upgrade",
       "tags": ["Civil", "Infrastructure", "QA"],
       "meta": "Melbourne, VIC | 2022 - 2023 | Confidential",
-      "preview": "Structural design support and QA verification of reinforced concrete crash barriers and precast noise walls.",
-      "fullText": "Quality-critical infrastructure delivery ensuring compliance with VicRoads and AS 5100 requirements under live traffic conditions.",
+      "preview": "Structural design support and QA verification of reinforced concrete crash barriers.",
+      "fullText": "Quality-critical infrastructure delivery ensuring compliance with VicRoads and AS 5100.",
       "bullets": [
-        "Supervised shop drawings, on-site concrete pours, and panel installation.",
-        "Conducted QA including concrete testing and reinforcement verification.",
-        "Achieved zero non-conformances across 100+ structural installations.",
-        "Coordinated fabrication and builder interfaces."
+        "Supervised shop drawings and on-site concrete pours.",
+        "Conducted QA testing and reinforcement verification.",
+        "Achieved zero non-conformances across 100+ structural installations."
       ]
     },
     {
       "title": "Mumbai Metro Line 4 & 5",
-      "tags": ["Civil", "Infrastructure", "QA/QC"],
+      "tags": ["Civil", "QA/QC"],
       "meta": "Mumbai, India | 2018 - 2019 | Confidential",
-      "preview": "Civil Site Engineer supporting independent verification and QA/QC teams on elevated viaducts and stations.",
-      "fullText": "Oversight of massive concrete construction and underground tunnel operations in a dense urban environment.",
+      "preview": "Civil Site Engineer supporting independent verification on elevated viaducts.",
+      "fullText": "Oversight of massive concrete construction and underground tunnel operations.",
       "bullets": [
-        "Performed concrete QA/QC (slump testing, dimensional checks) for foundations.",
-        "Conducted Pile Integrity Testing (PIT) and Dynamic Load Testing (DLT).",
-        "Monitored tunnel alignment (TBM) and excavation safety.",
-        "Supervised installation of bearings and precast bridge elements."
+        "Performed concrete QA/QC for deep foundations.",
+        "Conducted Pile Integrity and Dynamic Load Testing.",
+        "Monitored tunnel alignment (TBM) and excavation safety."
       ]
     }
   ],
@@ -87,21 +83,19 @@
       "dates": "02/2024 - Present",
       "location": "Altona VIC / Gove NT",
       "bullets": [
-        "Supported end-to-end delivery of $100M+ industrial and infrastructure projects.",
+        "Supported end-to-end delivery of $100M+ industrial projects.",
         "Managed subcontractor procurement (RFQs, tender evaluations).",
-        "Administered variations ($8M+), progress claims and EOT submissions.",
-        "Updated Primavera P6 schedules reflecting sequencing and delay impacts."
+        "Administered variations ($8M+), progress claims and EOTs."
       ]
     },
     {
-      "roleCompany": "Structural Project Engineer (Telecom), Indara Digital Infrastructures",
+      "roleCompany": "Structural Project Engineer, Indara",
       "dates": "04/2023 - 03/2024",
       "location": "Melbourne VIC",
       "bullets": [
-        "Delivered 150+ telecom infrastructure upgrades (5G network expansion) across metro and remote sites.",
-        "Coordinated land access, council approvals and statutory submissions for new and upgraded sites.",
-        "Managed civil interfaces for tower foundations and fibre backhaul readiness.",
-        "Reviewed fabrication drawings and conducted site inspections to AS/NZS 1170."
+        "Delivered 150+ telecom infrastructure upgrades (5G expansion).",
+        "Coordinated land access and statutory submissions.",
+        "Managed civil interfaces for foundations and fibre backhaul."
       ]
     },
     {
@@ -109,8 +103,7 @@
       "dates": "11/2021 - 03/2023",
       "location": "Clayton VIC",
       "bullets": [
-        "Designed steel framing and reinforced concrete elements to AS 4100, AS 3600 and AS/NZS 1170.",
-        "Coordinated fabrication, shop drawings, and builder interfaces.",
+        "Designed steel framing and reinforced concrete to AS 4100/3600.",
         "Conducted site inspections and QA hold-point sign-offs."
       ]
     },
@@ -129,8 +122,7 @@
       "location": "Mumbai, India",
       "bullets": [
         "Supported QA/QC teams on elevated viaduct and station construction.",
-        "Conducted Pile Integrity Testing (PIT) and Dynamic Load Testing (DLT).",
-        "Monitored tunnel alignment (TBM) and installation of precast bridge elements."
+        "Conducted Pile Integrity Testing (PIT) and Dynamic Load Testing (DLT)."
       ]
     }
   ],
