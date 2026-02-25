@@ -1,17 +1,22 @@
-// --- FAIL-SAFE DATABASE (Bulletproof Fallback) ---
+// --- FAIL-SAFE DATABASE ---
 const fallbackData = {
-    "name": "Ganesh Kalal",
+    "name": "Ganesh Kalal (MIEAust)",
     "role": "Project Engineer",
-    "kicker": "Melbourne VIC • Telecom • Infrastructure",
+    "kicker": "Melbourne VIC • Telecom • Civil Infrastructure",
     "heroSubtitle": "Civil and Telecom Project Engineer delivering Tier-1 projects. Specializing in 5G rollouts, statutory approvals, and precision structural execution.",
     "aboutLead": "Strategy-driven engineer balancing technical oversight with commercial discipline.",
-    "aboutStory": "I bridge the gap between structural engineering theory and site execution, with over 5 years of experience across metro rail, live-traffic freeways, and large-scale industrial closures.",
+    "aboutStory": "I bridge the gap between structural engineering theory and site execution. With over 5 years of experience across 5G telecom infrastructure, metro rail, live-traffic freeways, and the largest industrial closures in the Southern Hemisphere.",
     "knownFor": [
       "5G Infrastructure Rollouts & Upgrades",
       "Site Acquisition, Permitting & Council Approvals",
       "Fibre Backhaul, Trenching & Civil Works Coordination",
       "Structural Tower Design & Audits (AS/NZS 1170.2)",
       "Subcontractor Management & Commercial Execution"
+    ],
+    "certifications": [
+      { "name": "Oracle Primavera P6 Professional", "issuer": "Compass Consult", "icon": "calendar-days" },
+      { "name": "Generative AI for Project Managers", "issuer": "Project Management Institute (PMI)", "icon": "bot" },
+      { "name": "Leadership Development", "issuer": "Osprey International", "icon": "award" }
     ],
     "stats": [
       { "label": "Portfolio Value", "value": "$400M+" },
@@ -32,15 +37,20 @@ const fallbackData = {
         ]
       },
       {
-        "title": "Tier-1 Industrial Closures",
+        "title": "Tier-1 Industrial Closures (Exxon & Rio Tinto)",
         "tags": ["Industrial", "Demolition", "Civil"],
-        "meta": "VIC & NT | 2024 - Present | $300M+",
-        "preview": "Project Engineer contributing to full lifecycle delivery of large-scale brownfield remediation.",
-        "fullText": "End-to-end commercial and delivery oversight in live operational environments (ExxonMobil & Rio Tinto).",
+        "meta": "VIC & NT | 2024 - Present | $365M+",
+        "preview": "Project Engineer contributing to Australia's largest industrial demolition projects.",
+        "fullText": "End-to-end commercial and delivery oversight. Involving explosive demolition events, 142,000 tonnes of steel, and 300,000 tonnes of concrete.",
         "bullets": [
           "Managed subcontractor packages and regulatory interfaces.",
           "Negotiated contract variations totaling $8M+.",
           "Updated Primavera P6 schedules reflecting sequencing impacts."
+        ],
+        "links": [
+          { "title": "World's Most Powerful Shear Unveiled", "url": "https://libertyindustrial.com/worlds-most-powerful-shear-unveiled-in-australia/" },
+          { "title": "Rio Tinto Recycling Record Steel", "url": "https://libertyindustrial.com/rio-tinto-starts-recycling-steel-from-australias-largest-ever-demolition-project-on-the-northern-territorys-gove-peninsula/" },
+          { "title": "ExxonMobil Altona Demolition Works", "url": "https://corporate.exxonmobil.com/locations/australia/australia-newsroom/mobil-community-outreach/2025/altona-refinery-facilities-to-begin-demolition-works" }
         ]
       },
       {
@@ -57,7 +67,7 @@ const fallbackData = {
       },
       {
         "title": "Mumbai Metro Line 4 & 5",
-        "tags": ["Civil", "QA/QC"],
+        "tags": ["Civil", "QA/QC", "Infrastructure"],
         "meta": "Mumbai, India | 2018 - 2019 | Confidential",
         "preview": "Civil Site Engineer supporting independent verification on elevated viaducts.",
         "fullText": "Oversight of massive concrete construction and underground tunnel operations.",
@@ -71,7 +81,7 @@ const fallbackData = {
     "timeline": [
       {
         "roleCompany": "Project Engineer, Liberty Industrial",
-        "dates": "02/2024 - Present",
+        "dates": "03/2024 - Present",
         "location": "Altona VIC / Gove NT",
         "bullets": ["Supported end-to-end delivery of $100M+ industrial projects.", "Managed subcontractor procurement (RFQs, tender evaluations).", "Administered variations ($8M+), progress claims and EOTs."]
       },
@@ -86,6 +96,18 @@ const fallbackData = {
         "dates": "11/2021 - 03/2023",
         "location": "Clayton VIC",
         "bullets": ["Designed steel framing and reinforced concrete to AS 4100/3600.", "Conducted site inspections and QA hold-point sign-offs."]
+      },
+      {
+        "roleCompany": "Graduate Civil Engineer, Structcom",
+        "dates": "06/2020 - 10/2021",
+        "location": "Caulfield VIC",
+        "bullets": ["Designed stormwater drainage, OSD systems, and site grading.", "Coordinated geotechnical investigations and council approvals."]
+      },
+      {
+        "roleCompany": "Engineering Cadet / Site Eng, Tata Projects",
+        "dates": "01/2019 - 07/2019",
+        "location": "Mumbai, India",
+        "bullets": ["Supported QA/QC for concrete pours (slump testing).", "Assisted in pile integrity and dynamic load testing for foundations."]
       }
     ],
     "contact": {
@@ -94,7 +116,7 @@ const fallbackData = {
     }
 };
 
-let siteData = fallbackData; // Start safely
+let siteData = fallbackData; 
 
 document.addEventListener('DOMContentLoaded', async () => {
     
@@ -109,7 +131,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.warn("Fetch failed, using fail-safe internal data.");
     }
 
-    // --- 2. POPULATE DOM (Crash-Proof) ---
+    // --- 2. THEME TOGGLE ---
+    function initTheme() {
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.body.setAttribute('data-theme', savedTheme);
+
+        const toggleBtn = document.getElementById('themeToggle');
+        if(toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                const currentTheme = document.body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+        }
+    }
+
+    // --- 3. POPULATE DOM ---
     function populateDOM() {
         // Hero
         const nameNode = document.getElementById('heroName');
@@ -137,6 +175,22 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const li = document.createElement('li');
                 li.innerHTML = `<i data-lucide="check-circle-2"></i> <span>${item}</span>`;
                 ul.appendChild(li);
+            });
+        }
+
+        const certGrid = document.getElementById('certGrid');
+        if(certGrid && siteData.certifications) {
+            siteData.certifications.forEach(cert => {
+                const div = document.createElement('div');
+                div.className = 'cert-item';
+                div.innerHTML = `
+                    <i data-lucide="${cert.icon}" class="cert-icon"></i>
+                    <div class="cert-text">
+                        <h5>${cert.name}</h5>
+                        <p>${cert.issuer}</p>
+                    </div>
+                `;
+                certGrid.appendChild(div);
             });
         }
 
@@ -242,7 +296,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if(fText) fText.innerHTML = `&copy; ${new Date().getFullYear()} ${(siteData.name || "Ganesh").split(' ')[0]}. Engineering Precision.`;
     }
 
-    // --- 3. MODAL LOGIC ---
+    // --- 4. MODAL LOGIC ---
     window.openModal = function(p) {
         document.getElementById('modalTitle').textContent = p.title || 'Project Details';
         document.getElementById('modalTags').innerHTML = (p.tags || []).map(t => `<span class="bento-tag">${t}</span>`).join('');
@@ -259,8 +313,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         document.getElementById('modalScope').innerHTML = `<li>${p.preview || ''}</li>` + b.slice(0,mid).map(x=>`<li>${x}</li>`).join('');
         document.getElementById('modalRole').innerHTML = `<li>${p.fullText || ''}</li>`;
-        document.getElementById('modalConstraints').innerHTML = "<li>Managed structural interfaces in complex environments.</li>";
-        document.getElementById('modalOutcomes').innerHTML = b.slice(mid).map(x=>`<li>${x}</li>`).join('');
+        document.getElementById('modalConstraints').innerHTML = "<li>Managed structural interfaces in complex environments.</li><li>Coordinated with multiple stakeholders to ensure QA compliance.</li>";
+        
+        const linksContainer = document.getElementById('modalLinks');
+        if(p.links && p.links.length > 0) {
+            linksContainer.innerHTML = p.links.map(link => `
+                <a href="${link.url}" target="_blank" class="modal-ext-link">
+                    <i data-lucide="link"></i> ${link.title}
+                </a>
+            `).join('');
+        } else {
+            linksContainer.innerHTML = "<p style='color:var(--text-muted); font-size:0.9rem;'>No external media available.</p>";
+        }
 
         const modal = document.getElementById('projectModal');
         modal.classList.add('open');
@@ -278,38 +342,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // --- 4. CHARTS (Chart.js) ---
-    function initCharts() {
-        if(typeof Chart === 'undefined') return;
-        Chart.defaults.color = '#8892b0';
-        Chart.defaults.font.family = "'Inter', sans-serif";
-
-        const bChart = document.getElementById('budgetChart');
-        if(bChart) {
-            new Chart(bChart.getContext('2d'), {
-                type: 'bar',
-                data: {
-                    labels: ['Rio Tinto', 'Exxon', 'Telecom 5G', 'West Gate'],
-                    datasets: [{ label: 'Value ($M)', data: [300, 65, 50, 15], backgroundColor: '#00f0ff', borderRadius: 4 }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.05)' } }, x: { grid: { display: false } } } }
-            });
-        }
-
-        const tChart = document.getElementById('typeChart');
-        if(tChart) {
-            new Chart(tChart.getContext('2d'), {
-                type: 'doughnut',
-                data: {
-                    labels: ['Telecom 5G', 'Industrial', 'Civil'],
-                    datasets: [{ data: [40, 45, 15], backgroundColor: ['#00f0ff', '#0088ff', '#7000ff'], borderWidth: 0 }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#ffffff' } } } }
-            });
-        }
-    }
-
-    // --- 5. UI/UX INTERACTIVITY (ACTIVE THEORY VIBE) ---
+    // --- 5. UI/UX INTERACTIVITY ---
     function initCustomCursor() {
         const cursorDot = document.getElementById('cursorDot');
         const cursorRing = document.getElementById('cursorRing');
@@ -397,10 +430,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // --- RUN EVERYTHING ---
+    initTheme();
     populateDOM();
-    initCharts();
     
-    // Init aesthetics after a tiny delay for layout to settle
     setTimeout(() => {
         if(typeof lucide !== 'undefined') lucide.createIcons();
         initCustomCursor();
