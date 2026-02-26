@@ -44,9 +44,10 @@ const fallbackData = {
         "preview": "Structural design coordination for 150+ tower upgrades and 100+ site inspections.",
         "fullText": "Delivered design coordination, structural analysis, field inspections, and approvals support for critical telecom infrastructure.",
         "bullets": [
-          "Delivered 150+ lattice tower and steel/timber pole upgrades.",
+          "Delivered 150+ lattice tower and steel/timber pole upgrades ensuring compliance with AS1170.2.",
           "Managed trenching interfaces and civil coordination for fibre backhaul.",
-          "Secured statutory planning approvals from 20+ councils, reducing approval cycles by 20%."
+          "Prepared detailed BoQ/BOM, supported procurement and fabrication reviews.",
+          "Secured statutory planning approvals from 20+ councils, reducing approval cycles by 20% through improved documentation."
         ]
       },
       {
@@ -56,9 +57,10 @@ const fallbackData = {
         "preview": "Project Engineer contributing to Australia's largest industrial demolition projects.",
         "fullText": "End-to-end commercial and delivery oversight. Involving explosive demolition events, 142,000 tonnes of steel, and 300,000 tonnes of concrete.",
         "bullets": [
-          "Managed subcontractor packages and regulatory interfaces.",
-          "Negotiated contract variations totaling $8M+.",
-          "Introduced GPS and Drone topographic surveying for remediation earthworks, improving accuracy by 25%."
+          "Managed subcontractor packages, RFQs, and regulatory interfaces with Hobsons Bay City Council.",
+          "Negotiated and technically justified contract variations totaling $8M+.",
+          "Organised scrap steel load-outs exceeding 135,000 tonnes (approx $65M+ in scrap value).",
+          "Introduced GPS and aerial Drone topographic surveying for remediation earthworks, improving accuracy by 25%."
         ],
         "links": [
           { "title": "World's Most Powerful Shear Unveiled", "url": "https://libertyindustrial.com/worlds-most-powerful-shear-unveiled-in-australia/" },
@@ -73,8 +75,9 @@ const fallbackData = {
         "preview": "Structural design support and QA verification of reinforced concrete crash barriers.",
         "fullText": "Quality-critical infrastructure delivery ensuring compliance with VicRoads and AS 5100.",
         "bullets": [
-          "Supervised shop drawings and on-site concrete pours.",
-          "Conducted QA testing and reinforcement verification.",
+          "Supervised shop drawings and on-site concrete pours for precast noise walls.",
+          "Conducted rigorous QA testing and reinforcement verification.",
+          "Provided input on temporary works including formwork detailing and access scaffolding.",
           "Achieved zero non-conformances across 100+ structural installations."
         ]
       },
@@ -85,8 +88,9 @@ const fallbackData = {
         "preview": "Civil Site Engineer supporting independent verification on elevated viaducts.",
         "fullText": "Oversight of massive concrete construction and underground tunnel operations.",
         "bullets": [
-          "Performed concrete QA/QC for deep foundations.",
-          "Conducted Pile Integrity and Dynamic Load Testing.",
+          "Performed concrete QA/QC for deep foundations (slump testing, dimensional checks).",
+          "Conducted Dynamic Load Testing (DLT) to evaluate load-bearing capacity.",
+          "Performed Pile Integrity Testing (PIT) to assess cast-in-situ piles.",
           "Monitored tunnel alignment (TBM) and excavation safety."
         ]
       }
@@ -108,7 +112,7 @@ const fallbackData = {
         "roleCompany": "Graduate Structural Engineer, Clive Steele Partners",
         "dates": "11/2021 - 03/2023",
         "location": "Clayton VIC",
-        "bullets": ["Designed steel framing and reinforced concrete to AS 4100/3600.", "Provided input on temporary works including formwork detailing.", "Conducted site inspections and QA hold-point sign-offs."]
+        "bullets": ["Designed steel framing and reinforced concrete to AS 4100/3600.", "Provided input on temporary works including formwork detailing and scaffolding.", "Conducted site inspections and QA hold-point sign-offs."]
       },
       {
         "roleCompany": "Graduate Civil Engineer, Structcom",
@@ -130,7 +134,7 @@ const fallbackData = {
 };
 
 let siteData = fallbackData; 
-let threeNodes = []; // Global reference to 3D crystals for blast effect
+let glitchPassTrigger = null; // Global reference to trigger theme glitch
 
 document.addEventListener('DOMContentLoaded', async () => {
     
@@ -145,26 +149,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.warn("Fetch failed, using internal fail-safe data.");
     }
 
-    // --- 2. THEME TOGGLE ---
-    function initTheme() {
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.body.setAttribute('data-theme', savedTheme);
-
-        const toggleTheme = () => {
-            const currentTheme = document.body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        };
-
-        const tBtn = document.getElementById('themeToggle');
-        const mBtn = document.getElementById('themeToggleMobile');
-        
-        if(tBtn) tBtn.addEventListener('click', toggleTheme);
-        if(mBtn) mBtn.addEventListener('click', toggleTheme);
-    }
-
-    // --- 3. POPULATE DOM ---
+    // --- 2. POPULATE DOM ---
     function populateDOM() {
         try {
             if(document.getElementById('heroName')) document.getElementById('heroName').textContent = (siteData.name || "Ganesh Kalal").split(' (')[0];
@@ -321,7 +306,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // --- 4. MODAL LOGIC ---
+    // --- 3. MODAL LOGIC ---
     window.openModal = function(p) {
         document.getElementById('modalTitle').textContent = p.title || 'Project Details';
         document.getElementById('modalTags').innerHTML = (p.tags || []).map(t => `<span class="bento-tag">${t}</span>`).join('');
@@ -338,7 +323,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         document.getElementById('modalScope').innerHTML = `<li>${p.preview || ''}</li>` + b.slice(0,mid).map(x=>`<li>${x}</li>`).join('');
         document.getElementById('modalRole').innerHTML = `<li>${p.fullText || ''}</li>`;
-        document.getElementById('modalConstraints').innerHTML = "<li>Managed structural interfaces in complex environments.</li><li>Coordinated with multiple stakeholders to ensure QA compliance.</li>";
+        document.getElementById('modalConstraints').innerHTML = "<li>Managed strict stakeholder compliance and safety metrics.</li>";
         
         const linksContainer = document.getElementById('modalLinks');
         if(p.links && p.links.length > 0) {
@@ -367,61 +352,148 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // --- 5. THREE.JS 3D TELECOM BACKGROUND WITH SELF-EVOLVING CRYSTALS ---
+    // --- 4. CYBERPUNK TEXT SCRAMBLE ---
+    function initScrambleText() {
+        const chars = '!<>-_\\\\/[]{}—=+*^?#________';
+        
+        function scramble(el) {
+            const original = el.dataset.text || el.innerText;
+            el.dataset.text = original;
+            let iter = 0;
+            const maxIter = 15;
+            
+            const interval = setInterval(() => {
+                el.innerText = original.split('').map((c, i) => {
+                    if(c === ' ') return ' ';
+                    if(i < (iter/maxIter)*original.length) return c;
+                    return chars[Math.floor(Math.random() * chars.length)];
+                }).join('');
+                iter++;
+                if(iter > maxIter) clearInterval(interval);
+            }, 40);
+        }
+
+        if(typeof ScrollTrigger !== 'undefined') {
+            gsap.utils.toArray('.scramble-text').forEach(el => {
+                ScrollTrigger.create({
+                    trigger: el,
+                    start: "top 90%",
+                    onEnter: () => scramble(el)
+                });
+            });
+        }
+    }
+
+    // --- 5. HIGH-PERFORMANCE 3D POST-PROCESSING ENGINE ---
     function init3DBackground() {
-        if(typeof THREE === 'undefined') return;
+        if(typeof THREE === 'undefined' || typeof THREE.EffectComposer === 'undefined') {
+            console.warn("Three.js Post-Processing failed to load. Skipping 3D background.");
+            return;
+        }
+
         const canvas = document.getElementById('webgl-canvas');
         if(!canvas) return;
 
+        // Scene Setup
         const scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x020308, 0.015); 
-
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 40;
+        camera.position.z = 50;
 
-        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Cap for performance
 
-        const telecomGroup = new THREE.Group();
-        scene.add(telecomGroup);
+        // Post-Processing (Bloom & Glitch)
+        const renderScene = new THREE.RenderPass(scene, camera);
+        
+        const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+        bloomPass.threshold = 0.1;
+        bloomPass.strength = 1.2; // The neon glow
+        bloomPass.radius = 0.5;
 
+        const glitchPass = new THREE.GlitchPass();
+        glitchPass.goWild = false; // Triggered via theme toggle
+        
+        // Export function to trigger glitch
+        glitchPassTrigger = () => {
+            glitchPass.goWild = true;
+            setTimeout(() => { glitchPass.goWild = false; }, 400);
+        };
+
+        const composer = new THREE.EffectComposer(renderer);
+        composer.addPass(renderScene);
+        composer.addPass(bloomPass);
+        composer.addPass(glitchPass);
+
+        // Geometries
         const geometries = [
-            new THREE.TetrahedronGeometry(2),
-            new THREE.OctahedronGeometry(2),
-            new THREE.IcosahedronGeometry(1.5)
+            new THREE.TetrahedronGeometry(1.5),
+            new THREE.OctahedronGeometry(2)
         ];
         
-        const mat1 = new THREE.MeshBasicMaterial({ color: 0x00f0ff, wireframe: true, transparent: true, opacity: 0.2 });
-        const mat2 = new THREE.MeshBasicMaterial({ color: 0x0088ff, wireframe: true, transparent: true, opacity: 0.15 });
+        const mat1 = new THREE.MeshBasicMaterial({ color: 0x00f0ff, wireframe: true, transparent: true, opacity: 0.3 });
+        const mat2 = new THREE.MeshBasicMaterial({ color: 0x0088ff, wireframe: true, transparent: true, opacity: 0.2 });
 
-        // Generate Prisms/Crystals
-        for(let i=0; i<30; i++) {
+        const nodes = [];
+        const nodeCount = 60; // Lightweight count for performance
+
+        // Generate Nodes
+        for(let i=0; i < nodeCount; i++) {
             const geo = geometries[Math.floor(Math.random() * geometries.length)];
             const mesh = new THREE.Mesh(geo, Math.random() > 0.5 ? mat1 : mat2);
             
-            // Random positions spread out
-            mesh.position.set(
-                (Math.random() - 0.5) * 120,
-                (Math.random() - 0.5) * 120,
-                (Math.random() - 0.5) * 60 - 10
+            // Calculate 3 Morph States
+            // State 0: Scattered
+            const s0 = new THREE.Vector3(
+                (Math.random() - 0.5) * 150,
+                (Math.random() - 0.5) * 150,
+                (Math.random() - 0.5) * 60 - 20
             );
+
+            // State 1: Telecom Tower (Tapered Cylinder)
+            const y = -40 + (i / nodeCount) * 80;
+            const radius = 15 - ((y + 40) / 80) * 12;
+            const angle = i * Math.PI * 0.4;
+            const s1 = new THREE.Vector3(Math.cos(angle) * radius, y, Math.sin(angle) * radius);
+
+            // State 2: Suspension Bridge
+            let s2 = new THREE.Vector3();
+            if(i < 20) { // Deck
+                s2.set(-50 + (i/20)*100, -10, 0);
+            } else if (i < 30) { // Left Pillar
+                s2.set(-30, -30 + ((i-20)/10)*50, 0);
+            } else if (i < 40) { // Right Pillar
+                s2.set(30, -30 + ((i-30)/10)*50, 0);
+            } else { // Cable Parabola
+                const x = -50 + ((i-40)/20)*100;
+                s2.set(x, (x*x)*0.015 - 15, 0);
+            }
+
+            mesh.position.copy(s0);
             
-            mesh.rotation.set(Math.random()*Math.PI, Math.random()*Math.PI, 0);
-            
-            // Store physics properties for self-evolving animation and blast effect
             mesh.userData = {
-                originalPos: mesh.position.clone(),
-                velocity: new THREE.Vector3(0,0,0),
+                target0: s0,
+                target1: s1,
+                target2: s2,
                 rotSpeedX: (Math.random() - 0.5) * 0.02,
                 rotSpeedY: (Math.random() - 0.5) * 0.02,
-                scaleSpeed: Math.random() * 0.02,
-                scaleOffset: Math.random() * Math.PI * 2
             };
 
-            telecomGroup.add(mesh);
-            threeNodes.push(mesh);
+            scene.add(mesh);
+            nodes.push(mesh);
         }
+
+        // Scroll Tracking for Morphing
+        let scrollPercent = 0;
+        window.addEventListener('scroll', () => {
+            const h = document.documentElement;
+            const b = document.body;
+            const scrollTop = h.scrollTop || b.scrollTop;
+            const scrollHeight = h.scrollHeight || b.scrollHeight;
+            const clientHeight = h.clientHeight;
+            scrollPercent = scrollTop / (scrollHeight - clientHeight);
+        });
 
         let mouseX = 0, mouseY = 0;
         window.addEventListener('mousemove', (e) => {
@@ -429,49 +501,35 @@ document.addEventListener('DOMContentLoaded', async () => {
             mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
         });
 
-        let currentScroll = 0;
-        window.addEventListener('scroll', () => { currentScroll = window.scrollY; });
-
-        const clock = new THREE.Clock();
-
         function animate() {
             requestAnimationFrame(animate);
-            const time = clock.getElapsedTime();
             
-            // Self-Evolving: Breathe and rotate crystals
-            threeNodes.forEach(node => {
+            // Map scroll to state (0.0 to 2.0)
+            const globalProgress = scrollPercent * 2; 
+
+            nodes.forEach(node => {
                 const data = node.userData;
-                
-                // Continuous rotation
                 node.rotation.x += data.rotSpeedX;
                 node.rotation.y += data.rotSpeedY;
-                
-                // Breathing scale (Self-evolving shape behavior)
-                const scale = 1 + Math.sin(time * 2 + data.scaleOffset) * 0.2;
-                node.scale.set(scale, scale, scale);
 
-                // Apply velocity from blast, then spring back
-                node.position.add(data.velocity);
-                data.velocity.multiplyScalar(0.95); // Friction
-                
-                // Spring force back to original position
-                const force = data.originalPos.clone().sub(node.position).multiplyScalar(0.02);
-                data.velocity.add(force);
+                // Interpolate Positions (Morphing)
+                let targetPos = new THREE.Vector3();
+                if(globalProgress < 1) {
+                    targetPos.copy(data.target0).lerp(data.target1, globalProgress);
+                } else {
+                    targetPos.copy(data.target1).lerp(data.target2, globalProgress - 1);
+                }
+
+                // Smoothly glide to target position
+                node.position.lerp(targetPos, 0.05);
             });
 
-            // Slowly rotate entire system
-            telecomGroup.rotation.y += 0.0005;
-            telecomGroup.rotation.x += 0.0002;
-
-            // Mouse parallax
-            camera.position.x += (mouseX * 8 - camera.position.x) * 0.05;
-            camera.position.y += (-mouseY * 8 - camera.position.y) * 0.05;
+            // Camera Parallax
+            camera.position.x += (mouseX * 10 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY * 10 - camera.position.y) * 0.05;
             camera.lookAt(scene.position);
 
-            // Scroll effect
-            telecomGroup.position.y = currentScroll * 0.015;
-
-            renderer.render(scene, camera);
+            composer.render(); // Render through Post-Processing
         }
         animate();
 
@@ -479,13 +537,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
+            composer.setSize(window.innerWidth, window.innerHeight);
         });
 
+        // Theme Toggle Sync
         const updateColors = () => {
             const isLight = document.body.getAttribute('data-theme') === 'light';
             scene.fog.color.setHex(isLight ? 0xf8fafc : 0x020308);
             mat1.color.setHex(isLight ? 0x0284c7 : 0x00f0ff);
             mat2.color.setHex(isLight ? 0x0369a1 : 0x0088ff);
+            bloomPass.strength = isLight ? 0.3 : 1.2; // Reduce bloom in light mode
         };
         const tBtn = document.getElementById('themeToggle');
         const mBtn = document.getElementById('themeToggleMobile');
@@ -493,80 +554,32 @@ document.addEventListener('DOMContentLoaded', async () => {
         if(mBtn) mBtn.addEventListener('click', () => setTimeout(updateColors, 50));
     }
 
-    // --- 6. LIQUID RIPPLE & 3D BLAST ON CLICK ---
-    function initClickEffects() {
-        window.addEventListener('click', (e) => {
-            // 1. LIQUID RIPPLE (GSAP SVG Filter)
-            const map = document.getElementById('displacementMap');
-            if(map && typeof gsap !== 'undefined') {
-                gsap.fromTo(map, 
-                    { attr: { scale: 0 } }, 
-                    { attr: { scale: 80 }, duration: 0.4, ease: "power2.out", yoyo: true, repeat: 1 }
-                );
-            }
+    // --- THEME TOGGLE LISTENER (Includes Glitch) ---
+    function initThemeEvents() {
+        const toggleTheme = () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            if(glitchPassTrigger) glitchPassTrigger(); // Trigger WebGL RGB Glitch
+        };
 
-            // 2. CRYSTAL DISTURBANCE (Three.js Blast)
-            if(threeNodes.length > 0) {
-                // Convert mouse click to normalized device coordinates
-                const x = (e.clientX / window.innerWidth) * 2 - 1;
-                const y = -(e.clientY / window.innerHeight) * 2 + 1;
-                
-                threeNodes.forEach(node => {
-                    // Create a blast vector radiating away from the rough mouse area
-                    const blastForce = new THREE.Vector3(x * 40 - node.position.x, y * 40 - node.position.y, 0);
-                    const distance = blastForce.length();
-                    
-                    // Normalize and apply inverted strength based on distance
-                    if(distance < 50) {
-                        blastForce.normalize().multiplyScalar(-500 / (distance + 1));
-                        node.userData.velocity.add(blastForce);
-                        // Increase rotation speed temporarily
-                        node.userData.rotSpeedX *= -2;
-                        node.userData.rotSpeedY *= -2;
-                    }
-                });
-            }
-
-            // 3. CURSOR EXPAND
-            const cursorRing = document.getElementById('cursorRing');
-            if(cursorRing) {
-                cursorRing.classList.add('click-expand');
-                setTimeout(() => cursorRing.classList.remove('click-expand'), 300);
-            }
-        });
+        const tBtn = document.getElementById('themeToggle');
+        const mBtn = document.getElementById('themeToggleMobile');
+        
+        if(tBtn) tBtn.addEventListener('click', toggleTheme);
+        if(mBtn) mBtn.addEventListener('click', toggleTheme);
     }
 
-    // --- 7. GENERAL UI INTERACTIVITY ---
-    function initFibreOptics() {
-        if(typeof gsap === 'undefined') return;
-        const pulsesH = document.querySelectorAll('.cable-horizontal .pulse');
-        pulsesH.forEach(pulse => {
-            gsap.to(pulse, {
-                x: window.innerWidth + 300,
-                duration: "random(2, 4)",
-                ease: "power1.inOut",
-                repeat: -1,
-                delay: "random(0, 3)"
-            });
-        });
-        const pulsesV = document.querySelectorAll('.cable-vertical .pulse');
-        pulsesV.forEach(pulse => {
-            gsap.to(pulse, {
-                y: window.innerHeight + 300,
-                duration: "random(3, 5)",
-                ease: "power1.inOut",
-                repeat: -1,
-                delay: "random(0, 3)"
-            });
-        });
-    }
 
+    // --- 6. UI INTERACTIVITY ---
     function initCustomCursor() {
         const cursorDot = document.getElementById('cursorDot');
         const cursorRing = document.getElementById('cursorRing');
         
         if(window.matchMedia("(pointer: fine)").matches) {
-            document.body.classList.add('custom-cursor-active'); 
+            document.body.classList.add('custom-cursor-active'); // Safely hides native cursor only if JS works
+            
             let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
             let ringX = mouseX, ringY = mouseY;
 
@@ -650,20 +663,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // RUN EVERYTHING
+    // --- RUN EVERYTHING SAFELY ---
     initTheme();
+    initThemeEvents();
     populateDOM();
     
     setTimeout(() => {
         if(typeof lucide !== 'undefined') lucide.createIcons();
-        init3DBackground();
+        init3DBackground(); // Loads Bloom, Glitch, and Scroll Morphing
+        initScrambleText(); // Loads Cyberpunk Typography
         initCustomCursor();
         initMagneticButtons();
         initCardSpotlights();
         init3DTilt();
         initGSAPReveals();
-        initFibreOptics();
-        initClickEffects();
     }, 100);
 
 });
