@@ -47,7 +47,7 @@ const fallbackData = {
         "bullets": [
           "Delivered 150+ lattice tower and steel/timber pole upgrades ensuring compliance with AS1170.2.",
           "Managed trenching interfaces and civil coordination for fibre backhaul.",
-          "Secured statutory planning approvals from 20+ councils, reducing approval cycles by 20% through improved documentation."
+          "Secured statutory planning approvals from 20+ councils, reducing approval cycles by 20%."
         ]
       },
       {
@@ -60,12 +60,10 @@ const fallbackData = {
         "bullets": [
           "Managed subcontractor packages, RFQs, and regulatory interfaces with local councils.",
           "Negotiated and technically justified contract variations totaling $8M+.",
-          "Organised scrap steel load-outs exceeding 135,000 tonnes (approx $65M+ in scrap value).",
-          "Introduced GPS and aerial Drone topographic surveying for remediation earthworks, improving accuracy by 25%."
+          "Organised scrap steel load-outs exceeding 135,000 tonnes (approx $65M+ in scrap value)."
         ],
         "links": [
-          { "title": "World's Most Powerful Shear Unveiled", "url": "https://libertyindustrial.com/worlds-most-powerful-shear-unveiled-in-australia/" },
-          { "title": "Rio Tinto Recycling Record Steel", "url": "https://libertyindustrial.com/rio-tinto-starts-recycling-steel-from-australias-largest-ever-demolition-project-on-the-northern-territorys-gove-peninsula/" }
+          { "title": "Rio Tinto Recycling Record Steel", "url": "https://libertyindustrial.com/" }
         ]
       },
       {
@@ -125,13 +123,11 @@ let siteData = fallbackData;
 
 document.addEventListener('DOMContentLoaded', async () => {
     
-    // Fetch Data safely
     try {
         const res = await fetch('./content.json', { cache: 'no-store' });
         if(res.ok) siteData = { ...fallbackData, ...await res.json() }; 
-    } catch (e) { console.warn("Using local data."); }
+    } catch (e) {}
 
-    // Theme Logic
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.body.setAttribute('data-theme', savedTheme);
 
@@ -144,15 +140,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
     document.getElementById('themeToggleMobile')?.addEventListener('click', toggleTheme);
 
-    // Populate DOM Function
     function renderDOM() {
         try {
             if(document.getElementById('heroName')) document.getElementById('heroName').textContent = (siteData.name || "Ganesh Kalal").split(' (')[0];
             if(document.getElementById('heroRole')) document.getElementById('heroRole').setAttribute('data-text', siteData.role);
             if(siteData.profilePhotoUrl && document.getElementById('heroPhoto')) document.getElementById('heroPhoto').src = siteData.profilePhotoUrl;
 
-            const lead = document.getElementById('aboutLead');
-            if(lead) lead.innerHTML = `<strong>${siteData.aboutLead}</strong><br><br>${siteData.aboutStory}`;
+            const visaText = document.getElementById('visaText');
+            if(visaText && siteData.visaStatus) visaText.textContent = siteData.visaStatus;
+
+            const leadNode = document.getElementById('aboutLead');
+            if(leadNode) leadNode.innerHTML = `<strong>${siteData.aboutLead || ''}</strong><br><br>${siteData.aboutStory || ''}`;
             
             const ul = document.getElementById('aboutBullets');
             if(ul) siteData.knownFor.forEach(i => { ul.innerHTML += `<li><i data-lucide="check-circle-2"></i> <span>${i}</span></li>`; });
@@ -172,7 +170,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             const statsGrid = document.getElementById('statsGrid');
             if(statsGrid) siteData.stats.forEach(s => { statsGrid.innerHTML += `<div class="stat-box glass-panel tilt-card"><div class="stat-val">${s.value}</div><div class="stat-lbl">${s.label}</div></div>`; });
 
-            // Projects with Images
             const projGrid = document.getElementById('projectsBento');
             const filters = document.getElementById('projectFilters');
             if(projGrid && filters) {
@@ -191,12 +188,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 function renderProjects(filter) {
                     projGrid.innerHTML = '';
                     let filtered = filter === 'All' ? siteData.projects : siteData.projects.filter(p => p.tags.some(t => t.toLowerCase().includes(filter.toLowerCase())));
+                    
                     filtered.forEach((p, i) => {
                         const tile = document.createElement('div');
                         let sizeClass = i === 0 ? 'large' : (i === 3 ? 'medium' : '');
                         tile.className = `bento-tile glass-panel tilt-card ${sizeClass}`;
                         
-                        const img = p.imageUrl ? p.imageUrl : 'https://images.unsplash.com/photo-1541888086925-924372e90e75?auto=format&fit=crop&w=800&q=80';
+                        const img = p.imageUrl || 'https://images.unsplash.com/photo-1544006659-f0b21884ce1d?auto=format&fit=crop&w=800&q=80';
                         tile.style.backgroundImage = `url('${img}')`;
 
                         tile.innerHTML = `
@@ -204,7 +202,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 <div class="bento-tags">${p.tags.slice(0,3).map(t => `<span class="bento-tag">${t}</span>`).join('')}</div>
                                 <h3 class="bento-title">${p.title}</h3>
                             </div>
-                            <div class="bento-link" style="color:white; font-size:0.9rem; display:flex; align-items:center; gap:0.5rem;">View Case Study <i data-lucide="arrow-right"></i></div>
+                            <div style="color:#00f0ff; font-weight: 600; font-size:1rem; display:flex; align-items:center; gap:0.5rem; margin-top: 1rem;">View Case Study <i data-lucide="arrow-right"></i></div>
                         `;
                         tile.addEventListener('click', () => openModal(p));
                         projGrid.appendChild(tile);
@@ -214,7 +212,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 renderProjects('All');
             }
 
-            // Timeline
             const tl = document.getElementById('careerTimeline');
             if(tl) siteData.timeline.forEach((job, i) => {
                 const parts = job.roleCompany.split(',');
@@ -229,14 +226,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             if(document.getElementById('socialLinks')) document.getElementById('socialLinks').innerHTML = `<a href="${siteData.contact.linkedin}" target="_blank" class="social-btn magnetic"><span>LinkedIn Profile</span> <i data-lucide="arrow-up-right"></i></a><a href="mailto:${siteData.contact.email}" class="social-btn magnetic"><span>Email Me</span> <i data-lucide="mail"></i></a>`;
-            if(document.getElementById('footerText')) document.getElementById('footerText').innerHTML = `&copy; ${new Date().getFullYear()} ${siteData.name.split(' ')[0]}. Engineering Precision.`;
+            if(document.getElementById('footerText')) document.getElementById('footerText').innerHTML = `&copy; ${new Date().getFullYear()} ${(siteData.name || "Ganesh").split(' ')[0]}. Engineering Precision.`;
 
         } catch (error) { console.error("DOM Error:", error); }
     }
 
     renderDOM();
 
-    // Modal Export
     window.openModal = function(p) {
         document.getElementById('modalTitle').textContent = p.title;
         document.getElementById('modalTags').innerHTML = p.tags.map(t => `<span class="bento-tag">${t}</span>`).join('');
@@ -248,8 +244,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('modalConstraints').innerHTML = p.bullets.slice(mid).map(x=>`<li>${x}</li>`).join('');
         
         const linksContainer = document.getElementById('modalLinks');
-        if(p.links) linksContainer.innerHTML = p.links.map(l => `<a href="${l.url}" target="_blank" class="modal-ext-link"><i data-lucide="link"></i> ${l.title}</a>`).join('');
-        else linksContainer.innerHTML = "<p style='color:var(--text-muted); font-size:0.9rem;'>Internal works. No external media.</p>";
+        if(p.links && p.links.length > 0) {
+            linksContainer.innerHTML = p.links.map(l => `<a href="${l.url}" target="_blank" class="modal-ext-link"><i data-lucide="link"></i> ${l.title}</a>`).join('');
+        } else {
+            linksContainer.innerHTML = "<p style='color:var(--text-muted); font-size:1rem;'>Internal works. No external media.</p>";
+        }
 
         document.getElementById('projectModal').classList.add('open');
         document.body.style.overflow = 'hidden';
