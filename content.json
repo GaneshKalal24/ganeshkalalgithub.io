@@ -11,7 +11,7 @@
   "stats": [
     { "label": "Portfolio Value", "value": "$400M+" },
     { "label": "Telecom Sites", "value": "150+" },
-    { "label": "QA Non-Conformances", "value": "Zero" }
+    { "label": "QA Defects", "value": "Zero" }
   ],
   "aboutLead": "Strategy-driven engineer balancing technical oversight with commercial discipline.",
   "aboutStory": "I bridge the gap between structural engineering theory and site execution. With over 5 years of experience across 5G telecom infrastructure, metro rail, live-traffic freeways, and the largest industrial closures in the Southern Hemisphere.",
