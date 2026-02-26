@@ -14,19 +14,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-    
     <link rel="stylesheet" href="styles.css">
 </head>
 <body data-theme="dark">
 
-    <canvas id="webgl-canvas"></canvas>
+    <div class="video-background">
+        <video autoplay loop muted playsinline id="bg-video">
+            <source src="bg-video.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+    
     <div class="noise-overlay"></div>
 
     <div class="cursor-dot" id="cursorDot"></div>
@@ -201,9 +199,9 @@
                         <ul id="modalRole" class="modal-list"></ul>
                     </div>
                     <div class="modal-col">
-                        <h4>Constraints & Metrics</h4>
+                        <h4>Constraints & Outcomes</h4>
                         <ul id="modalConstraints" class="modal-list"></ul>
-                        <h4 class="mt-2">External Links / Media</h4>
+                        <h4 class="mt-2">External Links</h4>
                         <div id="modalLinks" class="modal-links-container"></div>
                     </div>
                 </div>
@@ -213,6 +211,5 @@
 
     <script src="js/core.js"></script>
     <script src="js/animations.js"></script>
-    <script src="js/webgl-engine.js"></script>
 </body>
 </html>
