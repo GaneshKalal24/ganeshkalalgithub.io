@@ -41,6 +41,7 @@ const fallbackData = {
         "title": "National 5G Telecom Upgrade",
         "tags": ["Telecom", "Structural", "Design"],
         "meta": "Victoria | 2023 - 2024 | $50M",
+        "imageUrl": "https://images.unsplash.com/photo-1544006659-f0b21884ce1d?auto=format&fit=crop&w=800&q=80",
         "preview": "Structural design coordination for 150+ tower upgrades and 100+ site inspections.",
         "fullText": "Delivered design coordination, structural analysis, field inspections, and approvals support for critical telecom infrastructure.",
         "bullets": [
@@ -53,6 +54,7 @@ const fallbackData = {
         "title": "Tier-1 Industrial Closures (Exxon & Rio Tinto)",
         "tags": ["Industrial", "Demolition", "Civil"],
         "meta": "VIC & NT | 2024 - Present | $365M+",
+        "imageUrl": "https://images.unsplash.com/photo-1534398079543-7ae6d016b86c?auto=format&fit=crop&w=800&q=80",
         "preview": "Project Engineer contributing to Australia's largest industrial demolition projects.",
         "fullText": "End-to-end commercial and delivery oversight. Involving explosive demolition events, 142,000 tonnes of steel, and 300,000 tonnes of concrete.",
         "bullets": [
@@ -70,6 +72,7 @@ const fallbackData = {
         "title": "West Gate Freeway Upgrade",
         "tags": ["Civil", "Infrastructure", "QA"],
         "meta": "Melbourne, VIC | 2022 - 2023 | Confidential",
+        "imageUrl": "https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=800&q=80",
         "preview": "Structural design support and QA verification of reinforced concrete crash barriers.",
         "fullText": "Quality-critical infrastructure delivery ensuring compliance with VicRoads and AS 5100.",
         "bullets": [
@@ -82,6 +85,7 @@ const fallbackData = {
         "title": "Mumbai Metro Line 4 & 5",
         "tags": ["Civil", "QA/QC", "Infrastructure"],
         "meta": "Mumbai, India | 2018 - 2019 | Confidential",
+        "imageUrl": "https://images.unsplash.com/photo-1582298538104-e3facf70a256?auto=format&fit=crop&w=800&q=80",
         "preview": "Civil Site Engineer supporting independent verification on elevated viaducts.",
         "fullText": "Oversight of massive concrete construction and underground tunnel operations.",
         "bullets": [
@@ -135,8 +139,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const newTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         document.body.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-        // Trigger Glitch if WebGL is loaded
-        if(window.triggerThemeGlitch) window.triggerThemeGlitch(newTheme);
     };
 
     document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
@@ -145,11 +147,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Populate DOM Function
     function renderDOM() {
         try {
-            document.getElementById('heroName').textContent = (siteData.name || "Ganesh Kalal").split(' (')[0];
-            document.getElementById('heroRole').setAttribute('data-text', siteData.role);
+            if(document.getElementById('heroName')) document.getElementById('heroName').textContent = (siteData.name || "Ganesh Kalal").split(' (')[0];
+            if(document.getElementById('heroRole')) document.getElementById('heroRole').setAttribute('data-text', siteData.role);
             if(siteData.profilePhotoUrl && document.getElementById('heroPhoto')) document.getElementById('heroPhoto').src = siteData.profilePhotoUrl;
 
-            document.getElementById('aboutLead').innerHTML = `<strong>${siteData.aboutLead}</strong><br><br>${siteData.aboutStory}`;
+            const lead = document.getElementById('aboutLead');
+            if(lead) lead.innerHTML = `<strong>${siteData.aboutLead}</strong><br><br>${siteData.aboutStory}`;
             
             const ul = document.getElementById('aboutBullets');
             if(ul) siteData.knownFor.forEach(i => { ul.innerHTML += `<li><i data-lucide="check-circle-2"></i> <span>${i}</span></li>`; });
@@ -169,7 +172,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const statsGrid = document.getElementById('statsGrid');
             if(statsGrid) siteData.stats.forEach(s => { statsGrid.innerHTML += `<div class="stat-box glass-panel tilt-card"><div class="stat-val">${s.value}</div><div class="stat-lbl">${s.label}</div></div>`; });
 
-            // Projects
+            // Projects with Images
             const projGrid = document.getElementById('projectsBento');
             const filters = document.getElementById('projectFilters');
             if(projGrid && filters) {
@@ -192,7 +195,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                         const tile = document.createElement('div');
                         let sizeClass = i === 0 ? 'large' : (i === 3 ? 'medium' : '');
                         tile.className = `bento-tile glass-panel tilt-card ${sizeClass}`;
-                        tile.innerHTML = `<div><div class="bento-tags">${p.tags.slice(0,3).map(t => `<span class="bento-tag">${t}</span>`).join('')}</div><h3 class="bento-title">${p.title}</h3></div><div class="bento-link">View Case Study <i data-lucide="arrow-right"></i></div>`;
+                        
+                        const img = p.imageUrl ? p.imageUrl : 'https://images.unsplash.com/photo-1541888086925-924372e90e75?auto=format&fit=crop&w=800&q=80';
+                        tile.style.backgroundImage = `url('${img}')`;
+
+                        tile.innerHTML = `
+                            <div>
+                                <div class="bento-tags">${p.tags.slice(0,3).map(t => `<span class="bento-tag">${t}</span>`).join('')}</div>
+                                <h3 class="bento-title">${p.title}</h3>
+                            </div>
+                            <div class="bento-link" style="color:white; font-size:0.9rem; display:flex; align-items:center; gap:0.5rem;">View Case Study <i data-lucide="arrow-right"></i></div>
+                        `;
                         tile.addEventListener('click', () => openModal(p));
                         projGrid.appendChild(tile);
                     });
