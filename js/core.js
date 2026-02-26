@@ -194,15 +194,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                         let sizeClass = i === 0 ? 'large' : (i === 3 ? 'medium' : '');
                         tile.className = `bento-tile glass-panel tilt-card ${sizeClass}`;
                         
+                        // PERFECT IMAGE RENDERING
                         const img = p.imageUrl || 'https://images.unsplash.com/photo-1544006659-f0b21884ce1d?auto=format&fit=crop&w=800&q=80';
                         tile.style.backgroundImage = `url('${img}')`;
+                        tile.style.backgroundSize = 'cover';
+                        tile.style.backgroundPosition = 'center';
 
                         tile.innerHTML = `
                             <div>
                                 <div class="bento-tags">${p.tags.slice(0,3).map(t => `<span class="bento-tag">${t}</span>`).join('')}</div>
                                 <h3 class="bento-title">${p.title}</h3>
                             </div>
-                            <div style="color:#00f0ff; font-weight: 600; font-size:1rem; display:flex; align-items:center; gap:0.5rem; margin-top: 1rem;">View Case Study <i data-lucide="arrow-right"></i></div>
+                            <div style="color:#00f0ff; font-weight: 700; font-size:1.1rem; display:flex; align-items:center; gap:0.5rem; margin-top: 1rem;">View Case Study <i data-lucide="arrow-right"></i></div>
                         `;
                         tile.addEventListener('click', () => openModal(p));
                         projGrid.appendChild(tile);
@@ -247,7 +250,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if(p.links && p.links.length > 0) {
             linksContainer.innerHTML = p.links.map(l => `<a href="${l.url}" target="_blank" class="modal-ext-link"><i data-lucide="link"></i> ${l.title}</a>`).join('');
         } else {
-            linksContainer.innerHTML = "<p style='color:var(--text-muted); font-size:1rem;'>Internal works. No external media.</p>";
+            linksContainer.innerHTML = "<p style='color:var(--text-muted); font-size:1.1rem;'>Internal works. No external media.</p>";
         }
 
         document.getElementById('projectModal').classList.add('open');
