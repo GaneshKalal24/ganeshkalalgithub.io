@@ -70,3 +70,692 @@
         /* CURSOR */
         .cursor-dot { width: 6px; height: 6px; background-color: var(--text-primary); position: fixed; border-radius: 50%; z-index: 10000; pointer-events: none; transform: translate(-50%, -50%); display: none; }
         .cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.4); position: fixed; border-radius: 50%; z-index: 9999; pointer-events: none; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background-color 0.3s; display: none; }
+        body.custom-cursor-active .cursor-dot, body.custom-cursor-active .cursor-ring { display: block; }
+        .cursor-ring.hover { width: 60px; height: 60px; background-color: rgba(255,255,255,0.1); border-color: var(--accent); backdrop-filter: blur(2px); }
+
+        /* TYPOGRAPHY & PANELS */
+        .glass-panel { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 24px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: var(--glass-shadow); }
+        h1, h2, h3, h4, h5, .logo { font-family: var(--font-heading); }
+        .section-title { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 2.5rem; letter-spacing: -1px; }
+        .sub-heading { color: var(--accent); text-transform: uppercase; letter-spacing: 1px; font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;}
+        .accent-text { color: var(--accent); }
+        .scramble-text { font-family: monospace; letter-spacing: 1px; }
+
+        /* NAV */
+        .floating-nav { position: fixed; top: 2rem; left: 0; width: 100%; display: flex; justify-content: center; pointer-events: none; }
+        .nav-inner { pointer-events: all; display: flex; align-items: center; gap: 3rem; padding: 0.75rem 1.5rem; border-radius: 999px; }
+        .logo { font-size: 1.2rem; font-weight: 400; letter-spacing: 2px; color: var(--text-primary); }
+        .logo strong { font-weight: 700; color: var(--accent); }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: var(--text-primary); text-decoration: none; font-size: 1rem; font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-actions { display: flex; gap: 1rem; align-items: center; }
+        .theme-btn, .theme-btn-mobile { background: transparent; border: none; color: var(--text-primary); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-glass); transition: 0.3s; }
+        .theme-btn:hover { background: var(--text-primary); color: var(--bg-main); }
+        [data-theme="dark"] .sun-icon { display: block; }
+        [data-theme="dark"] .moon-icon { display: none; }
+        [data-theme="light"] .sun-icon { display: none; }
+        [data-theme="light"] .moon-icon { display: block; }
+        .mobile-nav { display: none; position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; padding: 0.8rem 1.5rem; border-radius: 999px; justify-content: space-between; align-items: center; z-index: 2000; }
+        .nav-item { color: var(--text-primary); text-decoration: none; display: flex; align-items: center; justify-content: center; padding: 0.5rem; transition: color 0.3s; }
+        .nav-item:hover, .nav-item:active { color: var(--accent); }
+
+        /* BUTTONS */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.8rem 1.8rem; border-radius: 999px; font-weight: 600; font-size: 1rem; border: none; text-decoration: none; transition: var(--ease-fluid) 0.3s; cursor: pointer; }
+        .btn-primary { background: var(--text-primary); color: var(--bg-main); border: 1px solid var(--text-primary); }
+        .btn-primary:hover { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+        .btn-ghost { background: transparent; color: var(--text-primary); border: 1px solid var(--border-glass); }
+        .btn-ghost:hover { border-color: var(--text-primary); background: rgba(255,255,255,0.1); }
+        
+        .visa-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.2rem; border-radius: 999px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: var(--success); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.5px; }
+        .pulse-dot { width: 10px; height: 10px; background: var(--success); border-radius: 50%; box-shadow: 0 0 10px var(--success); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.7); } 70% { box-shadow: 0 0 0 10px rgba(16,185,129,0); } 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); } }
+
+        /* HERO */
+        .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 5vh; }
+        .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; align-items: center; }
+        .hero-kicker { font-family: var(--font-heading); color: var(--accent); text-transform: uppercase; letter-spacing: 3px; font-size: 1rem; margin-bottom: 1rem; font-weight: 700;}
+        .hero-title { font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; line-height: 1.1; margin-bottom: 0.5rem; }
+        .text-outline { color: transparent; -webkit-text-stroke: 1px var(--text-primary); }
+        .hero-role { font-size: clamp(2rem, 4vw, 3.5rem); font-family: var(--font-heading); font-weight: 800; margin-bottom: 1.5rem; line-height: 1.1; }
+        .hero-subtitle { font-size: clamp(1.2rem, 2vw, 1.45rem); color: var(--text-muted); max-width: 650px; margin-bottom: 2rem; line-height: 1.7; font-weight: 400;}
+        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap;}
+        .profile-frame { aspect-ratio: 4/5; border-radius: 30px; overflow: hidden; position: relative; padding: 0.5rem; display: flex; align-items: center; justify-content: center; }
+        .profile-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; z-index: 2; position: relative; }
+        
+        /* ABOUT */
+        .about-content { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: start; }
+        .lead-text { font-size: 1.35rem; color: var(--text-primary); margin-bottom: 1.5rem; line-height: 1.8;}
+        .bullet-list { list-style: none; display: grid; gap: 1rem; }
+        .bullet-list li { display: flex; align-items: flex-start; gap: 1rem; color: var(--text-muted); font-size: 1.15rem; line-height: 1.7;}
+        .bullet-list i { color: var(--accent); flex-shrink: 0; margin-top: 4px; width: 20px; height: 20px;}
+        .logistics-grid { display: flex; flex-wrap: wrap; gap: 1rem; }
+        .log-badge { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 8px; background: var(--bg-glass); border: 1px solid var(--border-glass); font-size: 1rem; font-weight: 600; color: var(--text-primary);}
+        .grid-2 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        .stat-box { padding: 2.5rem; text-align: center; border-radius: 24px; }
+        .stat-val { font-family: var(--font-heading); font-size: 3rem; font-weight: 800; color: var(--text-primary); line-height: 1; margin-bottom: 0.5rem; }
+        .stat-lbl { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); font-weight: 600;}
+
+        /* CREDENTIALS */
+        .credentials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .edu-list, .affil-list { display: grid; gap: 1.2rem; }
+        .edu-item { display: flex; flex-direction: column; gap: 0.4rem; padding: 1.5rem; border: 1px solid var(--border-glass); border-radius: 12px; background: var(--bg-glass); }
+        .edu-title { font-weight: 700; color: var(--text-primary); font-size: 1.15rem;}
+        .edu-meta { font-size: 1.05rem; color: var(--text-muted); }
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+        .tech-tag { padding: 0.6rem 1.2rem; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); font-size: 1.05rem; font-weight: 500; color: var(--text-primary);}
+
+        /* PROJECTS */
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+        .filter-chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .chip { background: transparent; border: 1px solid var(--border-glass); color: var(--text-primary); padding: 0.6rem 1.5rem; border-radius: 999px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .chip:hover, .chip.active { background: var(--text-primary); color: var(--bg-main); border-color: var(--text-primary); }
+        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 320px; gap: 1.5rem; }
+        .bento-tile { padding: 2.5rem; display: flex; flex-direction: column; justify-content: flex-end; transition: transform 0.4s var(--ease-fluid), border-color 0.3s; cursor: pointer; border-radius: 24px; border: 1px solid var(--border-glass); position: relative; overflow: hidden; background-color: #111; }
+        .bento-tile::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(2, 3, 8, 0.95) 0%, rgba(2, 3, 8, 0.1) 100%); z-index: 1; transition: opacity 0.4s ease; }
+        .bento-tile:hover::before { background: linear-gradient(to top, rgba(2, 3, 8, 0.95) 0%, rgba(2, 3, 8, 0.4) 100%); }
+        .bento-tile:hover { transform: translateY(-8px); border-color: var(--accent); }
+        .bento-tile > div { position: relative; z-index: 2; }
+        .bento-tile.large { grid-column: span 2; grid-row: span 2; }
+        .bento-tile.medium { grid-column: span 2; }
+        .bento-tags { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;}
+        .bento-tag { font-size: 0.8rem; font-weight: 700; padding: 0.4rem 0.8rem; background: var(--accent); border-radius: 999px; text-transform: uppercase; letter-spacing: 1px; color: var(--bg-main); }
+        .bento-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; line-height: 1.2; color: #ffffff; }
+
+        /* TIMELINE */
+        .timeline { position: relative; padding-left: 2.5rem; border-left: 2px solid var(--border-glass); }
+        .timeline-item { position: relative; padding: 2.5rem; margin-bottom: 2rem; transition: 0.4s; cursor: pointer; }
+        .timeline-dot { position: absolute; left: -3rem; top: 3rem; width: 16px; height: 16px; background: var(--bg-main); border: 2px solid var(--text-primary); border-radius: 50%; transition: 0.3s; }
+        .timeline-item:hover { border-color: var(--text-primary); }
+        .timeline-item:hover .timeline-dot { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+        .timeline-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; }
+        .role-title { font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 0.3rem; font-weight: 700; color: var(--text-primary);}
+        .role-company { font-size: 1.1rem; color: var(--text-muted); font-weight: 500;}
+        .role-dates { font-family: var(--font-heading); color: var(--accent); font-weight: 700; font-size: 1rem; }
+        .timeline-details { max-height: 0; overflow: hidden; opacity: 0; transition: all 0.5s var(--ease-fluid); }
+        .timeline-item.expanded .timeline-details { max-height: 500px; opacity: 1; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-glass); }
+        .timeline-list { list-style: none; }
+        .timeline-list li { position: relative; padding-left: 1.5rem; margin-bottom: 1rem; color: var(--text-muted); font-size: 1.15rem; line-height: 1.6;}
+        .timeline-list li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-weight: bold;}
+
+        /* CONTACT */
+        .contact-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; padding: 4rem; }
+        .contact-desc { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 2rem; }
+        .social-links { display: flex; flex-direction: column; gap: 1rem; }
+        .social-btn { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem; border: 1px solid var(--border-glass); border-radius: 12px; text-decoration: none; transition: 0.3s; font-size: 1.1rem; font-weight: 600; color: var(--text-primary);}
+        .social-btn:hover { background: var(--text-primary); color: var(--bg-main); }
+        .premium-form { display: flex; flex-direction: column; gap: 2rem; }
+        .input-group { position: relative; }
+        .input-group input, .input-group textarea { width: 100%; background: var(--input-bg); border: none; border-bottom: 1px solid var(--border-glass); padding: 1rem; color: var(--text-primary); font-size: 1.1rem; font-family: var(--font-body); outline: none; transition: 0.3s; resize: vertical; border-radius: 8px 8px 0 0;}
+        .input-group label { position: absolute; left: 1rem; top: 1rem; color: var(--text-muted); pointer-events: none; transition: 0.3s; font-size: 1rem; font-weight: 500;}
+        .input-group input:focus, .input-group textarea:focus { border-bottom-color: var(--accent); }
+        .input-group input:focus ~ label, .input-group input:not(:placeholder-shown) ~ label,
+        .input-group textarea:focus ~ label, .input-group textarea:not(:placeholder-shown) ~ label { top: -1.5rem; left: 0; font-size: 0.85rem; color: var(--accent); font-weight: 700; }
+        .premium-footer { border-top: 1px solid var(--border-glass); padding: 3rem 0; text-align: center; margin-bottom: 60px;} 
+        .footer-content { display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 1rem; flex-wrap: wrap; gap: 1rem; font-weight: 500;}
+        .footer-logo { font-family: var(--font-heading); font-weight: 700; color: var(--text-primary); letter-spacing: 2px; }
+
+        /* MODAL */
+        .modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
+        .modal.open { display: flex; }
+        .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); opacity: 0; transition: opacity 0.4s; }
+        .modal.open .modal-backdrop { opacity: 1; }
+        .modal-content { position: relative; width: 100%; max-width: 900px; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; transform: scale(0.95) translateY(20px); opacity: 0; transition: all 0.5s var(--ease-fluid); }
+        .modal.open .modal-content { transform: scale(1) translateY(0); opacity: 1; }
+        .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; width: 45px; height: 45px; border-radius: 50%; border: 1px solid var(--border-glass); background: var(--bg-main); color: var(--text-primary); display: flex; align-items: center; justify-content: center; z-index: 10; cursor: pointer;}
+        .modal-body { padding: 3rem; overflow-y: auto; }
+        .modal-title { font-size: 2.5rem; margin-bottom: 1.5rem; line-height: 1.1; font-weight: 800;}
+        .modal-tags { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .modal-metrics-bar { display: flex; gap: 1.5rem; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-glass); flex-wrap: wrap;}
+        .modal-metric { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-heading); color: var(--accent); font-weight: 600; font-size: 1.05rem;}
+        .modal-split { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+        .modal-split h4 { color: var(--text-primary); text-transform: uppercase; letter-spacing: 1px; font-size: 0.95rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-glass); padding-bottom: 0.5rem;}
+        .modal-list { list-style: none; }
+        .modal-list li { position: relative; padding-left: 1.5rem; margin-bottom: 1rem; color: var(--text-muted); line-height: 1.6; font-size: 1.05rem; }
+        .modal-list li::before { content: '▹'; position: absolute; left: 0; color: var(--accent); font-weight: bold;}
+        .modal-links-container { display: flex; flex-direction: column; gap: 1rem; }
+        .modal-ext-link { display: flex; align-items: center; gap: 0.8rem; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-glass); color: var(--text-primary); text-decoration: none; font-size: 1rem; font-weight: 600; transition: 0.3s; background: rgba(255,255,255,0.05); }
+        .modal-ext-link:hover { border-color: var(--accent); background: rgba(0, 240, 255, 0.1); }
+
+        /* MOBILE */
+        @media (max-width: 900px) {
+            .desktop-nav { display: none; }
+            .mobile-nav { display: flex; }
+            .wrap { padding: 0 1.5rem; }
+            .section { padding: 4rem 0; }
+            .hero { padding-top: 2rem; min-height: auto; padding-bottom: 4rem;}
+            .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+            .hero-actions { justify-content: center; }
+            .hero-visual { order: -1; max-width: 300px; margin: 0 auto; }
+            .about-content, .contact-container, .modal-split, .credentials-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .contact-container { padding: 2rem; }
+            .bento-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
+            .bento-tile { padding: 8rem 2rem 2rem 2rem; } 
+            .bento-tile.large, .bento-tile.medium { grid-column: span 1; grid-row: span 1; }
+            .hero-title { font-size: 3rem; }
+            .hero-role { font-size: 2rem; }
+            .timeline { padding-left: 1.5rem; }
+            .timeline-dot { left: -1.9rem; }
+            .timeline-item { padding: 1.5rem; }
+            .premium-footer { margin-bottom: 80px; } 
+            .modal-body { padding: 1.5rem; }
+            .modal-metrics-bar { flex-direction: column; gap: 0.8rem; }
+            body.custom-cursor-active * { cursor: auto !important; }
+            .cursor-dot, .cursor-ring { display: none !important; }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <div class="video-container">
+        <video autoplay loop muted playsinline id="bg-video">
+            <source src="bg-video.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+    
+    <div class="noise-overlay"></div>
+
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <nav class="floating-nav desktop-nav">
+        <div class="nav-inner glass-panel">
+            <div class="logo magnetic" data-strength="20">G<strong>K</strong></div>
+            <div class="nav-links">
+                <a href="#about" class="magnetic" data-strength="15">Profile</a>
+                <a href="#projects" class="magnetic" data-strength="15">Projects</a>
+                <a href="#career" class="magnetic" data-strength="15">Career</a>
+            </div>
+            <div class="nav-actions">
+                <button id="themeToggle" class="theme-btn magnetic" data-strength="20">
+                    <i data-lucide="sun" class="sun-icon"></i>
+                    <i data-lucide="moon" class="moon-icon"></i>
+                </button>
+                <a href="#contact" class="btn btn-primary btn-sm magnetic" data-strength="30">Connect</a>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="mobile-nav glass-panel">
+        <a href="#hero" class="nav-item"><i data-lucide="home"></i></a>
+        <a href="#about" class="nav-item"><i data-lucide="user"></i></a>
+        <a href="#projects" class="nav-item"><i data-lucide="briefcase"></i></a>
+        <a href="#contact" class="nav-item"><i data-lucide="mail"></i></a>
+        <button id="themeToggleMobile" class="nav-item theme-btn-mobile">
+            <i data-lucide="sun" class="sun-icon"></i>
+            <i data-lucide="moon" class="moon-icon"></i>
+        </button>
+    </nav>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="wrap">
+                <div class="hero-grid">
+                    <div class="hero-text">
+                        <div class="hero-kicker scramble-text" data-text="Melbourne VIC • Telecom • Civil Infrastructure">Melbourne VIC • Telecom • Civil Infrastructure</div>
+                        <h1 class="hero-title">
+                            Hi, I'm <span class="accent-text" id="heroName">Ganesh Kalal</span>.
+                        </h1>
+                        <h2 class="hero-role text-outline scramble-text" id="heroRole" data-text="Project Engineer">Project Engineer</h2>
+                        <p class="hero-subtitle" id="heroTagline">Delivering Tier-1 projects with structural precision. Specializing in 5G rollouts, statutory approvals, and complex brownfield execution.</p>
+                        <div class="hero-actions">
+                            <a href="#projects" class="btn btn-primary magnetic" data-strength="40">Explore Projects</a>
+                            <a href="https://www.linkedin.com/in/ganesh-kalal/" target="_blank" class="btn btn-ghost magnetic" data-strength="40">LinkedIn</a>
+                        </div>
+                    </div>
+                    <div class="hero-visual tilt-card">
+                        <div class="profile-frame glass-panel">
+                            <img id="heroPhoto" src="profile.png" alt="Ganesh Kalal" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="fallback-avatar" style="display:none;"><i data-lucide="user" style="width: 64px; height: 64px;"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="wrap">
+                <div class="about-content">
+                    <div class="about-text gsap-fade-up">
+                        <h2 class="section-title scramble-text" data-text="Professional Profile">Professional Profile</h2>
+                        <p class="lead-text" id="aboutLead">Loading profile data...</p>
+                        <ul class="bullet-list" id="aboutBullets"></ul>
+                        
+                        <h4 class="sub-heading mt-2 scramble-text" data-text="Site Clearances & Logistics">Site Clearances & Logistics</h4>
+                        <div class="logistics-grid" id="logisticsGrid"></div>
+                    </div>
+                    <div class="about-stats grid-2 gsap-fade-up">
+                        <div id="statsGrid" style="display: contents;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="credentials" class="section bg-alt">
+            <div class="wrap">
+                <h2 class="section-title gsap-fade-up scramble-text" data-text="Credentials & Arsenal">Credentials & Arsenal</h2>
+                <div class="credentials-grid gsap-fade-up">
+                    <div class="glass-panel p-3 spotlight-card">
+                        <h4 class="sub-heading"><i data-lucide="graduation-cap"></i> Academic Background</h4>
+                        <div id="educationList" class="edu-list"></div>
+                        <h4 class="sub-heading mt-2"><i data-lucide="award"></i> Professional Affiliations</h4>
+                        <div id="affiliationsList" class="affil-list"></div>
+                    </div>
+                    <div class="glass-panel p-3 spotlight-card">
+                        <h4 class="sub-heading"><i data-lucide="cpu"></i> Technical Stack</h4>
+                        <div id="techStackGrid" class="tech-stack"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="wrap">
+                <div class="section-header gsap-fade-up">
+                    <h2 class="section-title scramble-text" data-text="Key Projects & Outcomes">Key Projects & Outcomes</h2>
+                    <div class="filter-chips" id="projectFilters"></div>
+                </div>
+                <div class="bento-grid" id="projectsBento"></div>
+            </div>
+        </section>
+
+        <section id="career" class="section">
+            <div class="wrap">
+                <h2 class="section-title gsap-fade-up scramble-text" data-text="Career Trajectory">Career Trajectory</h2>
+                <div class="timeline" id="careerTimeline"></div>
+            </div>
+        </section>
+
+        <section id="contact" class="section pb-large">
+            <div class="wrap">
+                <div class="contact-container glass-panel spotlight-card gsap-fade-up">
+                    <div class="contact-left">
+                        <h2 class="section-title scramble-text" style="margin-bottom: 1rem;" data-text="Initiate Contact">Initiate Contact</h2>
+                        <p class="contact-desc">Ready to deliver major infrastructure. Open to Project Engineering roles.</p>
+                        
+                        <div class="visa-badge" id="visaBadgeContact">
+                            <span class="pulse-dot"></span> <span id="visaText">Australian Permanent Resident</span>
+                        </div>
+
+                        <div class="social-links" id="socialLinks" style="margin-top: 2rem;"></div>
+                    </div>
+                    <div class="contact-right">
+                        <form class="premium-form" onsubmit="event.preventDefault(); window.location.href='mailto:ganesh.r.kalal24@gmail.com';">
+                            <div class="input-group">
+                                <input type="text" id="name" required placeholder=" ">
+                                <label for="name">Name</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="email" id="email" required placeholder=" ">
+                                <label for="email">Email</label>
+                            </div>
+                            <div class="input-group">
+                                <textarea id="message" required rows="3" placeholder=" "></textarea>
+                                <label for="message">Message</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary magnetic" data-strength="30">Send Transmission <i data-lucide="send" class="btn-icon-right"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="premium-footer">
+        <div class="wrap footer-content">
+            <div class="footer-logo">G.KALAL</div>
+            <p id="footerText"></p>
+            <div class="footer-meta">MIEAust • Melbourne, VIC</div>
+        </div>
+    </footer>
+
+    <div id="projectModal" class="modal" aria-hidden="true">
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-content glass-panel">
+            <button class="modal-close magnetic" data-strength="20" id="modalCloseBtn"><i data-lucide="x"></i></button>
+            <div class="modal-body">
+                <div class="modal-tags" id="modalTags"></div>
+                <h2 id="modalTitle" class="modal-title"></h2>
+                <div class="modal-metrics-bar" id="modalMetrics"></div>
+                
+                <div class="modal-split">
+                    <div class="modal-col">
+                        <h4>Scope & Architecture</h4>
+                        <ul id="modalScope" class="modal-list"></ul>
+                        <h4 class="mt-2">Role & Execution</h4>
+                        <ul id="modalRole" class="modal-list"></ul>
+                    </div>
+                    <div class="modal-col">
+                        <h4>Constraints & Outcomes</h4>
+                        <ul id="modalConstraints" class="modal-list"></ul>
+                        <h4 class="mt-2">External Links</h4>
+                        <div id="modalLinks" class="modal-links-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const siteData = {
+            "name": "Ganesh Kalal (MIEAust)",
+            "role": "Project Engineer",
+            "kicker": "Melbourne VIC • Telecom • Civil Infrastructure",
+            "heroSubtitle": "Delivering Tier-1 projects with structural precision. Specializing in 5G rollouts, statutory approvals, and complex brownfield execution.",
+            "visaStatus": "Australian Permanent Resident",
+            "aboutLead": "Strategy-driven engineer balancing technical oversight with commercial discipline.",
+            "aboutStory": "I bridge the gap between structural engineering theory and site execution. With over 5 years of experience across 5G telecom infrastructure, metro rail, live-traffic freeways, and the largest industrial closures in the Southern Hemisphere.",
+            "knownFor": [
+              "5G Infrastructure Rollouts & Upgrades",
+              "Site Acquisition & Statutory Approvals",
+              "Structural Design & Audits (AS/NZS 1170.2, AS 3600)",
+              "Subcontractor Management & Procurement"
+            ],
+            "logistics": [
+                { "name": "White Card", "icon": "hard-hat" },
+                { "name": "Victorian Driver's License", "icon": "car" },
+                { "name": "Working at Heights", "icon": "triangle-right" },
+                { "name": "Confined Spaces", "icon": "box" },
+                { "name": "Asbestos Safety", "icon": "shield-alert" },
+                { "name": "Mental Health First Aider", "icon": "heart-pulse" }
+            ],
+            "education": [
+                { "degree": "Master of Engineering Science (Structural)", "school": "Swinburne University of Technology", "date": "2019 - 2021" },
+                { "degree": "Bachelor of Civil Engineering", "school": "University of Pune", "date": "2014 - 2018" }
+            ],
+            "affiliations": [
+                { "org": "Engineers Australia (MIEAust)", "status": "NER Registration in progress" },
+                { "org": "Project Management Institute", "status": "Working towards PMP" }
+            ],
+            "techStack": [
+                "MS Project", "Primavera P6", "Procore", "AutoCAD 3D", "Civil 3D", "SpaceGass", "Microstran", "MS Tower", "RAPT", "Inducta", "12d"
+            ],
+            "stats": [
+              { "label": "Portfolio Value", "value": "$400M+" },
+              { "label": "Telecom Sites", "value": "150+" },
+              { "label": "QA Defects", "value": "Zero" }
+            ],
+            "projects": [
+              {
+                "title": "National 5G Telecom Upgrade",
+                "tags": ["Telecom", "Structural", "Design"],
+                "meta": "Victoria | 2023 - 2024 | $50M",
+                "imageUrl": "https://images.unsplash.com/photo-1544006659-f0b21884ce1d?auto=format&fit=crop&w=800&q=80",
+                "preview": "Structural design coordination for 150+ tower upgrades and 100+ site inspections.",
+                "fullText": "Delivered design coordination, structural analysis, field inspections, and approvals support for critical telecom infrastructure.",
+                "bullets": [
+                  "Delivered 150+ lattice tower and steel/timber pole upgrades ensuring compliance with AS1170.2.",
+                  "Managed trenching interfaces and civil coordination for fibre backhaul.",
+                  "Secured statutory planning approvals from 20+ councils, reducing approval cycles by 20%."
+                ]
+              },
+              {
+                "title": "Tier-1 Industrial Closures",
+                "tags": ["Industrial", "Demolition", "Civil"],
+                "meta": "VIC & NT | 2024 - Present | $365M+",
+                "imageUrl": "https://images.unsplash.com/photo-1534398079543-7ae6d016b86c?auto=format&fit=crop&w=800&q=80",
+                "preview": "Project Engineer contributing to Australia's largest industrial demolition projects.",
+                "fullText": "End-to-end commercial and delivery oversight. Involving explosive demolition events, 142,000 tonnes of steel, and 300,000 tonnes of concrete.",
+                "bullets": [
+                  "Managed subcontractor packages, RFQs, and regulatory interfaces with local councils.",
+                  "Negotiated and technically justified contract variations totaling $8M+.",
+                  "Organised scrap steel load-outs exceeding 135,000 tonnes (approx $65M+ in scrap value)."
+                ],
+                "links": [
+                  { "title": "Rio Tinto Recycling Record Steel", "url": "https://libertyindustrial.com/" }
+                ]
+              },
+              {
+                "title": "West Gate Freeway Upgrade",
+                "tags": ["Civil", "Infrastructure", "QA"],
+                "meta": "Melbourne, VIC | 2022 - 2023 | Confidential",
+                "imageUrl": "https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=800&q=80",
+                "preview": "Structural design support and QA verification of reinforced concrete crash barriers.",
+                "fullText": "Quality-critical infrastructure delivery ensuring compliance with VicRoads and AS 5100.",
+                "bullets": [
+                  "Supervised shop drawings and on-site concrete pours for precast noise walls.",
+                  "Provided input on temporary works including formwork detailing and access scaffolding.",
+                  "Achieved zero non-conformances across 100+ structural installations."
+                ]
+              },
+              {
+                "title": "Mumbai Metro Line 4 & 5",
+                "tags": ["Civil", "QA/QC", "Infrastructure"],
+                "meta": "Mumbai, India | 2018 - 2019 | Confidential",
+                "imageUrl": "https://images.unsplash.com/photo-1582298538104-e3facf70a256?auto=format&fit=crop&w=800&q=80",
+                "preview": "Civil Site Engineer supporting independent verification on elevated viaducts.",
+                "fullText": "Oversight of massive concrete construction and underground tunnel operations.",
+                "bullets": [
+                  "Performed concrete QA/QC for deep foundations (slump testing, dimensional checks).",
+                  "Conducted Dynamic Load Testing (DLT) and Pile Integrity Testing (PIT).",
+                  "Monitored tunnel alignment (TBM) and excavation safety."
+                ]
+              }
+            ],
+            "timeline": [
+              {
+                "roleCompany": "Project Engineer, Liberty Industrial",
+                "dates": "03/2024 - Present",
+                "location": "Altona VIC / Gove NT",
+                "bullets": ["Supported end-to-end delivery of $100M+ industrial projects.", "Administered variations ($8M+), progress claims and EOTs."]
+              },
+              {
+                "roleCompany": "Structural Project Engineer, Indara",
+                "dates": "04/2023 - 03/2024",
+                "location": "Melbourne VIC",
+                "bullets": ["Delivered 150+ telecom infrastructure upgrades (5G expansion).", "Managed civil interfaces for foundations and fibre backhaul."]
+              },
+              {
+                "roleCompany": "Graduate Structural Engineer, Clive Steele Partners",
+                "dates": "11/2021 - 03/2023",
+                "location": "Clayton VIC",
+                "bullets": ["Designed steel framing and reinforced concrete to AS 4100/3600.", "Conducted site inspections and QA hold-point sign-offs."]
+              }
+            ],
+            "contact": {
+              "email": "ganesh.r.kalal24@gmail.com",
+              "linkedin": "https://www.linkedin.com/in/ganesh-kalal/"
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Theme Logic
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.body.setAttribute('data-theme', savedTheme);
+
+            const toggleTheme = () => {
+                const newTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                document.body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            };
+
+            document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+            document.getElementById('themeToggleMobile')?.addEventListener('click', toggleTheme);
+
+            // Populate DOM Function
+            function renderDOM() {
+                try {
+                    document.getElementById('heroName').textContent = siteData.name.split(' (')[0];
+                    document.getElementById('heroRole').setAttribute('data-text', siteData.role);
+                    const leadNode = document.getElementById('aboutLead');
+                    if(leadNode) leadNode.innerHTML = `<strong>${siteData.aboutLead}</strong><br><br>${siteData.aboutStory}`;
+                    
+                    const ul = document.getElementById('aboutBullets');
+                    if(ul) siteData.knownFor.forEach(i => { ul.innerHTML += `<li><i data-lucide="check-circle-2"></i> <span>${i}</span></li>`; });
+
+                    const logGrid = document.getElementById('logisticsGrid');
+                    if(logGrid) siteData.logistics.forEach(l => { logGrid.innerHTML += `<div class="log-badge"><i data-lucide="${l.icon}"></i> ${l.name}</div>`; });
+
+                    const eduList = document.getElementById('educationList');
+                    if(eduList) siteData.education.forEach(e => { eduList.innerHTML += `<div class="edu-item"><div class="edu-title">${e.degree}</div><div class="edu-meta">${e.school} • ${e.date}</div></div>`; });
+
+                    const affilList = document.getElementById('affiliationsList');
+                    if(affilList) siteData.affiliations.forEach(a => { affilList.innerHTML += `<div class="edu-item"><div class="edu-title">${a.org}</div><div class="edu-meta">${a.status}</div></div>`; });
+
+                    const stackGrid = document.getElementById('techStackGrid');
+                    if(stackGrid) siteData.techStack.forEach(t => { stackGrid.innerHTML += `<span class="tech-tag">${t}</span>`; });
+
+                    const statsGrid = document.getElementById('statsGrid');
+                    if(statsGrid) siteData.stats.forEach(s => { statsGrid.innerHTML += `<div class="stat-box glass-panel tilt-card"><div class="stat-val">${s.value}</div><div class="stat-lbl">${s.label}</div></div>`; });
+
+                    // Projects with Images
+                    const projGrid = document.getElementById('projectsBento');
+                    const filters = document.getElementById('projectFilters');
+                    if(projGrid && filters) {
+                        ['All', 'Telecom', 'Civil', 'Industrial'].forEach(cat => {
+                            const btn = document.createElement('button');
+                            btn.className = `chip magnetic ${cat === 'All' ? 'active' : ''}`;
+                            btn.textContent = cat;
+                            btn.addEventListener('click', () => {
+                                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                                btn.classList.add('active');
+                                renderProjects(cat);
+                            });
+                            filters.appendChild(btn);
+                        });
+
+                        function renderProjects(filter) {
+                            projGrid.innerHTML = '';
+                            let filtered = filter === 'All' ? siteData.projects : siteData.projects.filter(p => p.tags.some(t => t.toLowerCase().includes(filter.toLowerCase())));
+                            
+                            filtered.forEach((p, i) => {
+                                const tile = document.createElement('div');
+                                let sizeClass = i === 0 ? 'large' : (i === 3 ? 'medium' : '');
+                                tile.className = `bento-tile glass-panel tilt-card ${sizeClass}`;
+                                
+                                tile.style.backgroundImage = `linear-gradient(to top, rgba(2, 3, 8, 0.95) 0%, rgba(2, 3, 8, 0.2) 100%), url('${p.imageUrl}')`;
+                                tile.style.backgroundSize = 'cover';
+                                tile.style.backgroundPosition = 'center';
+
+                                tile.innerHTML = `
+                                    <div>
+                                        <div class="bento-tags">${p.tags.slice(0,3).map(t => `<span class="bento-tag">${t}</span>`).join('')}</div>
+                                        <h3 class="bento-title">${p.title}</h3>
+                                    </div>
+                                    <div style="color:#00f0ff; font-weight: 700; font-size:1.1rem; display:flex; align-items:center; gap:0.5rem; margin-top: 1rem;">View Case Study <i data-lucide="arrow-right"></i></div>
+                                `;
+                                tile.addEventListener('click', () => window.openModal(p));
+                                projGrid.appendChild(tile);
+                            });
+                            if(window.lucide) lucide.createIcons();
+                        }
+                        renderProjects('All');
+                    }
+
+                    const tl = document.getElementById('careerTimeline');
+                    if(tl) siteData.timeline.forEach((job, i) => {
+                        const parts = job.roleCompany.split(',');
+                        const card = document.createElement('div');
+                        card.className = `timeline-item glass-panel gsap-fade-up ${i === 0 ? 'expanded' : ''}`;
+                        card.innerHTML = `<div class="timeline-dot"></div><div class="timeline-header"><div><h3 class="role-title">${parts[0]}</h3><div class="role-company">${parts.slice(1).join(',')}</div></div><div class="role-dates">${job.dates}</div></div><div class="timeline-details"><ul class="timeline-list">${job.bullets.map(b => `<li>${b}</li>`).join('')}</ul></div>`;
+                        card.addEventListener('click', () => {
+                            document.querySelectorAll('.timeline-item').forEach(c => c.classList.remove('expanded'));
+                            card.classList.add('expanded');
+                        });
+                        tl.appendChild(card);
+                    });
+
+                    if(document.getElementById('socialLinks')) document.getElementById('socialLinks').innerHTML = `<a href="${siteData.contact.linkedin}" target="_blank" class="social-btn magnetic"><span>LinkedIn Profile</span> <i data-lucide="arrow-up-right"></i></a><a href="mailto:${siteData.contact.email}" class="social-btn magnetic"><span>Email Me</span> <i data-lucide="mail"></i></a>`;
+                    if(document.getElementById('footerText')) document.getElementById('footerText').innerHTML = `&copy; ${new Date().getFullYear()} ${(siteData.name || "Ganesh").split(' ')[0]}. Engineering Precision.`;
+
+                } catch (error) { console.error("DOM Error:", error); }
+            }
+
+            renderDOM();
+
+            window.openModal = function(p) {
+                document.getElementById('modalTitle').textContent = p.title;
+                document.getElementById('modalTags').innerHTML = p.tags.map(t => `<span class="bento-tag">${t}</span>`).join('');
+                const m = p.meta.split('|');
+                document.getElementById('modalMetrics').innerHTML = `<div class="modal-metric"><i data-lucide="map-pin"></i> ${m[0]}</div><div class="modal-metric"><i data-lucide="calendar"></i> ${m[1]}</div><div class="modal-metric"><i data-lucide="circle-dollar-sign"></i> ${m[2]}</div>`;
+                const mid = Math.ceil(p.bullets.length/2);
+                document.getElementById('modalScope').innerHTML = `<li>${p.preview}</li>` + p.bullets.slice(0,mid).map(x=>`<li>${x}</li>`).join('');
+                document.getElementById('modalRole').innerHTML = `<li>${p.fullText}</li>`;
+                document.getElementById('modalConstraints').innerHTML = p.bullets.slice(mid).map(x=>`<li>${x}</li>`).join('');
+                
+                const linksContainer = document.getElementById('modalLinks');
+                if(p.links && p.links.length > 0) {
+                    linksContainer.innerHTML = p.links.map(l => `<a href="${l.url}" target="_blank" class="modal-ext-link"><i data-lucide="link"></i> ${l.title}</a>`).join('');
+                } else {
+                    linksContainer.innerHTML = "<p style='color:var(--text-muted); font-size:1.1rem;'>Internal works. No external media.</p>";
+                }
+
+                document.getElementById('projectModal').classList.add('open');
+                document.body.style.overflow = 'hidden';
+                if(window.lucide) lucide.createIcons();
+            }
+
+            window.closeModal = function() {
+                document.getElementById('projectModal').classList.remove('open');
+                document.body.style.overflow = '';
+            }
+            document.getElementById('modalBackdrop')?.addEventListener('click', closeModal);
+            document.getElementById('modalCloseBtn')?.addEventListener('click', closeModal);
+
+            if(window.lucide) lucide.createIcons();
+
+            // --- ANIMATIONS & CURSOR ---
+            function initAnimations() {
+                const cursorDot = document.getElementById('cursorDot');
+                const cursorRing = document.getElementById('cursorRing');
+                
+                if(window.matchMedia("(pointer: fine)").matches && typeof gsap !== 'undefined') {
+                    document.body.classList.add('custom-cursor-active'); 
+                    let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
+                    let ringX = mouseX, ringY = mouseY;
+
+                    window.addEventListener('mousemove', (e) => {
+                        mouseX = e.clientX; mouseY = e.clientY;
+                        gsap.set(cursorDot, { x: mouseX, y: mouseY });
+                    });
+
+                    gsap.ticker.add(() => {
+                        ringX += (mouseX - ringX) * 0.2;
+                        ringY += (mouseY - ringY) * 0.2;
+                        gsap.set(cursorRing, { x: ringX, y: ringY });
+                    });
+
+                    document.body.addEventListener('mouseover', (e) => {
+                        if(e.target.closest('a, button, .bento-tile, .timeline-item, .magnetic')) cursorRing.classList.add('hover');
+                    });
+                    document.body.addEventListener('mouseout', (e) => {
+                        if(e.target.closest('a, button, .bento-tile, .timeline-item, .magnetic')) cursorRing.classList.remove('hover');
+                    });
+                }
+
+                const chars = '!<>-_\\\\/[]{}—=+*^?#________';
+                function scramble(el) {
+                    const original = el.getAttribute('data-text');
+                    if(!original) return;
+                    let iter = 0; const maxIter = 15;
+                    const interval = setInterval(() => {
+                        el.innerText = original.split('').map((c, i) => {
+                            if(c === ' ') return ' ';
+                            if(i < (iter/maxIter)*original.length) return c;
+                            return chars[Math.floor(Math.random() * chars.length)];
+                        }).join('');
+                        iter++;
+                        if(iter > maxIter) clearInterval(interval);
+                    }, 40);
+                }
+
+                if(typeof ScrollTrigger !== 'undefined') {
+                    gsap.utils.toArray('.scramble-text').forEach(el => {
+                        ScrollTrigger.create({ trigger: el, start: "top 90%", onEnter: () => scramble(el) });
+                    });
+
+                    gsap.utils.toArray('.gsap-fade-up').forEach(elem => {
+                        gsap.fromTo(elem, 
+                            { y: 40, autoAlpha: 0 },
+                            { y: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: elem, start: "top 85%" } }
+                        );
+                    });
+                }
+            }
+            setTimeout(initAnimations, 200);
+        });
+    </script>
+</body>
+</html>
