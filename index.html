@@ -3,175 +3,970 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ganesh Kalal | Engineering Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
+    <title>Ganesh Kalal — Project Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        /* CORE STYLES */
         :root {
-            --bg-main: #020308;
-            --accent: #00f0ff;
-            --text-main: #ffffff;
-            --text-muted: #cbd5e1;
-            --glass: rgba(10, 15, 25, 0.7);
-            --border: rgba(255, 255, 255, 0.1);
+            --bg: #0c0c0c;
+            --surface: #141414;
+            --surface2: #1c1c1c;
+            --border: #2a2a2a;
+            --accent: #e8ff3c;
+            --accent2: #ff4d00;
+            --text: #f0ede8;
+            --muted: #6b6560;
+            --mono: 'DM Mono', monospace;
+            --display: 'Bebas Neue', sans-serif;
+            --body: 'Syne', sans-serif;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; color: var(--text-main); background-color: var(--bg-main); overflow-x: hidden; line-height: 1.7; }
-        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
 
-        /* FAIL-PROOF VIDEO BACKGROUND */
-        .video-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            object-fit: cover;
-            z-index: -20;
-            opacity: 0.6; /* Dims video so text is readable */
-        }
-        /* Dark gradient over the video */
-        .video-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: linear-gradient(to bottom, rgba(2,3,8,0.3) 0%, rgba(2,3,8,0.95) 100%);
-            z-index: -10;
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--body);
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: none;
         }
 
-        /* LAYOUT & GLASS PANELS */
-        .wrap { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 10; }
-        .glass-panel { background: var(--glass); border: 1px solid var(--border); border-radius: 24px; backdrop-filter: blur(12px); padding: 2.5rem; }
-        
-        .hero { min-height: 80vh; display: flex; align-items: center; }
-        .hero h1 { font-size: 4rem; margin-bottom: 0.5rem; }
-        .hero h2 { font-size: 2.5rem; color: var(--accent); margin-bottom: 1.5rem; }
-        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin-bottom: 2rem; }
+        /* Custom cursor */
+        .cursor {
+            width: 12px; height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s, width 0.2s, height 0.2s;
+            mix-blend-mode: difference;
+        }
+        .cursor-ring {
+            width: 36px; height: 36px;
+            border: 1px solid rgba(232,255,60,0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: transform 0.25s ease, width 0.3s, height 0.3s;
+        }
 
-        /* BUTTONS */
-        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 2rem; border-radius: 99px; text-decoration: none; font-weight: 600; font-size: 1rem; transition: 0.3s; }
-        .btn-primary { background: var(--text-main); color: var(--bg-main); }
-        .btn-primary:hover { box-shadow: 0 0 20px rgba(255,255,255,0.4); }
+        /* Noise overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            pointer-events: none;
+            z-index: 9000;
+            opacity: 0.5;
+        }
 
-        /* BENTO BOX PROJECTS WITH HARDCODED IMAGES */
-        .bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-        .bento-card { 
-            position: relative;
-            border-radius: 24px; 
-            overflow: hidden; 
-            min-height: 350px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: flex-end; 
-            padding: 2rem; 
-            border: 1px solid var(--border);
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 3rem;
+            border-bottom: 1px solid var(--border);
+            background: rgba(12,12,12,0.85);
+            backdrop-filter: blur(20px);
+        }
+
+        .nav-logo {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .nav-logo span { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
             text-decoration: none;
-            color: white;
-            transition: transform 0.3s, border-color 0.3s;
+            transition: color 0.2s;
         }
-        .bento-card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .bento-card h3 { font-size: 2rem; margin-bottom: 0.5rem; position: relative; z-index: 2; }
-        .bento-card p { font-size: 1rem; color: var(--text-muted); position: relative; z-index: 2; margin-bottom: 1rem; }
-        .tags { display: flex; gap: 0.5rem; margin-bottom: 1rem; position: relative; z-index: 2; flex-wrap: wrap;}
-        .tag { background: var(--accent); color: var(--bg-main); padding: 0.3rem 0.8rem; border-radius: 99px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
+        .nav-links a:hover { color: var(--text); }
+
+        .nav-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+        }
+        .status-dot {
+            width: 6px; height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            padding: 12rem 3rem 6rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: end;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-label {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .hero-label::before {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .hero-title {
+            font-family: var(--display);
+            font-size: clamp(5rem, 10vw, 11rem);
+            line-height: 0.9;
+            letter-spacing: 0.02em;
+            margin-bottom: 2rem;
+        }
+        .hero-title em {
+            font-style: normal;
+            color: var(--accent);
+            -webkit-text-stroke: 0px;
+        }
+        .hero-title .outline {
+            -webkit-text-stroke: 1px var(--text);
+            color: transparent;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: var(--bg);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 400;
+            transition: background 0.2s, transform 0.2s;
+            margin-top: 2rem;
+        }
+        .hero-cta:hover { background: #fff; transform: translateX(4px); }
+        .hero-cta svg { width: 14px; height: 14px; }
+
+        .hero-right {
+            padding-bottom: 1rem;
+        }
+
+        .hero-desc {
+            font-size: 1.05rem;
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            max-width: 420px;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+        .stat {
+            background: var(--surface);
+            padding: 1.5rem 1.25rem;
+        }
+        .stat-num {
+            font-family: var(--display);
+            font-size: 2.8rem;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 0.3rem;
+        }
+        .stat-label {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* Decorative grid lines */
+        .grid-deco {
+            position: absolute;
+            top: 0; right: 0;
+            width: 50%;
+            height: 100%;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 6rem 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+        .section-num {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+        }
+        .section-title {
+            font-family: var(--display);
+            font-size: clamp(3rem, 6vw, 6rem);
+            letter-spacing: 0.03em;
+            line-height: 1;
+        }
+        .section-title .accent { color: var(--accent); }
+
+        /* PROJECTS GRID */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: auto;
+            gap: 1px;
+            background: var(--border);
+        }
+
+        .project-card {
+            background: var(--surface);
+            padding: 2.5rem;
+            text-decoration: none;
+            color: var(--text);
+            transition: background 0.25s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 320px;
+        }
+        .project-card:hover { background: var(--surface2); }
+        .project-card:hover .card-arrow { transform: translate(4px, -4px); }
+
+        .project-card.span-7 { grid-column: span 7; }
+        .project-card.span-5 { grid-column: span 5; }
+        .project-card.span-4 { grid-column: span 4; }
+        .project-card.span-8 { grid-column: span 8; }
+
+        .card-img {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .project-card:hover .card-img { opacity: 0.08; }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+        .card-tag {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 0.2rem 0.6rem;
+        }
+        .card-tag.hot {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+        }
+
+        .card-arrow {
+            font-family: var(--mono);
+            font-size: 1.2rem;
+            color: var(--muted);
+            transition: transform 0.25s;
+        }
+
+        .card-bottom {}
+        .card-num {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+        .card-title {
+            font-family: var(--display);
+            font-size: 2.4rem;
+            line-height: 1;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.75rem;
+        }
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 380px;
+        }
+
+        .card-metric {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 2rem;
+        }
+        .metric-val {
+            font-family: var(--display);
+            font-size: 2rem;
+            color: var(--accent);
+            line-height: 1;
+        }
+        .metric-label {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 0.2rem;
+        }
 
         /* TIMELINE */
-        .timeline { margin-top: 2rem; border-left: 2px solid var(--border); padding-left: 2rem; }
-        .timeline-item { margin-bottom: 2rem; position: relative; }
-        .timeline-item::before { content: ''; position: absolute; left: -2.45rem; top: 0.5rem; width: 14px; height: 14px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
-        .timeline-item h3 { font-size: 1.5rem; margin-bottom: 0.2rem; }
-        .timeline-item h4 { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1rem; font-weight: 400; }
-        .timeline-item ul { list-style-type: disc; padding-left: 1.5rem; color: var(--text-muted); }
-        .timeline-item li { margin-bottom: 0.5rem; }
+        .timeline-wrap {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 6rem;
+        }
 
+        .timeline-nav {
+            position: sticky;
+            top: 8rem;
+            height: fit-content;
+        }
+        .timeline-nav p {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tl-item {
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .tl-item:hover { opacity: 1; }
+        .tl-item.active { opacity: 1; }
+
+        .tl-year {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            padding-top: 0.3rem;
+            white-space: nowrap;
+        }
+
+        .tl-content {}
+        .tl-company {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        .tl-role {
+            font-family: var(--display);
+            font-size: 2.2rem;
+            letter-spacing: 0.03em;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+        }
+        .tl-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .tl-list li {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .tl-list li::before {
+            content: '—';
+            color: var(--border);
+            flex-shrink: 0;
+            margin-top: 0.05em;
+        }
+
+        /* SKILLS */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border);
+        }
+
+        .skill-cell {
+            background: var(--surface);
+            padding: 2rem;
+        }
+        .skill-cell-label {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        .skill-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .skill-item {
+            font-size: 0.9rem;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .skill-item::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 4rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-name {
+            font-family: var(--display);
+            font-size: 3rem;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            text-align: right;
+        }
+        .footer-links a {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--text); }
+
+        /* Horizontal marquee */
+        .marquee-wrap {
+            overflow: hidden;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            background: var(--surface);
+        }
+        .marquee-inner {
+            display: flex;
+            gap: 3rem;
+            animation: marquee 30s linear infinite;
+            white-space: nowrap;
+        }
+        .marquee-inner span {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            flex-shrink: 0;
+        }
+        .marquee-inner span.accent-mark { color: var(--accent); }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; }
+            .project-card.span-7,
+            .project-card.span-5,
+            .project-card.span-4,
+            .project-card.span-8 { grid-column: span 12; }
+            .timeline-wrap { grid-template-columns: 1fr; gap: 0; }
+            .timeline-nav { position: static; }
+            .skills-grid { grid-template-columns: repeat(2, 1fr); }
+            nav { padding: 1.25rem 1.5rem; }
+            .hero { padding: 10rem 1.5rem 4rem; }
+            section { padding: 4rem 1.5rem; }
+            footer { padding: 3rem 1.5rem; flex-direction: column; gap: 2rem; align-items: flex-start; }
+        }
+
+        @media (max-width: 600px) {
+            .nav-links { display: none; }
+            .hero-stats { grid-template-columns: 1fr; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .hero-title { font-size: 4.5rem; }
+        }
     </style>
 </head>
 <body>
 
-    <video class="video-bg" autoplay loop muted playsinline>
-        <source src="bg-video.mp4" type="video/mp4">
-    </video>
-    <div class="video-overlay"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-    <div class="wrap">
-        <section class="hero">
-            <div>
-                <p style="color: var(--accent); letter-spacing: 2px; text-transform: uppercase; font-weight: bold; margin-bottom: 1rem;">Melbourne VIC • Telecom • Civil Infrastructure</p>
-                <h1>Hi, I'm Ganesh Kalal.</h1>
-                <h2>Project Engineer</h2>
-                <p>Delivering Tier-1 projects with structural precision. Specializing in 5G rollouts, statutory approvals, and complex brownfield execution.</p>
-                <a href="#projects" class="btn btn-primary">Explore Projects <i data-lucide="arrow-down"></i></a>
+<!-- NAV -->
+<nav>
+    <div class="nav-logo">GK<span>.</span>ENG — Portfolio v2025</div>
+    <ul class="nav-links">
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#career">Career</a></li>
+        <li><a href="#skills">Competencies</a></li>
+    </ul>
+    <div class="nav-status">
+        <div class="status-dot"></div>
+        <span>Available for Projects — Melbourne VIC</span>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="grid-deco"></div>
+
+    <div class="hero-left">
+        <div class="hero-label">Project Engineer — Structural & Civil</div>
+        <h1 class="hero-title">
+            <span class="outline">GANESH</span><br>
+            <em>KALAL</em>
+        </h1>
+        <a href="#projects" class="hero-cta">
+            View Projects
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+        </a>
+    </div>
+
+    <div class="hero-right">
+        <p class="hero-desc">
+            Delivering Tier-1 projects with structural precision. Specialising in 5G rollouts, statutory approvals, industrial closures, and complex brownfield execution across Melbourne and beyond.
+        </p>
+
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-num">150+</div>
+                <div class="stat-label">Telecom Upgrades</div>
             </div>
-        </section>
-
-        <section id="projects" style="margin-top: 5rem;">
-            <h2 style="font-size: 3rem; margin-bottom: 1rem;">Key Projects & Outcomes</h2>
-            
-            <div class="bento-grid">
-                
-                <a href="#" class="bento-card" style="background: linear-gradient(to top, rgba(2,3,8,0.95), rgba(2,3,8,0.1)), url('https://images.unsplash.com/photo-1544006659-f0b21884ce1d?auto=format&fit=crop&w=800&q=80') center/cover;">
-                    <div class="tags"><span class="tag">Telecom</span><span class="tag">Structural</span></div>
-                    <h3>National 5G Upgrade</h3>
-                    <p>Delivered 150+ lattice tower and pole upgrades ensuring AS1170.2 compliance.</p>
-                </a>
-
-                <a href="#" class="bento-card" style="background: linear-gradient(to top, rgba(2,3,8,0.95), rgba(2,3,8,0.1)), url('https://images.unsplash.com/photo-1534398079543-7ae6d016b86c?auto=format&fit=crop&w=800&q=80') center/cover;">
-                    <div class="tags"><span class="tag">Industrial</span><span class="tag">Demolition</span></div>
-                    <h3>Tier-1 Industrial Closures</h3>
-                    <p>End-to-end delivery involving 142,000 tonnes of steel and 300,000 tonnes of concrete.</p>
-                </a>
-
-                <a href="#" class="bento-card" style="background: linear-gradient(to top, rgba(2,3,8,0.95), rgba(2,3,8,0.1)), url('https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=800&q=80') center/cover;">
-                    <div class="tags"><span class="tag">Civil</span><span class="tag">QA</span></div>
-                    <h3>West Gate Freeway</h3>
-                    <p>Quality-critical infrastructure delivery ensuring compliance with VicRoads and AS 5100.</p>
-                </a>
-
-                <a href="#" class="bento-card" style="background: linear-gradient(to top, rgba(2,3,8,0.95), rgba(2,3,8,0.1)), url('https://images.unsplash.com/photo-1582298538104-e3facf70a256?auto=format&fit=crop&w=800&q=80') center/cover;">
-                    <div class="tags"><span class="tag">Metro</span><span class="tag">Infrastructure</span></div>
-                    <h3>Mumbai Metro Line 4 & 5</h3>
-                    <p>Civil Site Engineer supporting independent verification on elevated viaducts.</p>
-                </a>
-
+            <div class="stat">
+                <div class="stat-num">$100M</div>
+                <div class="stat-label">Project Value</div>
             </div>
-        </section>
+            <div class="stat">
+                <div class="stat-num">4yr</div>
+                <div class="stat-label">Industry Exp.</div>
+            </div>
+        </div>
+    </div>
+</section>
 
-        <section style="margin-top: 8rem;">
-            <h2 style="font-size: 3rem; margin-bottom: 2rem;">Career Trajectory</h2>
-            <div class="glass-panel">
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <h3>Project Engineer</h3>
-                        <h4>Liberty Industrial | 03/2024 - Present</h4>
-                        <ul>
-                            <li>Supported end-to-end delivery of $100M+ industrial projects.</li>
-                            <li>Administered variations ($8M+), progress claims and EOTs.</li>
-                        </ul>
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+    <div class="marquee-inner">
+        <span>AS1170.2 Compliance</span><span class="accent-mark">✦</span>
+        <span>5G Infrastructure</span><span class="accent-mark">✦</span>
+        <span>Industrial Demolition</span><span class="accent-mark">✦</span>
+        <span>Structural Engineering</span><span class="accent-mark">✦</span>
+        <span>VicRoads Certified</span><span class="accent-mark">✦</span>
+        <span>AS 5100 Bridges</span><span class="accent-mark">✦</span>
+        <span>EOT Administration</span><span class="accent-mark">✦</span>
+        <span>Lattice Tower Design</span><span class="accent-mark">✦</span>
+        <!-- Duplicate for seamless loop -->
+        <span>AS1170.2 Compliance</span><span class="accent-mark">✦</span>
+        <span>5G Infrastructure</span><span class="accent-mark">✦</span>
+        <span>Industrial Demolition</span><span class="accent-mark">✦</span>
+        <span>Structural Engineering</span><span class="accent-mark">✦</span>
+        <span>VicRoads Certified</span><span class="accent-mark">✦</span>
+        <span>AS 5100 Bridges</span><span class="accent-mark">✦</span>
+        <span>EOT Administration</span><span class="accent-mark">✦</span>
+        <span>Lattice Tower Design</span><span class="accent-mark">✦</span>
+    </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+    <div class="section-header fade-up">
+        <span class="section-num">01</span>
+        <h2 class="section-title">Key <span class="accent">Projects</span></h2>
+    </div>
+
+    <div class="projects-grid fade-up">
+
+        <a href="#" class="project-card span-7">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1544006659-f0b21884ce1d?auto=format&fit=crop&w=1200&q=80');"></div>
+            <div class="card-top">
+                <div class="card-tags">
+                    <span class="card-tag hot">Current</span>
+                    <span class="card-tag">Telecom</span>
+                    <span class="card-tag">Structural</span>
+                </div>
+                <div class="card-arrow">↗</div>
+            </div>
+            <div class="card-bottom">
+                <div class="card-num">Project 01 / 2023–2024</div>
+                <div class="card-title">National 5G Rollout</div>
+                <p class="card-desc">Delivered 150+ lattice tower and pole upgrades for Indara's national 5G expansion, ensuring full AS1170.2 structural compliance across diverse site conditions.</p>
+                <div class="card-metric">
+                    <div>
+                        <div class="metric-val">150+</div>
+                        <div class="metric-label">Sites Delivered</div>
                     </div>
-                    <div class="timeline-item">
-                        <h3>Structural Project Engineer</h3>
-                        <h4>Indara | 04/2023 - 03/2024</h4>
-                        <ul>
-                            <li>Delivered 150+ telecom infrastructure upgrades (5G expansion).</li>
-                            <li>Managed civil interfaces for foundations and fibre backhaul.</li>
-                        </ul>
-                    </div>
-                    <div class="timeline-item">
-                        <h3>Graduate Structural Engineer</h3>
-                        <h4>Clive Steele Partners | 11/2021 - 03/2023</h4>
-                        <ul>
-                            <li>Designed steel framing and reinforced concrete to AS 4100/3600.</li>
-                            <li>Conducted site inspections and QA hold-point sign-offs.</li>
-                        </ul>
+                    <div>
+                        <div class="metric-val">12mo</div>
+                        <div class="metric-label">Programme</div>
                     </div>
                 </div>
             </div>
-        </section>
+        </a>
+
+        <a href="#" class="project-card span-5">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1534398079543-7ae6d016b86c?auto=format&fit=crop&w=800&q=80');"></div>
+            <div class="card-top">
+                <div class="card-tags">
+                    <span class="card-tag">Industrial</span>
+                    <span class="card-tag">Demolition</span>
+                </div>
+                <div class="card-arrow">↗</div>
+            </div>
+            <div class="card-bottom">
+                <div class="card-num">Project 02 / 2024–Present</div>
+                <div class="card-title">Tier-1 Industrial Closures</div>
+                <p class="card-desc">End-to-end delivery at Liberty Industrial involving massive brownfield deconstruction scopes.</p>
+                <div class="card-metric">
+                    <div>
+                        <div class="metric-val">142k</div>
+                        <div class="metric-label">Tonnes Steel</div>
+                    </div>
+                    <div>
+                        <div class="metric-val">300k</div>
+                        <div class="metric-label">Tonnes Concrete</div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="project-card span-4">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=800&q=80');"></div>
+            <div class="card-top">
+                <div class="card-tags">
+                    <span class="card-tag">Civil</span>
+                    <span class="card-tag">QA</span>
+                </div>
+                <div class="card-arrow">↗</div>
+            </div>
+            <div class="card-bottom">
+                <div class="card-num">Project 03 / 2022</div>
+                <div class="card-title">West Gate Freeway</div>
+                <p class="card-desc">Quality-critical infrastructure delivery ensuring VicRoads and AS 5100 compliance across major freeway works.</p>
+            </div>
+        </a>
+
+        <a href="#" class="project-card span-8">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1582298538104-e3facf70a256?auto=format&fit=crop&w=1200&q=80');"></div>
+            <div class="card-top">
+                <div class="card-tags">
+                    <span class="card-tag">Metro</span>
+                    <span class="card-tag">Infrastructure</span>
+                    <span class="card-tag">India</span>
+                </div>
+                <div class="card-arrow">↗</div>
+            </div>
+            <div class="card-bottom">
+                <div class="card-num">Project 04 / 2019–2021</div>
+                <div class="card-title">Mumbai Metro Lines 4 & 5</div>
+                <p class="card-desc">Civil Site Engineer supporting independent verification and quality assurance on elevated viaduct construction — complex, high-stakes urban rail infrastructure.</p>
+                <div class="card-metric">
+                    <div>
+                        <div class="metric-val">2</div>
+                        <div class="metric-label">Metro Lines</div>
+                    </div>
+                    <div>
+                        <div class="metric-val">IV&V</div>
+                        <div class="metric-label">Role Scope</div>
+                    </div>
+                </div>
+            </div>
+        </a>
 
     </div>
+</section>
 
-    <script>
-        lucide.createIcons();
-    </script>
+<!-- CAREER -->
+<section id="career">
+    <div class="section-header fade-up">
+        <span class="section-num">02</span>
+        <h2 class="section-title">Career <span class="accent">Trajectory</span></h2>
+    </div>
+
+    <div class="timeline-wrap">
+        <div class="timeline-nav fade-up">
+            <p>Four years of progressive responsibility across structural, civil, and industrial engineering disciplines. Each role building on the last — from graduate designer to full project accountability.</p>
+        </div>
+
+        <div class="timeline fade-up">
+
+            <div class="tl-item active">
+                <div class="tl-year">03/2024<br>Present</div>
+                <div class="tl-content">
+                    <div class="tl-company">Liberty Industrial</div>
+                    <div class="tl-role">Project Engineer</div>
+                    <ul class="tl-list">
+                        <li>End-to-end delivery of $100M+ industrial decommissioning and demolition projects.</li>
+                        <li>Administered variations totalling $8M+, progress claims, and extension of time events.</li>
+                        <li>Managed subcontractor interfaces, programme controls, and client reporting.</li>
+                        <li>Coordinated EPA and WorkSafe statutory approvals across multiple jurisdictions.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-year">04/2023<br>03/2024</div>
+                <div class="tl-content">
+                    <div class="tl-company">Indara</div>
+                    <div class="tl-role">Structural Project Engineer</div>
+                    <ul class="tl-list">
+                        <li>Delivered 150+ telecom infrastructure upgrades as part of a national 5G expansion programme.</li>
+                        <li>Managed civil interfaces for foundations, fibre backhaul, and ground-based installations.</li>
+                        <li>Ensured AS1170.2 wind code compliance across lattice tower and monopole structures.</li>
+                        <li>Coordinated structural assessments with external consultants and council approvals.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <div class="tl-year">11/2021<br>03/2023</div>
+                <div class="tl-content">
+                    <div class="tl-company">Clive Steele Partners</div>
+                    <div class="tl-role">Graduate Structural Engineer</div>
+                    <ul class="tl-list">
+                        <li>Designed steel framing and reinforced concrete structures to AS 4100 and AS 3600.</li>
+                        <li>Conducted site inspections and signed off QA hold points on infrastructure projects.</li>
+                        <li>Contributed to West Gate Freeway civil works in a QA capacity.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+    <div class="section-header fade-up">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Core <span class="accent">Competencies</span></h2>
+    </div>
+
+    <div class="skills-grid fade-up">
+        <div class="skill-cell">
+            <div class="skill-cell-label">Structural</div>
+            <div class="skill-items">
+                <div class="skill-item">AS1170.2 Wind Design</div>
+                <div class="skill-item">AS 4100 Steel</div>
+                <div class="skill-item">AS 3600 Concrete</div>
+                <div class="skill-item">Lattice Tower Assessment</div>
+                <div class="skill-item">Foundation Engineering</div>
+            </div>
+        </div>
+        <div class="skill-cell">
+            <div class="skill-cell-label">Civil & Infrastructure</div>
+            <div class="skill-items">
+                <div class="skill-item">AS 5100 Bridges</div>
+                <div class="skill-item">VicRoads Standards</div>
+                <div class="skill-item">Elevated Viaducts</div>
+                <div class="skill-item">QA Hold Points</div>
+                <div class="skill-item">Site Supervision</div>
+            </div>
+        </div>
+        <div class="skill-cell">
+            <div class="skill-cell-label">Project Management</div>
+            <div class="skill-items">
+                <div class="skill-item">Variation Administration</div>
+                <div class="skill-item">EOT Management</div>
+                <div class="skill-item">Progress Claims</div>
+                <div class="skill-item">Programme Control</div>
+                <div class="skill-item">Subcontractor Management</div>
+            </div>
+        </div>
+        <div class="skill-cell">
+            <div class="skill-cell-label">Regulatory</div>
+            <div class="skill-items">
+                <div class="skill-item">EPA Approvals</div>
+                <div class="skill-item">WorkSafe Victoria</div>
+                <div class="skill-item">Council DA Process</div>
+                <div class="skill-item">Statutory Compliance</div>
+                <div class="skill-item">Risk Assessment</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-name">GANESH KALAL</div>
+    <div class="footer-links">
+        <a href="mailto:ganesh@email.com">ganesh@email.com</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Download CV</a>
+    </div>
+</footer>
+
+<script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        cursor.style.left = mx + 'px';
+        cursor.style.top = my + 'px';
+    });
+
+    function animateRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + 'px';
+        ring.style.top = ry + 'px';
+        requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.style.width = '6px';
+            cursor.style.height = '6px';
+            ring.style.width = '52px';
+            ring.style.height = '52px';
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.style.width = '12px';
+            cursor.style.height = '12px';
+            ring.style.width = '36px';
+            ring.style.height = '36px';
+        });
+    });
+
+    // Scroll-triggered fade-ups
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => entry.target.classList.add('visible'), i * 100);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Timeline hover activation
+    document.querySelectorAll('.tl-item').forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            document.querySelectorAll('.tl-item').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
+</script>
 </body>
 </html>
