@@ -1,1296 +1,971 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ganesh Kalal | Project Engineer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ganesh Kalal | Civil & Structural Engineer</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <style>
+        /* =========================================
+           CORE THEME & VARIABLES
+        ========================================= */
+        :root {
+            --bg-main: #020308;
+            --surface: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.15); 
+            --accent: #00f0ff; 
+            --accent-glow: rgba(0, 240, 255, 0.4);
+            --text-primary: #ffffff;
+            --text-muted: #94a3b8;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+        }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+        [data-theme="light"] {
+            --bg-main: #f8fafc;
+            --surface: rgba(0, 0, 0, 0.03);
+            --border: rgba(0, 0, 0, 0.1);
+            --accent: #0284c7; 
+            --text-primary: #0f172a;
+            --text-muted: #475569;
+            --glass-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.06);
+        }
 
-  <script src="https://unpkg.com/lucide@latest"></script>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
-  <style>
-    :root{
-      --bg-main:#020308;
-      --surface:rgba(255,255,255,0.03);
-      --border:rgba(255,255,255,0.15);
-      --accent:#00f0ff;
-      --accent-glow:rgba(0,240,255,0.4);
-      --text-primary:#ffffff;
-      --text-muted:#cbd5e1;
-      --font-heading:'Space Grotesk',sans-serif;
-      --font-body:'Inter',sans-serif;
-      --glass-shadow:0 8px 32px 0 rgba(0,0,0,0.5);
-      --mono:'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
-    }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    [data-theme="light"]{
-      --bg-main:#f8fafc;
-      --surface:rgba(0,0,0,0.03);
-      --border:rgba(0,0,0,0.1);
-      --accent:#0284c7;
-      --accent-glow:rgba(2,132,199,0.25);
-      --text-primary:#0f172a;
-      --text-muted:#475569;
-      --glass-shadow:0 8px 32px 0 rgba(15,23,42,0.06);
-    }
+        /* 1. TRUE 3D SCROLLING CANVAS BACKGROUND */
+        #bg-canvas {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            height: 100dvh; z-index: -100; pointer-events: none;
+        }
 
-    *{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth}
+        /* 2. FIXED TRANSMISSION TOWERS */
+        .towers-background {
+            position: fixed; bottom: 0; left: 0; width: 100vw; height: 30vh; 
+            z-index: -1; pointer-events: none; opacity: 1; 
+        }
+        .towers-svg { width: 100%; height: 100%; display: block; }
+        .tower-steel { fill: none; stroke: #ffffff; stroke-width: 2; opacity: 0.5; }
+        .fiber-wire { fill: none; stroke: var(--accent); stroke-width: 2.5; opacity: 0.5; }
+        .fiber-pulse {
+            fill: none; stroke: #ffffff; stroke-width: 3.5;
+            stroke-dasharray: 15 250; filter: drop-shadow(0 0 10px var(--accent));
+            animation: pulseWire 3s linear infinite;
+        }
+        @keyframes pulseWire { from { stroke-dashoffset: 265; } to { stroke-dashoffset: 0; } }
 
-    body{
-      font-family:var(--font-body);
-      background-color:var(--bg-main);
-      color:var(--text-primary);
-      overflow-x:hidden;
-      line-height:1.7;
-      -webkit-font-smoothing:antialiased;
-      transition:background-color .3s,color .3s;
-    }
+        /* Noise Overlay for Texture */
+        body::before {
+            content: ''; position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 9000; opacity: 0.5;
+        }
 
-    /* Background canvas (procedural) */
-    #bg-canvas{
-      position:fixed;
-      inset:0;
-      width:100vw;
-      height:100vh;
-      height:100dvh;
-      z-index:-100;
-      pointer-events:none;
-    }
+        /* 3. CUSTOM CURSOR */
+        .cursor-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 999999; transform: translate(-50%, -50%); transition: background 0.2s; display: none;}
+        .cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.6); border-radius: 50%; position: fixed; pointer-events: none; z-index: 999998; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, border-color 0.3s; display: none;}
+        .cursor-ring.hover { width: 60px; height: 60px; border-color: var(--accent); background: rgba(0, 240, 255, 0.15); backdrop-filter: blur(2px); }
+        @media (pointer: fine) {
+            body.custom-cursor-active * { cursor: none !important; }
+            body.custom-cursor-active .cursor-dot, body.custom-cursor-active .cursor-ring { display: block; }
+        }
 
-    /* KEEP YOUR TOWERS EXACTLY AS IS */
-    .towers-background{
-      position:fixed;bottom:0;left:0;width:100vw;height:35vh;
-      z-index:-1;pointer-events:none;opacity:1;
-    }
-    .towers-svg{width:100%;height:100%;display:block}
-    .tower-steel{fill:none;stroke:#ffffff;stroke-width:2.5;opacity:.85}
-    .fiber-wire{fill:none;stroke:var(--accent);stroke-width:2.5;opacity:.5}
-    .fiber-pulse{
-      fill:none;stroke:#ffffff;stroke-width:3.5;
-      stroke-dasharray:15 250;
-      filter:drop-shadow(0 0 10px var(--accent));
-      animation:pulseWire 3s linear infinite;
-    }
-    .fiber-pulse.slow{animation:pulseWire 4.5s linear infinite reverse}
-    @keyframes pulseWire{from{stroke-dashoffset:265}to{stroke-dashoffset:0}}
-    [data-theme="light"] .tower-steel{stroke:#0f172a;opacity:.8}
+        /* NATIVE FADE UP ANIMATIONS */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .fade-up.in-view { opacity: 1; transform: translateY(0); }
 
-    /* Noise overlay */
-    body::before{
-      content:'';
-      position:fixed;
-      inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events:none;z-index:9000;opacity:.35;
-    }
+        /* WIDE LAYOUT FOR DESKTOP (No CV Dump) */
+        .wrap { max-width: 1440px; margin: 0 auto; padding: 0 3rem; position: relative; z-index: 10; }
+        section { padding: 10rem 0; border-bottom: 1px solid var(--border); }
+        h1, h2, h3, h4 { font-family: var(--font-heading); }
 
-    /* Cursor */
-    .cursor-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:999999;transform:translate(-50%,-50%);transition:background .2s;display:none}
-    .cursor-ring{width:36px;height:36px;border:1px solid rgba(255,255,255,0.6);border-radius:50%;position:fixed;pointer-events:none;z-index:999998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s;display:none}
-    .cursor-ring.hover{width:60px;height:60px;border-color:var(--accent);background:rgba(0,240,255,0.12);backdrop-filter:blur(2px)}
-    [data-theme="light"] .cursor-ring{border-color:rgba(0,0,0,0.5)}
-    @media (pointer:fine){
-      body.custom-cursor-active *{cursor:none!important}
-      body.custom-cursor-active .cursor-dot,body.custom-cursor-active .cursor-ring{display:block}
-    }
+        /* NAV */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.5rem 4rem; border-bottom: 1px solid var(--border);
+            background: rgba(2, 3, 8, 0.7); backdrop-filter: blur(20px);
+        }
+        .nav-logo { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; letter-spacing: 2px; }
+        .nav-logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 3rem; list-style: none; align-items: center; }
+        .nav-links a { font-size: 0.95rem; font-weight: 600; color: var(--text-muted); text-decoration: none; text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--text-primary); }
 
-    .fade-up{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
-    .fade-up.in-view{opacity:1;transform:translateY(0)}
+        /* HERO SECTION (Split & Wide) */
+        .hero {
+            min-height: 100vh; display: grid; grid-template-columns: 1.4fr 1fr; gap: 6rem;
+            align-items: center; padding-top: 6rem;
+        }
+        .hero-label { font-family: var(--font-heading); font-size: 1.1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem; font-weight: 700;}
+        .hero-title { font-size: clamp(4rem, 7vw, 7rem); font-weight: 800; line-height: 1.05; margin-bottom: 2rem; letter-spacing: -2px;}
+        .hero-title .outline { color: transparent; -webkit-text-stroke: 1px var(--muted); }
+        .hero-desc { font-size: 1.3rem; color: var(--text-muted); margin-bottom: 3rem; max-width: 700px; line-height: 1.8; }
+        
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 0.8rem; padding: 1.2rem 3rem;
+            background: var(--text-primary); color: var(--bg-main); border-radius: 999px;
+            font-weight: 700; text-decoration: none; transition: 0.3s; cursor: pointer; border: none; font-size: 1.1rem; font-family: var(--font-body);
+        }
+        @media (hover: hover) { .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 240, 255, 0.2); background: var(--accent); } }
 
-    .wrap{max-width:1200px;margin:0 auto;padding:0 2rem;position:relative;z-index:10}
-    section{padding:8rem 0;border-bottom:1px solid var(--border)}
-    h1,h2,h3,h4{font-family:var(--font-heading)}
+        .hero-image-container { position: relative; display: flex; justify-content: center; align-items: center; }
+        .profile-img { 
+            width: 100%; max-width: 450px; aspect-ratio: 4/5; object-fit: cover; 
+            border-radius: 24px; border: 2px solid var(--border); 
+            position: relative; z-index: 2; box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            filter: grayscale(10%) contrast(1.1); 
+        }
+        .img-glow { position: absolute; inset: -30px; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); z-index: 1; filter: blur(40px); opacity: 0.8; }
 
-    nav{
-      position:fixed;top:0;left:0;right:0;z-index:1000;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:1.5rem 3rem;border-bottom:1px solid var(--border);
-      background:rgba(2,3,8,.85);backdrop-filter:blur(20px);
-      -webkit-backdrop-filter:blur(20px);
-    }
-    [data-theme="light"] nav{background:rgba(248,250,252,.85)}
-    .nav-logo{font-family:var(--font-heading);font-size:1.2rem;font-weight:700;letter-spacing:2px}
-    .nav-logo span{color:var(--accent)}
-    .nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
-    .nav-links a{font-size:.9rem;font-weight:600;color:var(--text-muted);text-decoration:none;text-transform:uppercase;letter-spacing:1px;transition:color .3s}
-    .nav-links a:hover{color:var(--text-primary)}
+        /* MARQUEE */
+        .marquee-wrap { width: 100vw; overflow: hidden; border-bottom: 1px solid var(--border); padding: 1.5rem 0; background: var(--surface); }
+        .marquee-inner { display: flex; gap: 4rem; animation: marquee 35s linear infinite; white-space: nowrap; }
+        .marquee-inner span { font-family: var(--font-heading); font-size: 1.1rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-primary); flex-shrink: 0; font-weight: 700;}
+        .marquee-inner span.accent-mark { color: var(--accent); }
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    .theme-toggle{
-      background:transparent;border:1px solid var(--border);color:var(--text-primary);
-      width:40px;height:40px;border-radius:50%;
-      display:flex;align-items:center;justify-content:center;
-      cursor:pointer;transition:.3s;
-    }
-    .theme-toggle:hover{background:var(--text-primary);color:var(--bg-main)}
-    [data-theme="dark"] .icon-sun{display:block}
-    [data-theme="dark"] .icon-moon{display:none}
-    [data-theme="light"] .icon-sun{display:none}
-    [data-theme="light"] .icon-moon{display:block}
+        /* SECTION HEADERS */
+        .section-header { margin-bottom: 5rem; display: flex; align-items: baseline; gap: 1.5rem; }
+        .section-num { font-family: var(--font-heading); font-size: 1.5rem; color: var(--accent); font-weight: 700; }
+        .section-title { font-size: clamp(3rem, 5vw, 5rem); font-weight: 800; letter-spacing: -1px; }
 
-    .hero{
-      min-height:100vh;display:grid;grid-template-columns:1.2fr .8fr;gap:4rem;
-      align-items:center;padding-top:6rem;
-    }
-    .hero-label{font-family:var(--font-heading);font-size:1rem;color:var(--accent);text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;font-weight:700}
-    .hero-title{font-size:clamp(3rem,6vw,5.5rem);font-weight:800;line-height:1.1;margin-bottom:1.5rem}
-    .hero-desc{font-size:1.15rem;color:var(--text-muted);margin-bottom:2.5rem;max-width:600px;line-height:1.8}
+        /* BENTO PROJECTS (HR-Focused Outcomes) */
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 380px; gap: 2rem; }
+        .bento-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 3rem; 
+            color: var(--text-primary); transition: transform 0.4s, border-color 0.4s; position: relative; 
+            overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        }
+        @media (hover: hover) { .bento-card:hover { transform: translateY(-8px); border-color: var(--accent); } }
+        .bento-card.span-7 { grid-column: span 7; } .bento-card.span-5 { grid-column: span 5; }
+        .bento-card.span-4 { grid-column: span 4; } .bento-card.span-8 { grid-column: span 8; }
 
-    .btn-primary{
-      display:inline-flex;align-items:center;gap:.8rem;padding:1rem 2.5rem;
-      background:var(--text-primary);color:var(--bg-main);border-radius:999px;
-      font-weight:700;text-decoration:none;transition:.3s;cursor:pointer;
-      border:none;font-family:var(--font-body);font-size:1rem;
-    }
-    @media (hover:hover){
-      .btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(0,240,255,.2)}
-    }
+        .bento-bg {
+            position: absolute; inset: 0; background-size: cover; background-position: center;
+            opacity: 0.35; transition: opacity 0.4s, transform 0.6s; z-index: 1; filter: grayscale(80%);
+        }
+        .bento-card::before { 
+            content: ''; position: absolute; inset: 0; 
+            background: linear-gradient(to top, var(--bg-main) 10%, rgba(2,3,8,0.2) 100%); 
+            z-index: 2; 
+        }
+        @media (hover: hover) { .bento-card:hover .bento-bg { transform: scale(1.05); opacity: 0.6; filter: grayscale(0%);} }
 
-    .hero-image-container{position:relative;display:flex;justify-content:center;align-items:center}
-    .profile-img{
-      width:100%;max-width:380px;aspect-ratio:4/5;object-fit:cover;
-      border-radius:24px;border:2px solid var(--border);
-      position:relative;z-index:2;box-shadow:0 20px 40px rgba(0,0,0,.8);
-      filter:grayscale(15%) contrast(1.1);
-      background:var(--surface);
-    }
-    .img-glow{position:absolute;inset:-20px;background:radial-gradient(circle,var(--accent-glow) 0%,transparent 70%);z-index:1;filter:blur(30px);opacity:.8}
+        .bento-content { position: relative; z-index: 3; }
+        .card-tags { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .card-tag { font-family: var(--font-heading); font-size: 0.85rem; background: var(--accent); color: #000; padding: 0.4rem 1rem; border-radius: 99px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;}
+        .card-tag.dark { background: var(--text-primary); color: var(--bg-main);}
+        .card-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.1; letter-spacing: -1px;}
+        .card-desc { font-size: 1.2rem; color: var(--text-muted); line-height: 1.6; max-width: 90%; }
 
-    .marquee-wrap{width:100vw;overflow:hidden;border-bottom:1px solid var(--border);padding:1.5rem 0;background:var(--surface)}
-    .marquee-inner{display:flex;gap:3rem;animation:marquee 30s linear infinite;white-space:nowrap}
-    .marquee-inner span{font-family:var(--font-heading);font-size:.9rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-primary);flex-shrink:0;font-weight:600}
-    .marquee-inner span.accent-mark{color:var(--accent)}
-    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+        /* WIDE CAREER GRID (Replaces the vertical list to stop the "CV Dump" look) */
+        .career-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        
+        .career-card { 
+            padding: 3rem; background: var(--surface); border: 1px solid var(--border); 
+            border-radius: 24px; position: relative; backdrop-filter: blur(12px); 
+            transition: border-color 0.3s; cursor: pointer;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .career-card.featured { grid-column: span 2; background: rgba(0, 240, 255, 0.02); border-color: rgba(0, 240, 255, 0.2); }
+        @media (hover: hover) { .career-card:hover { border-color: var(--accent); } }
+        
+        .c-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; }
+        .c-year { font-family: var(--font-heading); font-size: 1rem; color: var(--accent); font-weight: 700; letter-spacing: 1px; margin-bottom: 0.5rem;}
+        .c-role { font-size: 2.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: -1px;}
+        .c-company { font-family: var(--font-heading); font-size: 1.1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;}
+        
+        .c-impact { font-size: 1.15rem; color: var(--text-primary); line-height: 1.7; font-weight: 400;}
+        .c-impact strong { color: var(--accent); font-weight: 600; }
 
-    .section-header{margin-bottom:3rem;display:flex;align-items:baseline;gap:1rem}
-    .section-num{font-family:var(--font-heading);font-size:1.2rem;color:var(--accent);font-weight:700}
-    .section-title{font-size:clamp(2rem,5vw,4rem);font-weight:700}
+        /* CREDENTIALS GRID */
+        .credentials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .cred-card { background: var(--surface); border: 1px solid var(--border); padding: 3rem; border-radius: 24px; backdrop-filter: blur(12px); }
+        .cred-title { font-size: 1.5rem; color: var(--text-primary); margin-bottom: 2rem; font-weight: 800; display: flex; align-items: center; gap: 1rem;}
+        
+        .cred-item { margin-bottom: 2rem; }
+        .cred-item:last-child { margin-bottom: 0; }
+        .cred-item h4 { font-size: 1.2rem; color: var(--accent); margin-bottom: 0.5rem; }
+        .cred-item p { font-size: 1.05rem; color: var(--text-muted); }
+        
+        .cred-list { list-style: none; display: flex; flex-direction: column; gap: 1.2rem; padding: 0;}
+        .cred-list li { display: flex; align-items: center; gap: 1rem; font-size: 1.15rem; color: var(--text-muted); font-weight: 500;}
+        .cred-list li i { color: var(--accent); }
 
-    /* BENTO */
-    .bento-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:320px;gap:1.5rem}
-    .bento-card{
-      background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:2.5rem;
-      color:var(--text-primary);transition:transform .4s,border-color .4s;position:relative;
-      overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;cursor:pointer;
-      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-    }
-    @media (hover:hover){.bento-card:hover{transform:translateY(-8px);border-color:var(--accent)}}
-    .bento-card.span-7{grid-column:span 7}.bento-card.span-5{grid-column:span 5}
-    .bento-card.span-4{grid-column:span 4}.bento-card.span-8{grid-column:span 8}
+        .tags-container { display: flex; flex-wrap: wrap; gap: 1rem; }
+        .cert-tag { border: 1px solid var(--border); background: rgba(255,255,255,0.02); color: var(--text-primary); padding: 0.8rem 1.2rem; border-radius: 8px; font-size: 1rem; font-weight: 600;}
 
-    .bento-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.28;transition:opacity .4s,transform .6s;z-index:1}
-    .bento-card::before{
-      content:'';position:absolute;inset:0;
-      background:linear-gradient(to top,var(--bg-main) 22%,rgba(2,3,8,.35) 100%);
-      z-index:2;
-    }
-    [data-theme="light"] .bento-card::before{
-      background:linear-gradient(to top,rgba(248,250,252,.92) 18%,rgba(248,250,252,.35) 100%);
-    }
-    @media (hover:hover){.bento-card:hover .bento-bg{transform:scale(1.05);opacity:.5}}
+        /* CONTACT TERMINAL */
+        .contact-terminal {
+            background: rgba(0, 0, 0, 0.7); border: 1px solid var(--border); border-radius: 24px;
+            backdrop-filter: blur(20px); overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.5); 
+            max-width: 900px; margin: 0 auto;
+        }
+        .terminal-header { background: var(--surface); padding: 1.5rem 2rem; display: flex; align-items: center; gap: 0.8rem; border-bottom: 1px solid var(--border); }
+        .term-dot { width: 14px; height: 14px; border-radius: 50%; }
+        .term-dot.close { background: #ff5f56; } .term-dot.min { background: #ffbd2e; } .term-dot.max { background: #27c93f; }
+        .term-title { margin-left: 1rem; font-family: var(--mono); font-size: 1rem; color: var(--text-muted); letter-spacing: 1px;}
+        
+        .terminal-body { padding: 4rem; }
+        .input-group { margin-bottom: 2.5rem; }
+        .input-group label { display: block; font-family: var(--mono); color: var(--accent); font-size: 1rem; margin-bottom: 1rem; font-weight: 700; letter-spacing: 2px;}
+        .input-group input, .input-group textarea {
+            width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--border);
+            color: var(--text-primary); font-family: var(--mono); font-size: 1.2rem; padding: 0.5rem 0;
+            outline: none; transition: 0.3s; resize: vertical;
+        }
+        .input-group input:focus, .input-group textarea:focus { border-bottom-color: var(--accent); }
+        
+        .terminal-btn {
+            background: transparent; border: 1px solid var(--accent); color: var(--accent);
+            font-family: var(--mono); font-size: 1.2rem; font-weight: 700; padding: 1.5rem 3rem;
+            cursor: pointer; transition: 0.3s; width: 100%; letter-spacing: 2px;
+        }
+        .terminal-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent-glow); }
 
-    .bento-content{position:relative;z-index:3}
-    .card-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
-    .card-tag{font-family:var(--font-heading);font-size:.75rem;background:var(--accent);color:#000;padding:.3rem .8rem;border-radius:99px;font-weight:700;text-transform:uppercase}
-    .card-tag.hot{background:var(--text-primary);color:var(--bg-main)}
-    .card-title{font-size:2rem;font-weight:700;margin-bottom:.5rem;line-height:1.1}
-    .card-desc{font-size:1.05rem;color:var(--text-muted);line-height:1.5}
+        /* FOOTER */
+        footer { padding: 4rem 0; border-top: 1px solid var(--border); margin-top: 6rem; position: relative; z-index: 10; background: var(--bg-main);}
+        .footer-wrap { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 3rem;}
+        .footer-logo { font-family: var(--font-heading); font-size: 2rem; font-weight: 800; letter-spacing: 2px;}
+        .footer-links { display: flex; gap: 3rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 1.1rem; font-weight: 600; transition: color 0.3s; text-transform: uppercase; letter-spacing: 1px;}
+        .footer-links a:hover { color: var(--accent); }
 
-    /* TIMELINE */
-    .timeline-wrap{display:grid;grid-template-columns:1fr 2fr;gap:4rem}
-    .timeline-nav{font-size:1.15rem;color:var(--text-muted);line-height:1.8;position:sticky;top:8rem}
+        /* MODAL */
+        .modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 90000; padding: 1rem; }
+        .modal.open { display: flex; }
+        .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); }
+        .modal-content { position: relative; width: 100%; max-width: 1000px; max-height: 90vh; overflow-y: auto; background: var(--bg-main); border: 1px solid var(--border); border-radius: 24px; z-index: 10; padding: 4rem;}
+        .modal-close { position: absolute; top: 2rem; right: 2rem; width: 50px; height: 50px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--text-primary); cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center;}
+        .modal-close:hover { border-color: var(--accent); color: var(--accent); }
+        .modal-title { font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.1; font-weight: 800; font-family: var(--font-heading); letter-spacing: -1px;}
+        .modal-metrics-bar { font-family: var(--font-heading); color: var(--accent); font-weight: 700; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px;}
+        .modal-split { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+        .modal-list { list-style: none; padding-left: 0; }
+        .modal-list li { position: relative; padding-left: 1.8rem; margin-bottom: 1.5rem; color: var(--text-muted); line-height: 1.7; font-size: 1.15rem;}
+        .modal-list li::before { content: '▹'; position: absolute; left: 0; color: var(--accent); font-weight: bold;}
+        
+        .external-link-btn { display: inline-flex; align-items: center; gap: 0.8rem; padding: 1rem 2rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--accent); text-decoration: none; font-weight: 700; font-size: 1.1rem; transition: 0.3s; margin-top: 1rem; }
+        .external-link-btn:hover { background: rgba(0, 240, 255, 0.1); border-color: var(--accent); }
 
-    .timeline{display:flex;flex-direction:column;position:relative;border-left:3px solid var(--border);padding-left:3.5rem}
-    .timeline::before{
-      content:'';position:absolute;left:-3px;top:0;width:3px;height:100%;
-      background:linear-gradient(to bottom,transparent,var(--accent),transparent);
-      background-size:100% 200%;animation:dataFlow 4s linear infinite;
-    }
-    @keyframes dataFlow{from{background-position:0 0}to{background-position:0 200%}}
-
-    .tl-item{
-      padding:2.5rem;background:var(--surface);border:1px solid var(--border);
-      border-radius:24px;margin-bottom:2rem;position:relative;
-      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-      transition:border-color .3s,transform .3s;cursor:pointer;
-    }
-    @media (hover:hover){.tl-item:hover{border-color:var(--accent);transform:translateX(10px)}}
-    .tl-item::after{
-      content:'';position:absolute;left:-4.3rem;top:3.5rem;width:18px;height:18px;border-radius:50%;
-      background:var(--bg-main);border:3px solid var(--accent);box-shadow:0 0 15px var(--accent-glow);
-    }
-    .tl-top{display:flex;justify-content:space-between;align-items:flex-start}
-    .tl-arrow{color:var(--accent);transition:transform .3s;opacity:0}
-    @media (hover:hover){.tl-item:hover .tl-arrow{opacity:1;transform:translate(5px,-5px)}}
-    .tl-year{font-family:var(--font-heading);font-size:1rem;color:var(--accent);font-weight:700;margin-bottom:.5rem;letter-spacing:1px}
-    .tl-role{font-family:var(--font-heading);font-size:1.8rem;font-weight:800;margin-bottom:.5rem;line-height:1.1}
-    .tl-company{font-family:var(--font-heading);font-size:1.05rem;color:var(--text-primary);margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:1px}
-    .tl-list{list-style:none;display:flex;flex-direction:column;gap:.8rem;padding-left:0}
-    .tl-list li{font-size:1.05rem;color:var(--text-muted);display:flex;gap:.8rem;line-height:1.6}
-    .tl-list li::before{content:'▹';color:var(--accent);font-weight:bold}
-
-    /* TECH TOOLKIT (NEW) */
-    .toolkit-grid{
-      display:grid;
-      grid-template-columns:repeat(12,1fr);
-      gap:1.5rem;
-    }
-    .tool-card{
-      grid-column:span 6;
-      background:var(--surface);
-      border:1px solid var(--border);
-      border-radius:24px;
-      padding:2.2rem;
-      backdrop-filter:blur(12px);
-      -webkit-backdrop-filter:blur(12px);
-    }
-    .tool-card h3{
-      font-size:1.3rem;
-      font-weight:800;
-      margin-bottom:1rem;
-      display:flex;
-      align-items:center;
-      gap:.7rem;
-    }
-    .pill-list{display:flex;flex-wrap:wrap;gap:.7rem}
-    .pill{
-      border:1px solid var(--border);
-      background:rgba(255,255,255,0.02);
-      color:var(--text-primary);
-      padding:.55rem .9rem;
-      border-radius:999px;
-      font-size:.95rem;
-      font-weight:600;
-      display:inline-flex;
-      align-items:center;
-      gap:.5rem;
-    }
-    [data-theme="light"] .pill{background:rgba(0,0,0,0.02)}
-    .pill i{color:var(--accent)}
-
-    /* Credentials */
-    .credentials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem}
-    .cred-card{background:var(--surface);border:1px solid var(--border);padding:2.5rem;border-radius:24px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;flex-direction:column}
-    .cred-title{font-family:var(--font-heading);font-size:1.4rem;color:var(--text-primary);margin-bottom:1.5rem;font-weight:800;display:flex;align-items:center;gap:.8rem}
-    .cred-item{margin-bottom:1.5rem}
-    .cred-item:last-child{margin-bottom:0}
-    .cred-item h4{font-size:1.1rem;color:var(--accent);margin-bottom:.3rem}
-    .cred-item p{font-size:.95rem;color:var(--text-muted)}
-    .cred-list{list-style:none;display:flex;flex-direction:column;gap:1rem;padding:0}
-    .cred-list li{display:flex;align-items:center;gap:1rem;font-size:1.05rem;color:var(--text-muted);font-weight:600}
-    .cred-list li i{color:var(--accent)}
-    .tags-container{display:flex;flex-wrap:wrap;gap:.8rem}
-    .cert-tag{border:1px solid var(--border);background:rgba(255,255,255,0.02);color:var(--text-primary);padding:.5rem 1rem;border-radius:10px;font-size:.95rem;font-weight:600;font-family:var(--font-body)}
-    [data-theme="light"] .cert-tag{background:rgba(0,0,0,0.02)}
-
-    /* CONTACT TERMINAL */
-    .contact-terminal{
-      background:rgba(0,0,0,0.6);border:1px solid var(--border);border-radius:16px;
-      backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);overflow:hidden;
-      box-shadow:0 20px 40px rgba(0,0,0,0.5);max-width:800px;margin:0 auto;
-    }
-    [data-theme="light"] .contact-terminal{background:rgba(255,255,255,0.85)}
-    .terminal-header{background:var(--surface);padding:1rem 1.5rem;display:flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border)}
-    .term-dot{width:12px;height:12px;border-radius:50%}
-    .term-dot.close{background:#ff5f56}.term-dot.min{background:#ffbd2e}.term-dot.max{background:#27c93f}
-    .term-title{margin-left:1rem;font-family:var(--mono);font-size:.9rem;color:var(--text-muted);opacity:.75}
-    .terminal-body{padding:2.5rem}
-    .input-group{margin-bottom:1.5rem}
-    .input-group label{display:block;font-family:var(--mono);color:var(--accent);font-size:.9rem;margin-bottom:.5rem;font-weight:800;letter-spacing:1px}
-    .input-group input,.input-group textarea{
-      width:100%;background:transparent;border:none;border-bottom:1px solid var(--border);
-      color:var(--text-primary);font-family:var(--mono);font-size:1rem;padding:.5rem 0;
-      outline:none;transition:.3s;resize:vertical;
-    }
-    .input-group input:focus,.input-group textarea:focus{border-bottom-color:var(--accent)}
-    .terminal-btn{
-      background:transparent;border:1px solid var(--accent);color:var(--accent);
-      font-family:var(--mono);font-size:1rem;font-weight:800;padding:1rem 2rem;
-      cursor:pointer;transition:.3s;width:100%;margin-top:1rem;
-    }
-    .terminal-btn:hover{background:var(--accent);color:#000;box-shadow:0 0 15px var(--accent-glow)}
-
-    footer{padding:3rem 0;border-top:1px solid var(--border);margin-top:4rem;position:relative;z-index:10;background:var(--bg-main)}
-    .footer-wrap{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:1200px;margin:0 auto;padding:0 2rem}
-    .footer-logo{font-family:var(--font-heading);font-size:1.5rem;font-weight:800}
-    .footer-links{display:flex;gap:2rem}
-    .footer-links a{color:var(--text-muted);text-decoration:none;font-size:1rem;font-weight:600;transition:color .3s}
-    .footer-links a:hover{color:var(--accent)}
-
-    /* Modal */
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:90000;padding:1rem}
-    .modal.open{display:flex}
-    .modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-    .modal-content{position:relative;width:100%;max-width:900px;max-height:90vh;overflow-y:auto;background:var(--bg-main);border:1px solid var(--border);border-radius:24px;z-index:10;padding:3rem;-webkit-overflow-scrolling:touch}
-    [data-theme="light"] .modal-content{background:#ffffff}
-    .modal-close{position:absolute;top:1.5rem;right:1.5rem;width:45px;height:45px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text-primary);cursor:pointer;transition:.3s;display:flex;justify-content:center;align-items:center}
-    .modal-close:hover{border-color:var(--accent);color:var(--accent)}
-    .modal-title{font-size:2.2rem;margin-bottom:1rem;line-height:1.1;font-weight:900;font-family:var(--font-heading)}
-    .modal-metrics-bar{font-family:var(--font-heading);color:var(--accent);font-weight:700;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);font-size:1rem;text-transform:uppercase;letter-spacing:1px}
-    .modal-split{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
-    .modal-list{list-style:none;padding-left:0}
-    .modal-list li{position:relative;padding-left:1.5rem;margin-bottom:1rem;color:var(--text-muted);line-height:1.6;font-size:1.05rem}
-    .modal-list li::before{content:'▹';position:absolute;left:0;color:var(--accent);font-weight:bold}
-
-    /* Mobile */
-    @media (max-width:768px){
-      nav{padding:1rem 1.5rem}
-      .nav-links{display:none}
-      .hero{grid-template-columns:1fr;padding-top:7rem;gap:2rem;text-align:center}
-      .hero-label{justify-content:center}
-      .hero-title{font-size:3rem}
-      .hero-desc{margin:0 auto 2rem auto;font-size:1.05rem}
-      .profile-img{max-width:280px}
-      section{padding:5rem 0}
-      .wrap{padding:0 1.5rem}
-      .section-header{margin-bottom:2rem}
-      .section-title{font-size:2.2rem}
-      .bento-card{padding:1.5rem;min-height:300px}
-      .bento-card.span-8,.bento-card.span-4,.bento-card.span-6{grid-column:span 12}
-      .timeline-wrap{grid-template-columns:1fr;gap:2rem}
-      .timeline-nav{position:static;font-size:1.05rem;margin-bottom:1rem}
-      .timeline{padding-left:2rem;border-left:2px solid var(--border)}
-      .tl-item{padding:1.5rem;margin-bottom:1.5rem}
-      .tl-item::after{left:-2.6rem;top:2rem;width:14px;height:14px;border-width:2px}
-      .towers-background{height:20vh}
-      .modal-content{padding:1.5rem;margin:1rem;width:calc(100% - 2rem)}
-      .modal-split{grid-template-columns:1fr;gap:1.5rem}
-      .tool-card{grid-column:span 12}
-      footer{padding:3rem 0;margin-top:2rem}
-      .footer-wrap{flex-direction:column;gap:1.5rem;text-align:center}
-      .footer-links{flex-direction:column;align-items:center;gap:1rem}
-    }
-  </style>
+        /* MOBILE OPTIMIZATION */
+        @media (max-width: 1024px) {
+            .wrap { padding: 0 1.5rem; }
+            nav { padding: 1rem 1.5rem; }
+            .nav-links { display: none; }
+            .hero { grid-template-columns: 1fr; padding-top: 8rem; gap: 3rem; text-align: center; }
+            .hero-label { justify-content: center; }
+            .hero-title { font-size: 3.5rem; }
+            .hero-desc { margin: 0 auto 2rem auto; font-size: 1.1rem; }
+            .profile-img { max-width: 320px; } 
+            section { padding: 6rem 0; }
+            .section-header { margin-bottom: 3rem; }
+            .section-title { font-size: 2.5rem; }
+            .bento-card { padding: 2rem; min-height: 350px; }
+            .bento-card.span-8, .bento-card.span-4 { grid-column: span 12; } 
+            .career-grid { grid-template-columns: 1fr; }
+            .career-card.featured { grid-column: span 1; }
+            .skills-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .towers-background { height: 20vh; }
+            .modal-content { padding: 2rem; margin: 1rem; width: calc(100% - 2rem); }
+            .modal-split { grid-template-columns: 1fr; gap: 2rem; }
+            .credentials-grid { grid-template-columns: 1fr; }
+            footer { padding: 3rem 0; margin-top: 2rem;}
+            .footer-wrap { flex-direction: column; gap: 1.5rem; text-align: center; }
+        }
+    </style>
 </head>
-
 <body data-theme="dark">
-  <canvas id="bg-canvas"></canvas>
 
-  <!-- KEEP YOUR TRANSMISSION TOWERS/CABLES SAME -->
-  <div class="towers-background">
-    <svg class="towers-svg" viewBox="0 0 3100 250" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <g id="tower">
-          <path class="tower-steel" d="M 20,0 L 0,210 M 20,0 L 40,210"></path>
-          <path class="tower-steel" d="M 15,50 L 25,50 M 10,100 L 30,100 M 5,150 L 35,150"></path>
-          <path class="tower-steel" d="M 15,50 L 30,100 M 25,50 L 10,100 M 10,100 L 35,150 M 30,100 L 5,150 M 5,150 L 40,210 M 35,150 L 0,210"></path>
-          <path class="tower-steel" d="M -15,30 L 55,30 M -20,60 L 60,60"></path>
-        </g>
-      </defs>
+    <canvas id="bg-canvas"></canvas>
 
-      <path class="fiber-wire" d="M -230,50 Q -30,150 170,50 Q 370,150 570,50 Q 770,150 970,50 Q 1170,150 1370,50 Q 1570,150 1770,50 Q 1970,150 2170,50 Q 2370,150 2570,50 Q 2770,150 2970,50 Q 3170,150 3370,50"></path>
-      <path class="fiber-pulse" d="M -230,50 Q -30,150 170,50 Q 370,150 570,50 Q 770,150 970,50 Q 1170,150 1370,50 Q 1570,150 1770,50 Q 1970,150 2170,50 Q 2370,150 2570,50 Q 2770,150 2970,50 Q 3170,150 3370,50"></path>
-
-      <path class="fiber-wire" d="M -230,80 Q -30,180 170,80 Q 370,180 570,80 Q 770,180 970,80 Q 1170,180 1370,80 Q 1570,180 1770,80 Q 1970,180 2170,80 Q 2370,180 2570,80 Q 2770,180 2970,80 Q 3170,180 3370,80"></path>
-      <path class="fiber-pulse slow" d="M -230,80 Q -30,180 170,80 Q 370,180 570,80 Q 770,180 970,80 Q 1170,180 1370,80 Q 1570,180 1770,80 Q 1970,180 2170,80 Q 2370,180 2570,80 Q 2770,180 2970,80 Q 3170,180 3370,80"></path>
-
-      <path class="fiber-wire" d="M -230,110 Q -30,210 170,110 Q 370,210 570,110 Q 770,210 970,110 Q 1170,210 1370,110 Q 1570,210 1770,110 Q 1970,210 2170,110 Q 2370,210 2570,110 Q 2770,210 2970,110 Q 3170,210 3370,110"></path>
-      <path class="fiber-pulse" d="M -230,110 Q -30,210 170,110 Q 370,210 570,110 Q 770,210 970,110 Q 1170,210 1370,110 Q 1570,210 1770,110 Q 1970,210 2170,110 Q 2370,210 2570,110 Q 2770,210 2970,110 Q 3170,210 3370,110" style="animation-delay: -1.5s;"></path>
-
-      <use href="#tower" x="150" y="40" /> <use href="#tower" x="550" y="40" /> <use href="#tower" x="950" y="40" /> <use href="#tower" x="1350" y="40" />
-      <use href="#tower" x="1750" y="40" /> <use href="#tower" x="2150" y="40" /> <use href="#tower" x="2550" y="40" /> <use href="#tower" x="2950" y="40" />
-    </svg>
-  </div>
-
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-
-  <nav>
-    <div class="nav-logo">G<span>.</span>KALAL</div>
-    <ul class="nav-links">
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#career">Trajectory</a></li>
-      <li><a href="#toolkit">Toolkit</a></li>
-      <li><a href="#credentials">Credentials</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <button class="theme-toggle" id="themeBtn" aria-label="Toggle Theme">
-      <i data-lucide="sun" class="icon-sun"></i>
-      <i data-lucide="moon" class="icon-moon"></i>
-    </button>
-  </nav>
-
-  <div class="wrap">
-    <section class="hero">
-      <div class="hero-left">
-        <div class="hero-label fade-up">Project Engineer — Structural & Civil</div>
-        <h1 class="hero-title">
-          <span class="fade-up">GANESH</span><br>
-          <em class="fade-up" style="transition-delay:.08s;color:var(--accent)">KALAL</em>
-        </h1>
-        <p class="hero-desc fade-up" style="transition-delay:.16s;">
-          Delivering Tier-1 projects with structural precision. Specialising in 5G rollouts, statutory approvals,
-          industrial closures, and complex brownfield execution across Melbourne and beyond.
-        </p>
-        <div style="display:flex;gap:1rem;margin-top:2rem;justify-content:flex-start" class="fade-up" style="transition-delay:.24s;">
-          <a href="#projects" class="btn-primary">
-            View Projects <i data-lucide="arrow-down" style="width:18px;height:18px"></i>
-          </a>
-        </div>
-      </div>
-
-      <div class="hero-right fade-up" style="transition-delay:.18s;">
-        <div class="hero-image-container">
-          <div class="img-glow"></div>
-          <img src="profile.png" alt="Ganesh Kalal" class="profile-img" onerror="this.style.display='none'">
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <div class="marquee-wrap fade-up">
-    <div class="marquee-inner">
-      <span>AS1170.2</span><span class="accent-mark">✦</span>
-      <span>5G Infrastructure</span><span class="accent-mark">✦</span>
-      <span>Industrial Demolition</span><span class="accent-mark">✦</span>
-      <span>Structural Engineering</span><span class="accent-mark">✦</span>
-      <span>VicRoads</span><span class="accent-mark">✦</span>
-      <span>NCC</span><span class="accent-mark">✦</span>
-      <span>Programme & Cost</span><span class="accent-mark">✦</span>
-      <span>QA/QC</span><span class="accent-mark">✦</span>
-
-      <span>AS1170.2</span><span class="accent-mark">✦</span>
-      <span>5G Infrastructure</span><span class="accent-mark">✦</span>
-      <span>Industrial Demolition</span><span class="accent-mark">✦</span>
-      <span>Structural Engineering</span><span class="accent-mark">✦</span>
-      <span>VicRoads</span><span class="accent-mark">✦</span>
-      <span>NCC</span><span class="accent-mark">✦</span>
-      <span>Programme & Cost</span><span class="accent-mark">✦</span>
-      <span>QA/QC</span><span class="accent-mark">✦</span>
+    <div class="towers-background">
+        <svg class="towers-svg" viewBox="0 0 3100 250" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <g id="tower">
+                    <path class="tower-steel" d="M 20,0 L 0,210 M 20,0 L 40,210"></path>
+                    <path class="tower-steel" d="M 15,50 L 25,50 M 10,100 L 30,100 M 5,150 L 35,150"></path>
+                    <path class="tower-steel" d="M 15,50 L 30,100 M 25,50 L 10,100 M 10,100 L 35,150 M 30,100 L 5,150 M 5,150 L 40,210 M 35,150 L 0,210"></path>
+                    <path class="tower-steel" d="M -15,30 L 55,30 M -20,60 L 60,60"></path>
+                </g>
+            </defs>
+            <path class="fiber-wire" d="M -230,50 Q -30,150 170,50 Q 370,150 570,50 Q 770,150 970,50 Q 1170,150 1370,50 Q 1570,150 1770,50 Q 1970,150 2170,50 Q 2370,150 2570,50 Q 2770,150 2970,50 Q 3170,150 3370,50"></path>
+            <path class="fiber-pulse" d="M -230,50 Q -30,150 170,50 Q 370,150 570,50 Q 770,150 970,50 Q 1170,150 1370,50 Q 1570,150 1770,50 Q 1970,150 2170,50 Q 2370,150 2570,50 Q 2770,150 2970,50 Q 3170,150 3370,50"></path>
+            
+            <path class="fiber-wire" d="M -230,80 Q -30,180 170,80 Q 370,180 570,80 Q 770,180 970,80 Q 1170,180 1370,80 Q 1570,180 1770,80 Q 1970,180 2170,80 Q 2370,180 2570,80 Q 2770,180 2970,80 Q 3170,180 3370,80"></path>
+            <path class="fiber-pulse slow" d="M -230,80 Q -30,180 170,80 Q 370,180 570,80 Q 770,180 970,80 Q 1170,180 1370,80 Q 1570,180 1770,80 Q 1970,180 2170,80 Q 2370,180 2570,80 Q 2770,180 2970,80 Q 3170,180 3370,80"></path>
+            
+            <path class="fiber-wire" d="M -230,110 Q -30,210 170,110 Q 370,210 570,110 Q 770,210 970,110 Q 1170,210 1370,110 Q 1570,210 1770,110 Q 1970,210 2170,110 Q 2370,210 2570,110 Q 2770,210 2970,110 Q 3170,210 3370,110"></path>
+            <path class="fiber-pulse" d="M -230,110 Q -30,210 170,110 Q 370,210 570,110 Q 770,210 970,110 Q 1170,210 1370,110 Q 1570,210 1770,110 Q 1970,210 2170,110 Q 2370,210 2570,110 Q 2770,210 2970,110 Q 3170,210 3370,110" style="animation-delay: -1.5s;"></path>
+            
+            <use href="#tower" x="150" y="40" /> <use href="#tower" x="550" y="40" /> <use href="#tower" x="950" y="40" /> <use href="#tower" x="1350" y="40" />
+            <use href="#tower" x="1750" y="40" /> <use href="#tower" x="2150" y="40" /> <use href="#tower" x="2550" y="40" /> <use href="#tower" x="2950" y="40" />
+        </svg>
     </div>
-  </div>
 
-  <div class="wrap">
-    <!-- PROJECTS (your existing content unchanged except small polish if you want) -->
-    <section id="projects">
-      <div class="section-header fade-up">
-        <span class="section-num">01 //</span>
-        <h2 class="section-title">Key Projects</h2>
-      </div>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
 
-      <div class="bento-grid fade-up" style="margin-bottom:1.5rem;">
-        <div class="bento-card span-8" data-id="p1">
-          <div class="bento-bg" style="background-image:url('https://images.unsplash.com/photo-1578319439584-104c94d37305?auto=format&fit=crop&w=1200&q=80');"></div>
-          <div class="bento-content">
-            <div class="card-tags"><span class="card-tag hot">Mining</span><span class="card-tag">Demolition</span><span class="card-tag">Remediation</span></div>
-            <h3 class="card-title">Rio Tinto Bauxite Refinery Closure</h3>
-            <p class="card-desc">Major industrial closure delivery, decontamination interfaces, demolition engineering support.</p>
-          </div>
-        </div>
+    <nav>
+        <div class="nav-logo">GANESH<span>.</span>K</div>
+        <ul class="nav-links">
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#career">Experience</a></li>
+            <li><a href="#credentials">Credentials</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
 
-        <div class="bento-card span-4" data-id="p2">
-          <div class="bento-bg" style="background-image:url('https://images.unsplash.com/photo-1534398079543-7ae6d016b86c?auto=format&fit=crop&w=800&q=80');"></div>
-          <div class="bento-content">
-            <div class="card-tags"><span class="card-tag">Oil & Gas</span><span class="card-tag">Demolition</span></div>
-            <h3 class="card-title">ExxonMobil Refinery Decommissioning</h3>
-            <p class="card-desc">Safe decommissioning and demolition of refinery assets and pipe rack packages.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="bento-grid fade-up" style="transition-delay:.08s;">
-        <div class="bento-card span-4" data-id="p3">
-          <div class="bento-bg" style="background-image:url('https://images.unsplash.com/photo-1544006659-f0b21884ce1d?auto=format&fit=crop&w=800&q=80');"></div>
-          <div class="bento-content">
-            <div class="card-tags"><span class="card-tag">Telecom</span><span class="card-tag">Structural</span></div>
-            <h3 class="card-title">National 5G Rollout</h3>
-            <p class="card-desc">Structural inspections, design coordination and approvals across large multi-site programs.</p>
-          </div>
-        </div>
-
-        <div class="bento-card span-4" data-id="p4">
-          <div class="bento-bg" style="background-image:url('https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=800&q=80');"></div>
-          <div class="bento-content">
-            <div class="card-tags"><span class="card-tag">Infrastructure</span><span class="card-tag">QA/QC</span></div>
-            <h3 class="card-title">Major Civil Infrastructure</h3>
-            <p class="card-desc">Urban transport works, QA/QC, inspections and delivery support across complex environments.</p>
-          </div>
-        </div>
-
-        <div class="bento-card span-4" data-id="p5">
-          <div class="bento-bg" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80');"></div>
-          <div class="bento-content">
-            <div class="card-tags"><span class="card-tag">Design</span><span class="card-tag">Delivery</span></div>
-            <h3 class="card-title">Built Environment Projects</h3>
-            <p class="card-desc">Structural design and coordination for commercial, residential and community assets.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CAREER (kept) -->
-    <section id="career">
-      <div class="section-header fade-up">
-        <span class="section-num">02 //</span>
-        <h2 class="section-title">Professional Trajectory</h2>
-      </div>
-
-      <div class="timeline-wrap">
-        <div class="timeline-nav fade-up">
-          <p>Progressive responsibility across structural, civil and industrial engineering. Click any role to open full detail.</p>
-        </div>
-
-        <div class="timeline">
-          <div class="tl-item fade-up" data-id="c1">
-            <div class="tl-top">
-              <div>
-                <div class="tl-year">03/2024 — Present</div>
-                <div class="tl-role">Project Engineer</div>
-                <div class="tl-company">Liberty Industrial | Altona VIC / Gove NT</div>
-              </div>
-              <div class="tl-arrow"><i data-lucide="arrow-up-right" style="width:24px;height:24px;"></i></div>
+    <div class="wrap">
+        <section class="hero">
+            <div class="hero-left">
+                <div class="hero-label scramble-text" data-text="Civil & Structural Engineer">Civil & Structural Engineer</div>
+                <h1 class="hero-title">
+                    <span class="outline fade-up">ENGINEERING</span><br>
+                    <span class="fade-up" style="transition-delay: 0.1s;">THE FUTURE</span><br>
+                    <em class="fade-up" style="transition-delay: 0.2s; color: var(--accent);">OF INFRASTRUCTURE.</em>
+                </h1>
+                <p class="hero-desc fade-up" style="transition-delay: 0.3s;">
+                    I deliver complex, high-risk infrastructure projects. From the Southern Hemisphere's largest industrial demolitions to national 5G rollouts, I specialize in structural integrity, rigorous QA/QC, and Tier-1 commercial execution.
+                </p>
+                <div style="display: flex; gap: 1.5rem; margin-top: 2rem;" class="fade-up" style="transition-delay: 0.4s;">
+                    <a href="#projects" class="btn-primary">
+                        Explore Portfolio <i data-lucide="chevron-right"></i>
+                    </a>
+                </div>
             </div>
-            <ul class="tl-list">
-              <li>End-to-end delivery of major industrial decommissioning and demolition packages.</li>
-              <li>Contract admin, cost tracking, variation assessments and reporting.</li>
-            </ul>
-          </div>
 
-          <div class="tl-item fade-up" data-id="c2">
-            <div class="tl-top">
-              <div>
-                <div class="tl-year">04/2023 — 03/2024</div>
-                <div class="tl-role">Structural Engineer (Telecom)</div>
-                <div class="tl-company">Indara Digital Infrastructures | Melbourne VIC</div>
-              </div>
-              <div class="tl-arrow"><i data-lucide="arrow-up-right" style="width:24px;height:24px;"></i></div>
+            <div class="hero-right fade-up" style="transition-delay: 0.3s;">
+                <div class="hero-image-container">
+                    <div class="img-glow"></div>
+                    <img src="profile.png" alt="Ganesh Kalal" class="profile-img" onerror="this.style.display='none'">
+                </div>
             </div>
-            <ul class="tl-list">
-              <li>Multi-site delivery for tower upgrades, inspections, and approvals.</li>
-              <li>Design coordination for poles, headframes and foundation interfaces.</li>
-            </ul>
-          </div>
-
-          <div class="tl-item fade-up" data-id="c3">
-            <div class="tl-top">
-              <div>
-                <div class="tl-year">11/2021 — 03/2023</div>
-                <div class="tl-role">Graduate Structural Engineer</div>
-                <div class="tl-company">Clive Steele Partners | Clayton VIC</div>
-              </div>
-              <div class="tl-arrow"><i data-lucide="arrow-up-right" style="width:24px;height:24px;"></i></div>
-            </div>
-            <ul class="tl-list">
-              <li>Structural and civil design support across community and built environment assets.</li>
-              <li>Site inspections, QA evidence, and council coordination.</li>
-            </ul>
-          </div>
-
-          <div class="tl-item fade-up" data-id="c4">
-            <div class="tl-top">
-              <div>
-                <div class="tl-year">06/2020 — 10/2021</div>
-                <div class="tl-role">Graduate Civil Engineer</div>
-                <div class="tl-company">Structcom | Caulfield VIC</div>
-              </div>
-              <div class="tl-arrow"><i data-lucide="arrow-up-right" style="width:24px;height:24px;"></i></div>
-            </div>
-            <ul class="tl-list">
-              <li>Drainage design, OSD systems, grading and approvals coordination.</li>
-              <li>Drafting support and design documentation packages.</li>
-            </ul>
-          </div>
-
-          <div class="tl-item fade-up" data-id="c5">
-            <div class="tl-top">
-              <div>
-                <div class="tl-year">01/2019 — 07/2019</div>
-                <div class="tl-role">Engineering Cadet</div>
-                <div class="tl-company">Tata Projects | Mumbai, India</div>
-              </div>
-              <div class="tl-arrow"><i data-lucide="arrow-up-right" style="width:24px;height:24px;"></i></div>
-            </div>
-            <ul class="tl-list">
-              <li>QA/QC support for concrete and geotechnical testing on metro works.</li>
-              <li>Field inspections and reporting on construction progress.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TECH TOOLKIT (NEW) -->
-    <section id="toolkit">
-      <div class="section-header fade-up">
-        <span class="section-num">03 //</span>
-        <h2 class="section-title">Technical Toolkit</h2>
-      </div>
-
-      <div class="toolkit-grid fade-up">
-        <div class="tool-card">
-          <h3><i data-lucide="bar-chart-3"></i> Project Controls & Reporting</h3>
-          <div class="pill-list">
-            <span class="pill"><i data-lucide="check-circle"></i> MS Project</span>
-            <span class="pill"><i data-lucide="check-circle"></i> Primavera P6</span>
-            <span class="pill"><i data-lucide="check-circle"></i> MS Office</span>
-            <span class="pill"><i data-lucide="check-circle"></i> Power BI</span>
-            <span class="pill"><i data-lucide="check-circle"></i> Procore</span>
-            <span class="pill"><i data-lucide="check-circle"></i> Oracle NetSuite</span>
-            <span class="pill"><i data-lucide="check-circle"></i> IPM</span>
-          </div>
-        </div>
-
-        <div class="tool-card">
-          <h3><i data-lucide="pencil-ruler"></i> Drafting & Digital</h3>
-          <div class="pill-list">
-            <span class="pill"><i data-lucide="check-circle"></i> AutoCAD 2D</span>
-            <span class="pill"><i data-lucide="check-circle"></i> Civil 3D / Map 3D</span>
-            <span class="pill"><i data-lucide="check-circle"></i> 12d</span>
-            <span class="pill"><i data-lucide="check-circle"></i> Bluebeam</span>
-            <span class="pill"><i data-lucide="check-circle"></i> SketchUp</span>
-            <span class="pill"><i data-lucide="check-circle"></i> Drone / GPS Survey (field)</span>
-          </div>
-        </div>
-
-        <div class="tool-card">
-          <h3><i data-lucide="box"></i> Structural Analysis & Design</h3>
-          <div class="pill-list">
-            <span class="pill"><i data-lucide="check-circle"></i> SpaceGass</span>
-            <span class="pill"><i data-lucide="check-circle"></i> Microstran</span>
-            <span class="pill"><i data-lucide="check-circle"></i> Structural Toolkit</span>
-            <span class="pill"><i data-lucide="check-circle"></i> RAPT</span>
-            <span class="pill"><i data-lucide="check-circle"></i> MS Tower</span>
-            <span class="pill"><i data-lucide="check-circle"></i> Inducta</span>
-            <span class="pill"><i data-lucide="check-circle"></i> RAFT</span>
-            <span class="pill"><i data-lucide="check-circle"></i> STAAD Pro</span>
-          </div>
-        </div>
-
-        <div class="tool-card">
-          <h3><i data-lucide="shield"></i> Codes & Compliance</h3>
-          <div class="pill-list">
-            <span class="pill"><i data-lucide="check-circle"></i> NCC</span>
-            <span class="pill"><i data-lucide="check-circle"></i> Australian Standards</span>
-            <span class="pill"><i data-lucide="check-circle"></i> VicRoads</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Credentials (kept) -->
-    <section id="credentials">
-      <div class="section-header fade-up">
-        <span class="section-num">04 //</span>
-        <h2 class="section-title">Credentials & Clearances</h2>
-      </div>
-
-      <div class="credentials-grid fade-up">
-        <div class="cred-card">
-          <h3 class="cred-title"><i data-lucide="graduation-cap"></i> Academic Background</h3>
-          <div class="cred-item">
-            <h4>Master of Engineering Science (Structural)</h4>
-            <p>Swinburne University of Technology | 2019 - 2021</p>
-          </div>
-          <div class="cred-item">
-            <h4>Bachelor of Civil Engineering</h4>
-            <p>University of Pune, India | 2014 - 2018</p>
-          </div>
-        </div>
-
-        <div class="cred-card">
-          <h3 class="cred-title"><i data-lucide="award"></i> Professional Memberships</h3>
-          <ul class="cred-list">
-            <li><i data-lucide="check-circle"></i> Engineers Australia (MIEAust)</li>
-            <li><i data-lucide="check-circle"></i> Institution of Structural Engineers</li>
-            <li><i data-lucide="check-circle"></i> Project Management Institute (PMI)</li>
-          </ul>
-        </div>
-
-        <div class="cred-card">
-          <h3 class="cred-title"><i data-lucide="shield-check"></i> Site Clearances</h3>
-          <div class="tags-container">
-            <span class="cert-tag">White Card</span>
-            <span class="cert-tag">Working at Heights</span>
-            <span class="cert-tag">Confined Spaces</span>
-            <span class="cert-tag">Asbestos Safety</span>
-            <span class="cert-tag">Mental Health First Aider</span>
-            <span class="cert-tag">Gen AI for PMs</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT (TITLE FIXED) -->
-    <section id="contact" style="border-bottom:none;padding-bottom:2rem;">
-      <div class="section-header fade-up">
-        <span class="section-num">05 //</span>
-        <h2 class="section-title">Initiate Contact</h2>
-      </div>
-
-      <div class="contact-terminal fade-up">
-        <div class="terminal-header">
-          <div class="term-dot close"></div>
-          <div class="term-dot min"></div>
-          <div class="term-dot max"></div>
-          <div class="term-title">secure_transmission.exe</div>
-        </div>
-        <div class="terminal-body">
-          <form id="contactForm" onsubmit="sendEmail(event)">
-            <div class="input-group">
-              <label>> IDENTIFICATION (NAME)</label>
-              <input type="text" id="senderName" required placeholder="Enter your name...">
-            </div>
-            <div class="input-group">
-              <label>> TRANSMISSION PAYLOAD (MESSAGE)</label>
-              <textarea id="senderMessage" rows="3" required placeholder="Type your message here..."></textarea>
-            </div>
-            <button type="submit" class="terminal-btn">[ SEND TRANSMISSION ]</button>
-          </form>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <footer>
-    <div class="footer-wrap">
-      <div class="footer-logo">G.KALAL</div>
-      <div class="footer-links">
-        <a href="mailto:ganesh.r.kalal24@gmail.com">Email Me</a>
-        <a href="https://www.linkedin.com/in/ganesh-kalal/" target="_blank" rel="noopener">LinkedIn</a>
-      </div>
+        </section>
     </div>
-  </footer>
 
-  <!-- MODAL -->
-  <div id="projectModal" class="modal" aria-hidden="true">
-    <div class="modal-backdrop" id="modalBackdrop"></div>
-    <div class="modal-content">
-      <button class="modal-close" id="modalCloseBtn"><i data-lucide="x"></i></button>
-      <div class="card-tags" id="modalTags" style="margin-bottom:1.5rem;"></div>
-      <h2 id="modalTitle" class="modal-title"></h2>
-      <div class="modal-metrics-bar" id="modalMetrics"></div>
-
-      <div class="modal-split">
-        <div>
-          <h4 id="modalLeftTitle" style="color:var(--text-primary);text-transform:uppercase;letter-spacing:1px;margin-bottom:1.5rem;font-size:.9rem;">Overview</h4>
-          <ul id="modalLeftList" class="modal-list"></ul>
+    <div class="marquee-wrap fade-up">
+        <div class="marquee-inner">
+            <span>AS1170.2 Compliance</span><span class="accent-mark">✦</span>
+            <span>5G Infrastructure</span><span class="accent-mark">✦</span>
+            <span>Industrial Demolition</span><span class="accent-mark">✦</span>
+            <span>Structural Engineering</span><span class="accent-mark">✦</span>
+            <span>VicRoads Certified</span><span class="accent-mark">✦</span>
+            <span>AS 5100 Bridges</span><span class="accent-mark">✦</span>
+            <span>EOT Administration</span><span class="accent-mark">✦</span>
+            <span>Lattice Tower Design</span><span class="accent-mark">✦</span>
+            <span>AS1170.2 Compliance</span><span class="accent-mark">✦</span>
+            <span>5G Infrastructure</span><span class="accent-mark">✦</span>
+            <span>Industrial Demolition</span><span class="accent-mark">✦</span>
+            <span>Structural Engineering</span><span class="accent-mark">✦</span>
+            <span>VicRoads Certified</span><span class="accent-mark">✦</span>
+            <span>AS 5100 Bridges</span><span class="accent-mark">✦</span>
+            <span>EOT Administration</span><span class="accent-mark">✦</span>
+            <span>Lattice Tower Design</span><span class="accent-mark">✦</span>
         </div>
-        <div>
-          <h4 id="modalRightTitle" style="color:var(--text-primary);text-transform:uppercase;letter-spacing:1px;margin-bottom:1.5rem;font-size:.9rem;">Execution</h4>
-          <ul id="modalRightList" class="modal-list"></ul>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <script>
-    try {
-      lucide.createIcons();
+    <div class="wrap">
+        <section id="projects">
+            <div class="section-header fade-up">
+                <span class="section-num">01 //</span>
+                <h2 class="section-title scramble-text" data-text="Major Projects">Major Projects</h2>
+            </div>
 
-      function sendEmail(e){
-        e.preventDefault();
-        const name = document.getElementById('senderName').value;
-        const message = document.getElementById('senderMessage').value;
-        window.location.href =
-          `mailto:ganesh.r.kalal24@gmail.com?subject=Incoming%20Transmission%20from%20${encodeURIComponent(name)}&body=${encodeURIComponent(message)}`;
-      }
+            <div class="bento-grid fade-up" style="margin-bottom: 2rem;">
+                <div class="bento-card span-8" data-id="p1">
+                    <div class="card-img bento-bg" style="background-image: url('https://images.unsplash.com/photo-1578319439584-104c94d37305?auto=format&fit=crop&w=1200&q=80');"></div>
+                    <div class="bento-content">
+                        <div class="card-top">
+                            <div class="card-tags"><span class="card-tag hot">Mining</span><span class="card-tag dark">Remediation</span></div>
+                            <div class="card-arrow"><i data-lucide="arrow-up-right"></i></div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-num">Gove, NT | $300M+ Project Value</div>
+                            <h3 class="card-title">Rio Tinto Bauxite Refinery Closure</h3>
+                            <p class="card-desc">Managing Australia's largest industrial demolition project, executing heavy structural dismantling and precision explosive works safely.</p>
+                        </div>
+                    </div>
+                </div>
 
-      // Scroll animations
-      const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, observerOptions);
-      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+                <div class="bento-card span-4" data-id="p2">
+                    <div class="card-img bento-bg" style="background-image: url('https://images.unsplash.com/photo-1534398079543-7ae6d016b86c?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="bento-content">
+                        <div class="card-top">
+                            <div class="card-tags"><span class="card-tag">Oil & Gas</span></div>
+                            <div class="card-arrow"><i data-lucide="arrow-up-right"></i></div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-num">Altona, VIC | $65M Project Value</div>
+                            <h3 class="card-title">ExxonMobil Refinery Decommissioning</h3>
+                            <p class="card-desc">Leading technical evaluations and managing subcontractor packages for the safe removal of massive refinery assets.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-      // THEME (kept)
-      const themeBtn = document.getElementById('themeBtn');
-      const currentTheme = localStorage.getItem('theme') || 'dark';
-      document.body.setAttribute('data-theme', currentTheme);
-      themeBtn.addEventListener('click', () => {
-        const theme = document.body.getAttribute('data-theme');
-        const newTheme = theme === 'dark' ? 'light' : 'dark';
-        document.body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-      });
+            <div class="bento-grid fade-up" style="transition-delay: 0.1s;">
+                <div class="bento-card span-4" data-id="p3">
+                    <div class="card-img bento-bg" style="background-image: url('https://images.unsplash.com/photo-1544006659-f0b21884ce1d?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="bento-content">
+                        <div class="card-top">
+                            <div class="card-tags"><span class="card-tag">Telecom</span></div>
+                            <div class="card-arrow"><i data-lucide="arrow-up-right"></i></div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-num">National | $50M Project Value</div>
+                            <h3 class="card-title">National 5G Rollout</h3>
+                            <p class="card-desc">Structurally cleared 150+ telecom tower upgrades to AS1170.2 standards across 20+ jurisdictions.</p>
+                        </div>
+                    </div>
+                </div>
 
-      /* =========================================================
-         PROCEDURAL "WIREFRAME CITY" BACKGROUND (NO IMAGE)
-         - Isometric grid
-         - Wireframe boxes that "build up" from 0 to full height
-         - Floating data points and faint labels
-         - Matches your reference vibe (blue 3D skyline / data grid)
-      ========================================================= */
-      const canvas = document.getElementById('bg-canvas');
-      const ctx = canvas.getContext('2d', { alpha: true });
+                <div class="bento-card span-4" data-id="p4">
+                    <div class="card-img bento-bg" style="background-image: url('https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="bento-content">
+                        <div class="card-top">
+                            <div class="card-tags"><span class="card-tag">Infrastructure</span><span class="card-tag dark">QA/QC</span></div>
+                            <div class="card-arrow"><i data-lucide="arrow-up-right"></i></div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-num">VIC & India | Urban Transport</div>
+                            <h3 class="card-title">Major Civil Infrastructure</h3>
+                            <p class="card-desc">Achieved zero non-conformances on the West Gate Freeway Upgrade and executed deep foundation QA on the Mumbai Metro.</p>
+                        </div>
+                    </div>
+                </div>
 
-      let W = 0, H = 0, DPR = Math.min(2, window.devicePixelRatio || 1);
+                <div class="bento-card span-4" data-id="p5">
+                    <div class="card-img bento-bg" style="background-image: url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="bento-content">
+                        <div class="card-top">
+                            <div class="card-tags"><span class="card-tag">Commercial</span></div>
+                            <div class="card-arrow"><i data-lucide="arrow-up-right"></i></div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-num">Victoria | Built Environment</div>
+                            <h3 class="card-title">Retail Fitouts & Residential</h3>
+                            <p class="card-desc">Designed stormwater (OSD) systems and provided structural drafting for high-traffic retail builds including KFC.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-      function resizeCanvas(){
-        DPR = Math.min(2, window.devicePixelRatio || 1);
-        W = Math.floor(window.innerWidth);
-        H = Math.floor(window.innerHeight);
-        canvas.width = Math.floor(W * DPR);
-        canvas.height = Math.floor(H * DPR);
-        canvas.style.width = W + 'px';
-        canvas.style.height = H + 'px';
-        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      }
-      window.addEventListener('resize', resizeCanvas);
-      resizeCanvas();
+        <section id="career">
+            <div class="section-header fade-up">
+                <span class="section-num">02 //</span>
+                <h2 class="section-title scramble-text" data-text="Professional Experience">Professional Experience</h2>
+            </div>
 
-      function rand(min, max){ return Math.random() * (max - min) + min; }
+            <div class="career-grid">
+                
+                <div class="career-card featured fade-up" data-id="c1">
+                    <div class="c-head">
+                        <div>
+                            <div class="c-year">03/2024 — Present</div>
+                            <div class="c-role">Project Engineer</div>
+                            <div class="c-company">Liberty Industrial | Altona VIC / Gove NT</div>
+                        </div>
+                        <i data-lucide="arrow-up-right" style="color: var(--accent); width: 32px; height: 32px;"></i>
+                    </div>
+                    <p class="c-impact">
+                        Spearheaded the safe delivery of the Southern Hemisphere's largest controlled explosive demolition. Successfully administered <strong>$8M+ in commercial variations</strong> while introducing GPS/drone topographic surveys that improved earthwork remediation accuracy by 25%.
+                    </p>
+                </div>
 
-      // Isometric projection
-      function iso(x, y, z){
-        // tweak these for perspective feel
-        const scale = Math.min(W, H) * 0.018;        // overall size
-        const sx = (x - y) * scale + W * 0.52;      // center slightly right
-        const sy = (x + y) * scale * 0.52 + H * 0.42 - z;
-        return { x: sx, y: sy };
-      }
+                <div class="career-card fade-up" data-id="c2" style="transition-delay: 0.1s;">
+                    <div class="c-head">
+                        <div>
+                            <div class="c-year">04/2023 — 03/2024</div>
+                            <div class="c-role">Structural Project Engineer</div>
+                            <div class="c-company">Indara | Melbourne VIC</div>
+                        </div>
+                        <i data-lucide="arrow-up-right" style="color: var(--accent); width: 24px; height: 24px;"></i>
+                    </div>
+                    <p class="c-impact">
+                        Led structural design and compliance for 150+ national 5G telecom upgrades. Ensured rigorous adherence to <strong>AS1170.2 wind codes</strong> and successfully secured planning approvals across 20+ council jurisdictions.
+                    </p>
+                </div>
 
-      // Build a city set
-      const city = [];
-      const gridSize = 12;         // 12x12 cells
-      const spacing = 1.0;
+                <div class="career-card fade-up" data-id="c3" style="transition-delay: 0.2s;">
+                    <div class="c-head">
+                        <div>
+                            <div class="c-year">11/2021 — 03/2023</div>
+                            <div class="c-role">Graduate Structural Engineer</div>
+                            <div class="c-company">Clive Steele Partners | Clayton VIC</div>
+                        </div>
+                        <i data-lucide="arrow-up-right" style="color: var(--accent); width: 24px; height: 24px;"></i>
+                    </div>
+                    <p class="c-impact">
+                        Engineered reinforced concrete infrastructure for the West Gate Freeway upgrade. Achieved <strong>zero non-conformances</strong> across 100+ installations by enforcing strict VicRoads and AS 5100 standards.
+                    </p>
+                </div>
 
-      function seedCity(){
-        city.length = 0;
-        for(let gx=0; gx<gridSize; gx++){
-          for(let gy=0; gy<gridSize; gy++){
-            // bias: taller nearer "center" of city
-            const cx = (gx - gridSize/2);
-            const cy = (gy - gridSize/2);
-            const dist = Math.sqrt(cx*cx + cy*cy);
-            const heightMax = Math.max(22, 90 - dist * 7);
+                <div class="career-card fade-up" data-id="c4">
+                    <div class="c-head">
+                        <div>
+                            <div class="c-year">06/2020 — 10/2021</div>
+                            <div class="c-role">Graduate Civil Engineer</div>
+                            <div class="c-company">Structcom | Caulfield VIC</div>
+                        </div>
+                        <i data-lucide="arrow-up-right" style="color: var(--accent); width: 24px; height: 24px;"></i>
+                    </div>
+                    <p class="c-impact">
+                        Designed complex stormwater management (OSD) and site grading for municipal and commercial assets. Streamlined documentation to accelerate council approval timelines by <strong>25%</strong>.
+                    </p>
+                </div>
 
-            // random "plot selection"
-            if(Math.random() < 0.22) continue;
+                <div class="career-card fade-up" data-id="c5" style="transition-delay: 0.1s;">
+                    <div class="c-head">
+                        <div>
+                            <div class="c-year">01/2019 — 07/2019</div>
+                            <div class="c-role">Engineering Cadet</div>
+                            <div class="c-company">Tata Projects | Mumbai, India</div>
+                        </div>
+                        <i data-lucide="arrow-up-right" style="color: var(--accent); width: 24px; height: 24px;"></i>
+                    </div>
+                    <p class="c-impact">
+                        Executed critical QA/QC protocols for Mumbai Metro's deep foundation works. Oversaw <strong>Dynamic Load Testing (DLT)</strong> and Pile Integrity Testing (PIT) in a high-density urban environment.
+                    </p>
+                </div>
 
-            city.push({
-              x: (gx - gridSize/2) * spacing,
-              y: (gy - gridSize/2) * spacing,
-              w: rand(0.55, 0.95),
-              d: rand(0.55, 0.95),
-              hTarget: rand(10, heightMax),
-              h: 0,
-              build: rand(0.6, 1.4),
-              phase: rand(0, Math.PI*2),
-              label: (Math.random() < 0.12) ? (Math.floor(rand(12, 98)) + "." + Math.floor(rand(0,9))) : null
+            </div>
+        </section>
+
+        <section id="credentials">
+            <div class="section-header fade-up">
+                <span class="section-num">03 //</span>
+                <h2 class="section-title scramble-text" data-text="Credentials & Clearances">Credentials & Clearances</h2>
+            </div>
+            
+            <div class="credentials-grid fade-up">
+                <div class="cred-card">
+                    <h3 class="cred-title"><i data-lucide="graduation-cap"></i> Academic Backbone</h3>
+                    <div class="cred-item">
+                        <h4>Master of Engineering Science (Structural)</h4>
+                        <p>Swinburne University of Technology | 2019 - 2021</p>
+                    </div>
+                    <div class="cred-item">
+                        <h4>Bachelor of Civil Engineering</h4>
+                        <p>University of Pune, India | 2014 - 2018</p>
+                    </div>
+                </div>
+                
+                <div class="cred-card">
+                    <h3 class="cred-title"><i data-lucide="award"></i> Professional Authority</h3>
+                    <ul class="cred-list">
+                        <li><i data-lucide="check-circle"></i> Engineers Australia (MIEAust)</li>
+                        <li><i data-lucide="check-circle"></i> Project Management Institute (PMI)</li>
+                        <li><i data-lucide="check-circle"></i> Institution of Structural Engineers</li>
+                        <li><i data-lucide="check-circle"></i> Concrete Institute of Australia</li>
+                    </ul>
+                </div>
+                
+                <div class="cred-card">
+                    <h3 class="cred-title"><i data-lucide="shield-check"></i> Site Clearances</h3>
+                    <div class="tags-container">
+                        <span class="cert-tag">White Card</span>
+                        <span class="cert-tag">Working at Heights</span>
+                        <span class="cert-tag">Confined Spaces</span>
+                        <span class="cert-tag">Asbestos Safety</span>
+                        <span class="cert-tag">Mental Health First Aider</span>
+                        <span class="cert-tag">Gen AI for PMs</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" style="border-bottom: none; padding-bottom: 2rem;">
+            <div class="section-header fade-up" style="justify-content: center; text-align: center;">
+                <span class="section-num">04 //</span>
+                <h2 class="section-title scramble-text" data-text="Initiate Contact">Initiate Contact</h2>
+            </div>
+            
+            <div class="contact-terminal fade-up">
+                <div class="terminal-header">
+                    <div class="term-dot close"></div>
+                    <div class="term-dot min"></div>
+                    <div class="term-dot max"></div>
+                    <div class="term-title">secure_transmission.exe</div>
+                </div>
+                <div class="terminal-body">
+                    <form id="contactForm" onsubmit="sendEmail(event)">
+                        <div class="input-group">
+                            <label>> IDENTIFICATION (NAME / COMPANY)</label>
+                            <input type="text" id="senderName" required placeholder="Enter your credentials...">
+                        </div>
+                        <div class="input-group">
+                            <label>> TRANSMISSION PAYLOAD (MESSAGE)</label>
+                            <textarea id="senderMessage" rows="4" required placeholder="Type your project inquiry here..."></textarea>
+                        </div>
+                        <button type="submit" class="terminal-btn">
+                            [ SEND TRANSMISSION TO GANESH ]
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="wrap" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <div class="footer-logo">GANESH.K</div>
+            <div class="footer-links">
+                <a href="mailto:ganesh.r.kalal24@gmail.com">Email Me</a>
+                <a href="https://www.linkedin.com/in/ganesh-kalal/" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="projectModal" class="modal" aria-hidden="true">
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalCloseBtn"><i data-lucide="x"></i></button>
+            <div class="card-tags" id="modalTags" style="margin-bottom: 1.5rem;"></div>
+            <h2 id="modalTitle" class="modal-title"></h2>
+            <div class="modal-metrics-bar" id="modalMetrics"></div>
+            
+            <div class="modal-split">
+                <div>
+                    <h4 id="modalLeftTitle" style="color: var(--text-primary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 1.5rem; font-size: 1rem;">Scope & Architecture</h4>
+                    <ul id="modalLeftList" class="modal-list"></ul>
+                </div>
+                <div>
+                    <h4 id="modalRightTitle" style="color: var(--text-primary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 1.5rem; font-size: 1rem;">Execution & Outcomes</h4>
+                    <ul id="modalRightList" class="modal-list"></ul>
+                </div>
+            </div>
+
+            <div id="modalLinksContainer" style="display: none; margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 2rem;">
+                <h4 style="color: var(--text-primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem; font-size: 1rem;">External References</h4>
+                <div id="modalLinks" style="display: flex; gap: 1rem; flex-wrap: wrap;"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        try {
+            // 1. ICONS
+            lucide.createIcons();
+
+            // 2. TERMINAL EMAIL FUNCTION
+            function sendEmail(e) {
+                e.preventDefault();
+                const name = document.getElementById('senderName').value;
+                const message = document.getElementById('senderMessage').value;
+                window.location.href = `mailto:ganesh.r.kalal24@gmail.com?subject=Incoming Transmission from ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}`;
+            }
+
+            // 3. NATIVE SCROLL ANIMATIONS
+            const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        
+                        if (entry.target.classList.contains('scramble-text') && !entry.target.hasAttribute('data-scrambled')) {
+                            entry.target.setAttribute('data-scrambled', 'true');
+                            const original = entry.target.getAttribute('data-text');
+                            if (original) {
+                                const chars = '!<>-_\\\\/[]{}—=+*^?#________';
+                                let iter = 0; const maxIter = 15;
+                                const interval = setInterval(() => {
+                                    entry.target.innerText = original.split('').map((c, i) => {
+                                        if(c === ' ') return ' ';
+                                        if(i < (iter/maxIter)*original.length) return c;
+                                        return chars[Math.floor(Math.random() * chars.length)];
+                                    }).join('');
+                                    iter++;
+                                    if(iter > maxIter) clearInterval(interval);
+                                }, 40);
+                            }
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-up, .scramble-text').forEach(el => observer.observe(el));
+
+            // 4. TRUE 3D PERSPECTIVE WIREFRAME BACKGROUND
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            let w, h;
+            
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            // Create a 3D grid of points
+            const gridPoints = [];
+            const rows = 30;
+            const cols = 30;
+            const spacing = 150;
+            
+            for(let i=0; i<rows; i++) {
+                for(let j=0; j<cols; j++) {
+                    let x = (j - cols/2) * spacing;
+                    let z = i * spacing;
+                    // Generate occasional "buildings" (spikes in Y axis)
+                    let y = Math.random() > 0.85 ? Math.random() * -400 - 100 : Math.random() * -20;
+                    gridPoints.push({x, y, z, origY: y});
+                }
+            }
+
+            let scrollOffset = 0;
+            window.addEventListener('scroll', () => {
+                scrollOffset = window.scrollY;
             });
-          }
+
+            function animateBg() {
+                const isLight = document.body.getAttribute('data-theme') === 'light';
+                ctx.fillStyle = isLight ? '#f8fafc' : '#020308'; 
+                ctx.fillRect(0, 0, w, h);
+
+                const glowColor = isLight ? 'rgba(2, 132, 199, 0.15)' : 'rgba(0, 240, 255, 0.25)'; 
+                ctx.strokeStyle = glowColor;
+                ctx.lineWidth = 1;
+
+                const fov = 350;
+                const cameraY = -150; 
+                // Camera moves forward on Z axis based on scroll!
+                const cameraZ = -100 + (scrollOffset * 0.8);
+
+                ctx.beginPath();
+                
+                // Draw horizontal lines
+                for(let i=0; i<rows; i++) {
+                    let prevX, prevY;
+                    let lineValid = false;
+                    
+                    for(let j=0; j<cols; j++) {
+                        let pt = gridPoints[i * cols + j];
+                        
+                        // Relative to camera
+                        let dz = pt.z - cameraZ;
+                        
+                        // Loop the grid infinitely
+                        while(dz < 10) dz += (rows * spacing);
+                        while(dz > (rows * spacing)) dz -= (rows * spacing);
+                        
+                        if (dz > 10) {
+                            let scale = fov / dz;
+                            let sx = (pt.x * scale) + (w / 2);
+                            let sy = ((pt.y - cameraY) * scale) + (h / 1.5); // Center lower
+                            
+                            if (lineValid) {
+                                ctx.lineTo(sx, sy);
+                            } else {
+                                ctx.moveTo(sx, sy);
+                                lineValid = true;
+                            }
+                        } else {
+                            lineValid = false;
+                        }
+                    }
+                }
+                
+                // Draw vertical data streams (buildings)
+                for(let i=0; i<gridPoints.length; i++) {
+                    let pt = gridPoints[i];
+                    if (pt.origY < -100) { // If it's a building
+                        let dz = pt.z - cameraZ;
+                        while(dz < 10) dz += (rows * spacing);
+                        while(dz > (rows * spacing)) dz -= (rows * spacing);
+                        
+                        if (dz > 10) {
+                            let scale = fov / dz;
+                            let sx = (pt.x * scale) + (w / 2);
+                            let syTop = ((pt.y - cameraY) * scale) + (h / 1.5);
+                            let syBot = ((0 - cameraY) * scale) + (h / 1.5);
+                            
+                            ctx.moveTo(sx, syBot);
+                            ctx.lineTo(sx, syTop);
+                        }
+                    }
+                }
+                
+                ctx.stroke();
+
+                requestAnimationFrame(animateBg);
+            }
+            animateBg();
+
+            // 5. MODAL LOGIC (Deep CV Data Integration)
+            const siteData = {
+                "p1": {
+                    title: "Rio Tinto Bauxite Refinery Closure", tags: ["Mining", "Demolition", "Remediation"], meta: "Gove, NT | 2024 - Present | $300M+",
+                    leftTitle: "Scope & Architecture", rightTitle: "Execution & Outcomes",
+                    left: ["Project Engineer on Australia's largest industrial closure project.", "Prepared procurement documentation and reviewed structural design packages for AS 3600 & AS 4100 compliances.", "Supported environmental controls, risk management, and stakeholder engagement."],
+                    right: ["Delivered works to Rio Tinto's strict standards for safety and responsible site closure.", "Contributed heavily to massive mechanical and explosive demolition planning.", "Organised and executed massive scrap steel load-out logistics."],
+                    links: [ { title: "Rio Tinto Recycling Record Steel", url: "https://libertyindustrial.com/" } ]
+                },
+                "p2": {
+                    title: "ExxonMobil Refinery Decommissioning", tags: ["Oil & Gas", "Demolition"], meta: "Altona, VIC | 2024 - Present | $65M+",
+                    leftTitle: "Scope & Architecture", rightTitle: "Execution & Outcomes",
+                    left: ["Project Engineer managing subcontractor packages and on-site civil/structural works.", "Prepared SOWs/RFQs and conducted technical & commercial evaluation of 15+ tender submissions.", "Supported the safe decommissioning of major refinery assets including stacks, LPG tanks, boilers and pipe racks."],
+                    right: ["Reviewed and approved contractor designs.", "Negotiated and technically justified contract variations totaling $8M+.", "Supervised on-site concrete demolition works and coordinated statutory approvals with Hobsons Bay City Council."]
+                },
+                "p3": {
+                    title: "National 5G Telecom Rollout", tags: ["Telecom", "Structural"], meta: "National | 2023 - 2024 | $50M",
+                    leftTitle: "Scope & Architecture", rightTitle: "Execution & Outcomes",
+                    left: ["Led structural design coordination for 150+ tower upgrades.", "Conducted technical evaluation of subcontractor proposals and ITPs.", "Designed steel headframes for telecom structures."],
+                    right: ["Delivered lattice tower and pole upgrades ensuring AS1170.2 compliance.", "Managed trenching interfaces and civil coordination for fibre backhaul.", "Secured statutory planning approvals from 20+ councils, reducing approval cycles by 20%."]
+                },
+                "p4": {
+                    title: "Major Civil Infrastructure", tags: ["Infrastructure", "QA/QC"], meta: "VIC & India | 2018 - 2023",
+                    leftTitle: "Scope & Architecture", rightTitle: "Execution & Outcomes",
+                    left: ["West Gate Freeway: Structural design support and QA verification of reinforced concrete crash barriers.", "Provided input on temporary works including formwork detailing, access scaffolding, and construction sequence planning.", "Mumbai Metro Lines 4 & 5: Supported independent verification on elevated viaducts and monitored tunnel alignment (TBM)."],
+                    right: ["Achieved zero non-conformances across 100+ structural installations on West Gate Freeway.", "Performed concrete QA/QC for deep foundations (slump testing).", "Conducted Dynamic Load Testing (DLT) and Pile Integrity Testing (PIT) to evaluate load bearing capacity and structural soundness."]
+                },
+                "p5": {
+                    title: "Commercial Fitouts & Residential", tags: ["Commercial", "Residential", "Fitout"], meta: "Victoria | 2020 - 2021",
+                    leftTitle: "Scope & Architecture", rightTitle: "Execution & Outcomes",
+                    left: ["Structural design and drafting for retail fitouts including KFC and Hungry Jack's.", "Drafted floor plans, connection details, and elevations for residential projects."],
+                    right: ["Designed stormwater drainage, OSD systems, and overall site grading.", "Resolved compliance issues with contractors and architects, minimising delays."]
+                },
+                "c1": {
+                    title: "Project Engineer", tags: ["Delivery", "Demolition", "Civil"], meta: "Liberty Industrial | 03/2024 - Present",
+                    leftTitle: "Core Responsibilities", rightTitle: "Key Achievements",
+                    left: ["Coordinated planning, sequencing, and delivery of heavy civil & structural works on $100M+ industrial projects.", "Prepared SOWs, RFQs, ITPs, and managed technical queries, RFIs, and engineering coordination.", "Produced weekly PMO reports covering cost, schedule, risk management, and statutory approvals."],
+                    right: ["Successfully carried out the biggest controlled explosive demolition in the Southern Hemisphere ensuring 100% safety compliance.", "Verified progress claims, lead safety audits, and administered budget variations of $8M+.", "Introduced GPS-based topographic surveys along with aerial drones, improving accuracy by 25%."]
+                },
+                "c2": {
+                    title: "Structural Project Engineer", tags: ["Telecom", "Design"], meta: "Indara | 04/2023 - 03/2024",
+                    leftTitle: "Core Responsibilities", rightTitle: "Key Achievements",
+                    left: ["Delivered 150+ telecom infrastructure upgrades including structural design, analysis, and fabrication coordination.", "Reviewed structural drawings and ITPs for AS/NZS 1170 & 4100 compliance and conducted field inspections.", "Supported tender evaluation, provided technical input to contract negotiations."],
+                    right: ["Secured statutory approvals from 20+ councils for national 5G rollouts.", "Designed steel headframes for telecom structures, ensuring compliance with AS4100 & AS1170.2.", "Conducted safety audits for remote telecom infrastructures, identifying risks and implementing remedial actions."]
+                },
+                "c3": {
+                    title: "Graduate Structural Engineer", tags: ["Structural", "Civil"], meta: "Clive Steele Partners | 11/2021 - 03/2023",
+                    leftTitle: "Core Responsibilities", rightTitle: "Key Achievements",
+                    left: ["Designed reinforced concrete elements (barriers, walls, foundations, slabs) to AS 3600 and prepared construction drawings.", "Reviewed subcontractor shop drawings and supervised on-site concrete works including quality testing.", "Coordinated approvals with councils, organised geotechnical surveys and DBYD searches."],
+                    right: ["Delivered components for West Gate Freeway (precast noise walls, RRC barriers) to VicRoads design standards.", "Reduced approval timelines by 20% through streamlined documentation.", "Conducted over 100 inspections and produced remedial strategies for community and residential assets."]
+                },
+                "c4": {
+                    title: "Graduate Civil Engineer", tags: ["Drainage", "Civil"], meta: "Structcom | 06/2020 - 10/2021",
+                    leftTitle: "Core Responsibilities", rightTitle: "Key Achievements",
+                    left: ["Supported structural design and drafting for community centres, pavilions, courts and public transport assets.", "Designed stormwater drainage, OSD systems, and overall site grading.", "Drafted floor plans, connection details, and elevations for residential projects."],
+                    right: ["Delivered drainage, utilities and municipal infrastructure renewal projects in compliance with MRPV/VicRoads specifications.", "Coordinated approvals with council officers & developers; organised land surveys, Geotech, DBYD."]
+                },
+                "c5": {
+                    title: "Engineering Cadet", tags: ["QA/QC", "Supervision"], meta: "Tata Projects | 01/2019 - 07/2019",
+                    leftTitle: "Core Responsibilities", rightTitle: "Key Achievements",
+                    left: ["Supported QA/QC for mass concrete pours including slump and dimensional checks.", "Assisted in pile integrity and dynamic load testing for deep foundations.", "Monitored excavation safety and installation of bearings and precast bridge elements."],
+                    right: ["Supported construction of underground metro tunnels, including TBM-related works, shafts, and tunnel lining interfaces.", "Supervised bridge piling and reinforced concrete substructure works, including piles and pile caps in dense urban environments."]
+                }
+            };
+
+            const modal = document.getElementById('projectModal');
+            
+            document.querySelectorAll('.bento-card, .career-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const id = card.getAttribute('data-id');
+                    const data = siteData[id];
+                    if(!data) return; 
+
+                    document.getElementById('modalTitle').textContent = data.title;
+                    document.getElementById('modalMetrics').textContent = data.meta;
+                    document.getElementById('modalTags').innerHTML = data.tags.map(t => `<span class="card-tag" style="background:var(--accent); color:#000; padding:0.4rem 1rem; border-radius:99px; font-size:0.85rem; font-weight:700; text-transform:uppercase;">${t}</span>`).join('');
+                    
+                    document.getElementById('modalLeftTitle').textContent = data.leftTitle;
+                    document.getElementById('modalRightTitle').textContent = data.rightTitle;
+                    
+                    document.getElementById('modalLeftList').innerHTML = data.left.map(b => `<li>${b}</li>`).join('');
+                    document.getElementById('modalRightList').innerHTML = data.right.map(b => `<li>${b}</li>`).join('');
+
+                    // Render Links if they exist
+                    const linksContainer = document.getElementById('modalLinksContainer');
+                    const linksDiv = document.getElementById('modalLinks');
+                    if (data.links && data.links.length > 0) {
+                        linksContainer.style.display = 'block';
+                        linksDiv.innerHTML = data.links.map(l => 
+                            `<a href="${l.url}" target="_blank" class="external-link-btn">
+                                <i data-lucide="external-link" style="width: 18px; height: 18px;"></i> ${l.title}
+                            </a>`
+                        ).join('');
+                        lucide.createIcons(); 
+                    } else {
+                        linksContainer.style.display = 'none';
+                        linksDiv.innerHTML = '';
+                    }
+
+                    modal.classList.add('open');
+                    document.body.style.overflow = 'hidden'; 
+                });
+            });
+
+            function closeModal() {
+                modal.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+            document.getElementById('modalBackdrop').addEventListener('click', closeModal);
+            document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+
+            // 6. SAFE TOUCH CURSOR
+            if(window.matchMedia("(pointer: fine)").matches) {
+                document.body.classList.add('custom-cursor-active');
+                const cursor = document.getElementById('cursorDot');
+                const ring = document.getElementById('cursorRing');
+                let mx = window.innerWidth/2, my = window.innerHeight/2, rx = mx, ry = my;
+
+                window.addEventListener('mousemove', e => {
+                    mx = e.clientX; my = e.clientY;
+                    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+                });
+
+                function animateRing() {
+                    rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+                    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+                    requestAnimationFrame(animateRing);
+                }
+                animateRing();
+
+                document.querySelectorAll('a, button, input, textarea, .bento-card, .career-card, .modal-close').forEach(el => {
+                    el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+                    el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+                });
+            }
+
+            // 7. LIGHT / DARK MODE
+            const themeBtn = document.getElementById('themeBtn');
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            document.body.setAttribute('data-theme', currentTheme);
+
+            themeBtn.addEventListener('click', () => {
+                let theme = document.body.getAttribute('data-theme');
+                let newTheme = theme === 'dark' ? 'light' : 'dark';
+                document.body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+        } catch (e) {
+            console.error(e);
         }
-      }
-      seedCity();
-
-      // draw helpers
-      function strokeLine(a, b, alpha, width){
-        ctx.globalAlpha = alpha;
-        ctx.lineWidth = width;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
-      }
-
-      function drawWireBox(b, accentRGB, lineAlpha){
-        // corners on ground (z=0)
-        const x0 = b.x, y0 = b.y;
-        const x1 = b.x + b.w, y1 = b.y;
-        const x2 = b.x + b.w, y2 = b.y + b.d;
-        const x3 = b.x, y3 = b.y + b.d;
-
-        const z = b.h;
-
-        const p0 = iso(x0, y0, 0);
-        const p1 = iso(x1, y1, 0);
-        const p2 = iso(x2, y2, 0);
-        const p3 = iso(x3, y3, 0);
-
-        const t0 = iso(x0, y0, z);
-        const t1 = iso(x1, y1, z);
-        const t2 = iso(x2, y2, z);
-        const t3 = iso(x3, y3, z);
-
-        // base
-        ctx.strokeStyle = `rgba(${accentRGB}, ${lineAlpha})`;
-        strokeLine(p0, p1, 1, 1);
-        strokeLine(p1, p2, 1, 1);
-        strokeLine(p2, p3, 1, 1);
-        strokeLine(p3, p0, 1, 1);
-
-        // verticals
-        strokeLine(p0, t0, 0.9, 1);
-        strokeLine(p1, t1, 0.9, 1);
-        strokeLine(p2, t2, 0.9, 1);
-        strokeLine(p3, t3, 0.9, 1);
-
-        // top
-        strokeLine(t0, t1, 1, 1);
-        strokeLine(t1, t2, 1, 1);
-        strokeLine(t2, t3, 1, 1);
-        strokeLine(t3, t0, 1, 1);
-
-        // glowing vertical edge
-        ctx.strokeStyle = `rgba(${accentRGB}, ${Math.min(0.65, lineAlpha + 0.18)})`;
-        strokeLine(p1, t1, 1, 2);
-
-        // points (nodes)
-        ctx.fillStyle = `rgba(${accentRGB}, ${0.9})`;
-        ctx.globalAlpha = 0.35;
-        [t0,t1,t2,t3].forEach(pt=>{
-          ctx.beginPath();
-          ctx.arc(pt.x, pt.y, 2, 0, Math.PI*2);
-          ctx.fill();
-        });
-        ctx.globalAlpha = 1;
-
-        // optional label
-        if(b.label){
-          ctx.globalAlpha = 0.65;
-          ctx.font = '12px ' + getComputedStyle(document.body).getPropertyValue('--font-heading');
-          ctx.fillStyle = `rgba(${accentRGB}, 0.85)`;
-          ctx.fillText(b.label, t2.x + 6, t2.y - 6);
-          ctx.globalAlpha = 1;
-        }
-      }
-
-      function drawIsoGrid(accentRGB){
-        const scale = Math.min(W, H) * 0.018;
-        const gridCount = 22;
-
-        ctx.globalAlpha = 0.18;
-        ctx.lineWidth = 1;
-
-        // two sets of diagonal lines to make the isometric "mesh"
-        ctx.strokeStyle = `rgba(${accentRGB}, 0.18)`;
-        for(let i=-gridCount;i<=gridCount;i++){
-          const a = iso(-gridCount, i, 0);
-          const b = iso(gridCount, i, 0);
-          strokeLine(a, b, 1, 1);
-        }
-        for(let i=-gridCount;i<=gridCount;i++){
-          const a = iso(i, -gridCount, 0);
-          const b = iso(i, gridCount, 0);
-          strokeLine(a, b, 1, 1);
-        }
-
-        // subtle depth fade
-        const fade = ctx.createLinearGradient(0, H*0.2, 0, H);
-        fade.addColorStop(0, `rgba(0,0,0,0)`);
-        fade.addColorStop(1, `rgba(0,0,0,0.25)`);
-        ctx.fillStyle = fade;
-        ctx.globalAlpha = 1;
-        ctx.fillRect(0,0,W,H);
-      }
-
-      // floating particles
-      const particles = Array.from({length: 90}).map(()=>({
-        x: rand(0, W),
-        y: rand(0, H),
-        vx: rand(-0.12, 0.12),
-        vy: rand(-0.08, 0.08),
-        a: rand(0.12, 0.45)
-      }));
-
-      let lastT = performance.now();
-      function animateBg(t){
-        const dt = Math.min(0.05, (t - lastT) / 1000);
-        lastT = t;
-
-        const isLight = document.body.getAttribute('data-theme') === 'light';
-        const accentRGB = isLight ? "2,132,199" : "0,240,255";
-
-        // clear with slight trail (gives the “digital glow”)
-        ctx.fillStyle = isLight ? "rgba(248,250,252,0.18)" : "rgba(2,3,8,0.22)";
-        ctx.fillRect(0, 0, W, H);
-
-        // grid
-        drawIsoGrid(accentRGB);
-
-        // particles
-        ctx.globalAlpha = 0.8;
-        ctx.fillStyle = `rgba(${accentRGB}, 0.55)`;
-        particles.forEach(p=>{
-          p.x += p.vx * (60*dt);
-          p.y += p.vy * (60*dt);
-          if(p.x < -10) p.x = W + 10;
-          if(p.x > W + 10) p.x = -10;
-          if(p.y < -10) p.y = H + 10;
-          if(p.y > H + 10) p.y = -10;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, 1.2, 0, Math.PI*2);
-          ctx.fill();
-        });
-        ctx.globalAlpha = 1;
-
-        // “build” animation
-        const buildSpeed = 18; // higher = faster construction
-        let completed = 0;
-
-        for(const b of city){
-          // gently pulse target height a bit
-          const wobble = 1 + Math.sin(t/1100 + b.phase) * 0.03;
-          const target = b.hTarget * wobble;
-
-          b.h += (target - b.h) * (dt * b.build);
-          // add staged build feel: if near target, snap and count complete
-          if(Math.abs(target - b.h) < 0.6) completed++;
-
-          // draw wireframe box
-          const alpha = isLight ? 0.32 : 0.42;
-          drawWireBox(b, accentRGB, alpha);
-        }
-
-        // once most are complete, restart construction cycle (feels like “build start to end”)
-        if(completed > city.length * 0.92){
-          // reset heights slowly so it feels like rebuild
-          for(const b of city){ b.h *= 0.08; }
-          // occasional reseed so skyline changes
-          if(Math.random() < 0.12) seedCity();
-        }
-
-        requestAnimationFrame(animateBg);
-      }
-      requestAnimationFrame(animateBg);
-
-      // MODAL DATA (your existing siteData kept)
-      const siteData = {
-        "p1": {
-          title: "Rio Tinto Bauxite Refinery Closure",
-          tags: ["Mining", "Demolition", "Remediation"],
-          meta: "Gove, NT | 2024 - Present | $300M+",
-          leftTitle: "Scope & Architecture",
-          rightTitle: "Execution & Outcomes",
-          left: [
-            "Project Engineer on major industrial closure works with demolition and remediation interfaces.",
-            "Prepared procurement documentation and reviewed structural design packages for compliance and execution readiness.",
-            "Supported environmental controls, risk management and stakeholder coordination."
-          ],
-          right: [
-            "Coordinated safe work planning and subcontractor execution across high risk workfronts.",
-            "Supported demolition sequencing and site readiness for shutdown and handover activities.",
-            "Organised heavy logistics interfaces including scrap steel load-out workflows."
-          ]
-        },
-        "p2": {
-          title: "ExxonMobil Refinery Decommissioning",
-          tags: ["Oil & Gas", "Demolition"],
-          meta: "Altona, VIC | 2024 - Present | $65M",
-          leftTitle: "Scope & Architecture",
-          rightTitle: "Execution & Outcomes",
-          left: [
-            "Project Engineer managing subcontractor packages and on-site civil and structural works.",
-            "Prepared SOWs/RFQs and supported technical and commercial evaluation of tender submissions.",
-            "Supported safe decommissioning of refinery assets including pipe racks and demolition scopes."
-          ],
-          right: [
-            "Reviewed contractor designs and managed delivery interfaces.",
-            "Supported variation assessments and commercial documentation.",
-            "Coordinated site activities with statutory and local authority requirements."
-          ]
-        },
-        "p3": {
-          title: "National 5G Telecom Rollout",
-          tags: ["Telecom", "Structural"],
-          meta: "Australia | 2023 - 2024",
-          leftTitle: "Scope & Architecture",
-          rightTitle: "Execution & Outcomes",
-          left: [
-            "Structural design coordination for tower upgrades and site modifications.",
-            "Site inspections and compliance documentation to support approvals and build readiness.",
-            "Drafted and reviewed structural and civil drawings."
-          ],
-          right: [
-            "Delivered upgrades across multiple sites with consistent safety and quality.",
-            "Managed civil interfaces including foundations and installation coordination.",
-            "Supported council approvals and stakeholder coordination."
-          ]
-        },
-        "p4": {
-          title: "Major Civil Infrastructure",
-          tags: ["Infrastructure", "QA/QC"],
-          meta: "VIC & India | 2018 - 2023",
-          leftTitle: "Scope & Architecture",
-          rightTitle: "Execution & Outcomes",
-          left: [
-            "Urban transport delivery support including QA/QC and inspection activities.",
-            "Concrete and geotechnical testing support in high-production environments.",
-            "Reporting and coordination across multi-discipline work packs."
-          ],
-          right: [
-            "Improved QA evidence packs and inspection workflows.",
-            "Supported risk reduction through systematic checking and reporting.",
-            "Delivered progress reporting aligned to site programs."
-          ]
-        },
-        "p5": {
-          title: "Built Environment Projects",
-          tags: ["Design", "Delivery"],
-          meta: "VIC | 2020 - 2021",
-          leftTitle: "Scope & Architecture",
-          rightTitle: "Execution & Outcomes",
-          left: [
-            "Structural design and drafting support on residential and commercial packages.",
-            "Drainage and OSD system support including documentation and approvals.",
-            "Coordination with contractors and consultants for constructability."
-          ],
-          right: [
-            "Reduced delays through clearer documentation and coordination.",
-            "Supported delivery under Australian compliance expectations.",
-            "Improved close-out quality through disciplined inspection and reporting."
-          ]
-        },
-
-        "c1": {
-          title: "Project Engineer",
-          tags: ["Delivery", "Demolition", "Civil"],
-          meta: "Liberty Industrial | 03/2024 - Present",
-          leftTitle: "Core Responsibilities",
-          rightTitle: "Key Outcomes",
-          left: [
-            "Coordinated planning, sequencing and delivery of heavy civil and structural works on major industrial projects.",
-            "Prepared SOWs, RFQs, ITPs and managed technical queries, RFIs and engineering coordination.",
-            "Produced reporting covering cost, schedule and risk with delivery teams and stakeholders."
-          ],
-          right: [
-            "Delivered high-risk packages with strong safety performance.",
-            "Supported commercial assessments including variations and progress claim documentation.",
-            "Improved reporting and site visibility through structured tracking and field coordination."
-          ]
-        },
-        "c2": {
-          title: "Structural Engineer (Telecom)",
-          tags: ["Telecom", "Design"],
-          meta: "Indara Digital Infrastructures | 04/2023 - 03/2024",
-          leftTitle: "Core Responsibilities",
-          rightTitle: "Key Outcomes",
-          left: [
-            "Delivered structural coordination for telecom upgrades including inspections and approvals.",
-            "Reviewed drawings and documentation and supported drafting revisions.",
-            "Coordinated with stakeholders across multi-site programs."
-          ],
-          right: [
-            "Improved delivery reliability through repeatable checks and documentation quality.",
-            "Supported safe site outcomes through inspections and compliance reporting.",
-            "Contributed technical input to strengthen bid and proposal work."
-          ]
-        },
-        "c3": {
-          title: "Graduate Structural Engineer",
-          tags: ["Structural", "Civil"],
-          meta: "Clive Steele Partners | 11/2021 - 03/2023",
-          leftTitle: "Core Responsibilities",
-          rightTitle: "Key Outcomes",
-          left: [
-            "Design and documentation support across structural and civil scopes.",
-            "Site inspections, QA evidence collection and reporting.",
-            "Council coordination for permits and approvals."
-          ],
-          right: [
-            "Improved approval cycles through better documentation clarity.",
-            "Delivered consistent inspection reporting and close-out quality.",
-            "Supported remediation actions and technical reporting."
-          ]
-        },
-        "c4": {
-          title: "Graduate Civil Engineer",
-          tags: ["Drainage", "Civil"],
-          meta: "Structcom | 06/2020 - 10/2021",
-          leftTitle: "Core Responsibilities",
-          rightTitle: "Key Outcomes",
-          left: [
-            "Drainage design, OSD systems and grading support.",
-            "Drafting and documentation packages for approvals.",
-            "Coordination with survey, geotech and stakeholders."
-          ],
-          right: [
-            "Delivered documentation aligned with council expectations.",
-            "Improved coordination outcomes by managing interfaces early.",
-            "Supported construction readiness through clear drawings."
-          ]
-        },
-        "c5": {
-          title: "Engineering Cadet",
-          tags: ["QA/QC", "Supervision"],
-          meta: "Tata Projects | 01/2019 - 07/2019",
-          leftTitle: "Core Responsibilities",
-          rightTitle: "Key Outcomes",
-          left: [
-            "QA/QC support for mass concrete pours, slump and dimensional checks.",
-            "Assisted with pile integrity and dynamic load testing activities.",
-            "Site inspections and daily progress reporting support."
-          ],
-          right: [
-            "Improved field reporting discipline and quality checks consistency.",
-            "Supported safe execution on high-volume foundation works.",
-            "Built strong construction QA fundamentals in metro environment."
-          ]
-        }
-      };
-
-      const modal = document.getElementById('projectModal');
-      document.querySelectorAll('.bento-card, .tl-item').forEach(card => {
-        card.addEventListener('click', () => {
-          const id = card.getAttribute('data-id');
-          const data = siteData[id];
-          if (!data) return;
-
-          document.getElementById('modalTitle').textContent = data.title;
-          document.getElementById('modalMetrics').textContent = data.meta;
-
-          document.getElementById('modalTags').innerHTML = data.tags.map(t =>
-            `<span class="card-tag" style="background:var(--accent);color:#000;padding:.2rem .6rem;border-radius:999px;font-size:.75rem;font-weight:800;text-transform:uppercase;">${t}</span>`
-          ).join('');
-
-          document.getElementById('modalLeftTitle').textContent = data.leftTitle;
-          document.getElementById('modalRightTitle').textContent = data.rightTitle;
-
-          document.getElementById('modalLeftList').innerHTML = data.left.map(b => `<li>${b}</li>`).join('');
-          document.getElementById('modalRightList').innerHTML = data.right.map(b => `<li>${b}</li>`).join('');
-
-          modal.classList.add('open');
-          document.body.style.overflow = 'hidden';
-          lucide.createIcons();
-        });
-      });
-
-      function closeModal(){
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-      document.getElementById('modalBackdrop').addEventListener('click', closeModal);
-      document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
-
-      // Cursor (desktop only)
-      if (window.matchMedia("(pointer: fine)").matches) {
-        document.body.classList.add('custom-cursor-active');
-        const cursor = document.getElementById('cursorDot');
-        const ring = document.getElementById('cursorRing');
-        let mx = window.innerWidth/2, my = window.innerHeight/2, rx = mx, ry = my;
-
-        window.addEventListener('mousemove', e => {
-          mx = e.clientX; my = e.clientY;
-          cursor.style.left = mx + 'px';
-          cursor.style.top = my + 'px';
-        });
-
-        function animateRing(){
-          rx += (mx - rx) * 0.15;
-          ry += (my - ry) * 0.15;
-          ring.style.left = rx + 'px';
-          ring.style.top = ry + 'px';
-          requestAnimationFrame(animateRing);
-        }
-        animateRing();
-
-        document.querySelectorAll('a, button, input, textarea, .bento-card, .tl-item, .modal-close').forEach(el => {
-          el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-          el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-        });
-      }
-
-    } catch (e) {
-      console.error(e);
-    }
-  </script>
+    </script>
 </body>
 </html>
