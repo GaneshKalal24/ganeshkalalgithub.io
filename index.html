@@ -23,20 +23,10 @@
             --accent: #00f0ff; 
             --accent-glow: rgba(0, 240, 255, 0.4);
             --text-primary: #ffffff;
-            --text-muted: #94a3b8;
+            --text-readable: rgba(255, 255, 255, 0.9); /* Brighter, readable text */
+            --text-muted: #cbd5e1;
             --font-heading: 'Space Grotesk', sans-serif;
             --font-body: 'Inter', sans-serif;
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
-        }
-
-        [data-theme="light"] {
-            --bg-main: #f8fafc;
-            --surface: rgba(0, 0, 0, 0.03);
-            --border: rgba(0, 0, 0, 0.1);
-            --accent: #0284c7; 
-            --text-primary: #0f172a;
-            --text-muted: #475569;
-            --glass-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.06);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,24 +41,24 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* 1. TRUE 3D SCROLLING CANVAS BACKGROUND */
+        /* 1. IMMERSIVE 3D CITY CANVAS BACKGROUND */
         #bg-canvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             height: 100dvh; z-index: -100; pointer-events: none;
         }
 
-        /* 2. FIXED TRANSMISSION TOWERS */
+        /* 2. SUBTLE TRANSMISSION TOWERS (Dimmed & Recessed) */
         .towers-background {
             position: fixed; bottom: 0; left: 0; width: 100vw; height: 30vh; 
-            z-index: -1; pointer-events: none; opacity: 1; 
+            z-index: -1; pointer-events: none; opacity: 0.5; /* Dimmed for subtlety */
         }
         .towers-svg { width: 100%; height: 100%; display: block; }
-        .tower-steel { fill: none; stroke: #ffffff; stroke-width: 2; opacity: 0.5; }
-        .fiber-wire { fill: none; stroke: var(--accent); stroke-width: 2.5; opacity: 0.5; }
+        .tower-steel { fill: none; stroke: #ffffff; stroke-width: 1.5; opacity: 0.3; } /* Thinner, lighter */
+        .fiber-wire { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0.25; }
         .fiber-pulse {
-            fill: none; stroke: #ffffff; stroke-width: 3.5;
-            stroke-dasharray: 15 250; filter: drop-shadow(0 0 10px var(--accent));
-            animation: pulseWire 3s linear infinite;
+            fill: none; stroke: #ffffff; stroke-width: 2.5;
+            stroke-dasharray: 15 250; filter: drop-shadow(0 0 8px var(--accent));
+            animation: pulseWire 4s linear infinite; opacity: 0.7;
         }
         @keyframes pulseWire { from { stroke-dashoffset: 265; } to { stroke-dashoffset: 0; } }
 
@@ -92,7 +82,7 @@
         .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .fade-up.in-view { opacity: 1; transform: translateY(0); }
 
-        /* WIDE LAYOUT FOR DESKTOP (No CV Dump) */
+        /* WIDE LAYOUT FOR DESKTOP */
         .wrap { max-width: 1440px; margin: 0 auto; padding: 0 3rem; position: relative; z-index: 10; }
         section { padding: 10rem 0; border-bottom: 1px solid var(--border); }
         h1, h2, h3, h4 { font-family: var(--font-heading); }
@@ -110,7 +100,7 @@
         .nav-links a { font-size: 0.95rem; font-weight: 600; color: var(--text-muted); text-decoration: none; text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.3s; }
         .nav-links a:hover { color: var(--text-primary); }
 
-        /* HERO SECTION (Split & Wide) */
+        /* HERO SECTION */
         .hero {
             min-height: 100vh; display: grid; grid-template-columns: 1.4fr 1fr; gap: 6rem;
             align-items: center; padding-top: 6rem;
@@ -118,7 +108,7 @@
         .hero-label { font-family: var(--font-heading); font-size: 1.1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem; font-weight: 700;}
         .hero-title { font-size: clamp(4rem, 7vw, 7rem); font-weight: 800; line-height: 1.05; margin-bottom: 2rem; letter-spacing: -2px;}
         .hero-title .outline { color: transparent; -webkit-text-stroke: 1px var(--muted); }
-        .hero-desc { font-size: 1.3rem; color: var(--text-muted); margin-bottom: 3rem; max-width: 700px; line-height: 1.8; }
+        .hero-desc { font-size: 1.35rem; color: var(--text-readable); margin-bottom: 3rem; max-width: 700px; line-height: 1.8; }
         
         .btn-primary {
             display: inline-flex; align-items: center; gap: 0.8rem; padding: 1.2rem 3rem;
@@ -148,7 +138,7 @@
         .section-num { font-family: var(--font-heading); font-size: 1.5rem; color: var(--accent); font-weight: 700; }
         .section-title { font-size: clamp(3rem, 5vw, 5rem); font-weight: 800; letter-spacing: -1px; }
 
-        /* BENTO PROJECTS (HR-Focused Outcomes) */
+        /* BENTO PROJECTS */
         .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 380px; gap: 2rem; }
         .bento-card {
             background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 3rem; 
@@ -176,9 +166,9 @@
         .card-tag { font-family: var(--font-heading); font-size: 0.85rem; background: var(--accent); color: #000; padding: 0.4rem 1rem; border-radius: 99px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;}
         .card-tag.dark { background: var(--text-primary); color: var(--bg-main);}
         .card-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.1; letter-spacing: -1px;}
-        .card-desc { font-size: 1.2rem; color: var(--text-muted); line-height: 1.6; max-width: 90%; }
+        .card-desc { font-size: 1.25rem; color: var(--text-readable); line-height: 1.6; max-width: 90%; }
 
-        /* WIDE CAREER GRID (Replaces the vertical list to stop the "CV Dump" look) */
+        /* WIDE CAREER GRID */
         .career-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
         
         .career-card { 
@@ -191,11 +181,11 @@
         @media (hover: hover) { .career-card:hover { border-color: var(--accent); } }
         
         .c-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; }
-        .c-year { font-family: var(--font-heading); font-size: 1rem; color: var(--accent); font-weight: 700; letter-spacing: 1px; margin-bottom: 0.5rem;}
-        .c-role { font-size: 2.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: -1px;}
-        .c-company { font-family: var(--font-heading); font-size: 1.1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;}
+        .c-year { font-family: var(--font-heading); font-size: 1.1rem; color: var(--accent); font-weight: 700; letter-spacing: 1px; margin-bottom: 0.5rem;}
+        .c-role { font-size: 2.4rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: -1px;}
+        .c-company { font-family: var(--font-heading); font-size: 1.2rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;}
         
-        .c-impact { font-size: 1.15rem; color: var(--text-primary); line-height: 1.7; font-weight: 400;}
+        .c-impact { font-size: 1.25rem; color: var(--text-readable); line-height: 1.7; font-weight: 400;}
         .c-impact strong { color: var(--accent); font-weight: 600; }
 
         /* CREDENTIALS GRID */
@@ -205,15 +195,15 @@
         
         .cred-item { margin-bottom: 2rem; }
         .cred-item:last-child { margin-bottom: 0; }
-        .cred-item h4 { font-size: 1.2rem; color: var(--accent); margin-bottom: 0.5rem; }
-        .cred-item p { font-size: 1.05rem; color: var(--text-muted); }
+        .cred-item h4 { font-size: 1.25rem; color: var(--accent); margin-bottom: 0.5rem; }
+        .cred-item p { font-size: 1.15rem; color: var(--text-readable); }
         
         .cred-list { list-style: none; display: flex; flex-direction: column; gap: 1.2rem; padding: 0;}
-        .cred-list li { display: flex; align-items: center; gap: 1rem; font-size: 1.15rem; color: var(--text-muted); font-weight: 500;}
+        .cred-list li { display: flex; align-items: center; gap: 1rem; font-size: 1.2rem; color: var(--text-readable); font-weight: 500;}
         .cred-list li i { color: var(--accent); }
 
         .tags-container { display: flex; flex-wrap: wrap; gap: 1rem; }
-        .cert-tag { border: 1px solid var(--border); background: rgba(255,255,255,0.02); color: var(--text-primary); padding: 0.8rem 1.2rem; border-radius: 8px; font-size: 1rem; font-weight: 600;}
+        .cert-tag { border: 1px solid var(--border); background: rgba(255,255,255,0.02); color: var(--text-readable); padding: 0.8rem 1.2rem; border-radius: 8px; font-size: 1.1rem; font-weight: 500;}
 
         /* CONTACT TERMINAL */
         .contact-terminal {
@@ -224,22 +214,22 @@
         .terminal-header { background: var(--surface); padding: 1.5rem 2rem; display: flex; align-items: center; gap: 0.8rem; border-bottom: 1px solid var(--border); }
         .term-dot { width: 14px; height: 14px; border-radius: 50%; }
         .term-dot.close { background: #ff5f56; } .term-dot.min { background: #ffbd2e; } .term-dot.max { background: #27c93f; }
-        .term-title { margin-left: 1rem; font-family: var(--mono); font-size: 1rem; color: var(--text-muted); letter-spacing: 1px;}
+        .term-title { margin-left: 1rem; font-family: var(--font-heading); font-size: 1.1rem; color: var(--text-muted); letter-spacing: 1px;}
         
         .terminal-body { padding: 4rem; }
         .input-group { margin-bottom: 2.5rem; }
-        .input-group label { display: block; font-family: var(--mono); color: var(--accent); font-size: 1rem; margin-bottom: 1rem; font-weight: 700; letter-spacing: 2px;}
+        .input-group label { display: block; font-family: var(--font-heading); color: var(--accent); font-size: 1.1rem; margin-bottom: 1rem; font-weight: 700; letter-spacing: 1px;}
         .input-group input, .input-group textarea {
             width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--border);
-            color: var(--text-primary); font-family: var(--mono); font-size: 1.2rem; padding: 0.5rem 0;
+            color: var(--text-primary); font-family: var(--font-body); font-size: 1.25rem; padding: 0.5rem 0;
             outline: none; transition: 0.3s; resize: vertical;
         }
         .input-group input:focus, .input-group textarea:focus { border-bottom-color: var(--accent); }
         
         .terminal-btn {
             background: transparent; border: 1px solid var(--accent); color: var(--accent);
-            font-family: var(--mono); font-size: 1.2rem; font-weight: 700; padding: 1.5rem 3rem;
-            cursor: pointer; transition: 0.3s; width: 100%; letter-spacing: 2px;
+            font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; padding: 1.5rem 3rem;
+            cursor: pointer; transition: 0.3s; width: 100%; letter-spacing: 2px; border-radius: 8px;
         }
         .terminal-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent-glow); }
 
@@ -248,7 +238,7 @@
         .footer-wrap { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 3rem;}
         .footer-logo { font-family: var(--font-heading); font-size: 2rem; font-weight: 800; letter-spacing: 2px;}
         .footer-links { display: flex; gap: 3rem; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 1.1rem; font-weight: 600; transition: color 0.3s; text-transform: uppercase; letter-spacing: 1px;}
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 1.2rem; font-weight: 600; transition: color 0.3s; text-transform: uppercase; letter-spacing: 1px;}
         .footer-links a:hover { color: var(--accent); }
 
         /* MODAL */
@@ -259,13 +249,13 @@
         .modal-close { position: absolute; top: 2rem; right: 2rem; width: 50px; height: 50px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--text-primary); cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center;}
         .modal-close:hover { border-color: var(--accent); color: var(--accent); }
         .modal-title { font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.1; font-weight: 800; font-family: var(--font-heading); letter-spacing: -1px;}
-        .modal-metrics-bar { font-family: var(--font-heading); color: var(--accent); font-weight: 700; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px;}
+        .modal-metrics-bar { font-family: var(--font-heading); color: var(--accent); font-weight: 700; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); font-size: 1.25rem; text-transform: uppercase; letter-spacing: 1px;}
         .modal-split { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
         .modal-list { list-style: none; padding-left: 0; }
-        .modal-list li { position: relative; padding-left: 1.8rem; margin-bottom: 1.5rem; color: var(--text-muted); line-height: 1.7; font-size: 1.15rem;}
+        .modal-list li { position: relative; padding-left: 1.8rem; margin-bottom: 1.5rem; color: var(--text-readable); line-height: 1.7; font-size: 1.25rem;}
         .modal-list li::before { content: '▹'; position: absolute; left: 0; color: var(--accent); font-weight: bold;}
         
-        .external-link-btn { display: inline-flex; align-items: center; gap: 0.8rem; padding: 1rem 2rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--accent); text-decoration: none; font-weight: 700; font-size: 1.1rem; transition: 0.3s; margin-top: 1rem; }
+        .external-link-btn { display: inline-flex; align-items: center; gap: 0.8rem; padding: 1rem 2rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--accent); text-decoration: none; font-weight: 700; font-size: 1.15rem; transition: 0.3s; margin-top: 1rem; }
         .external-link-btn:hover { background: rgba(0, 240, 255, 0.1); border-color: var(--accent); }
 
         /* MOBILE OPTIMIZATION */
@@ -276,7 +266,7 @@
             .hero { grid-template-columns: 1fr; padding-top: 8rem; gap: 3rem; text-align: center; }
             .hero-label { justify-content: center; }
             .hero-title { font-size: 3.5rem; }
-            .hero-desc { margin: 0 auto 2rem auto; font-size: 1.1rem; }
+            .hero-desc { margin: 0 auto 2rem auto; font-size: 1.2rem; }
             .profile-img { max-width: 320px; } 
             section { padding: 6rem 0; }
             .section-header { margin-bottom: 3rem; }
@@ -316,7 +306,7 @@
             <path class="fiber-pulse slow" d="M -230,80 Q -30,180 170,80 Q 370,180 570,80 Q 770,180 970,80 Q 1170,180 1370,80 Q 1570,180 1770,80 Q 1970,180 2170,80 Q 2370,180 2570,80 Q 2770,180 2970,80 Q 3170,180 3370,80"></path>
             
             <path class="fiber-wire" d="M -230,110 Q -30,210 170,110 Q 370,210 570,110 Q 770,210 970,110 Q 1170,210 1370,110 Q 1570,210 1770,110 Q 1970,210 2170,110 Q 2370,210 2570,110 Q 2770,210 2970,110 Q 3170,210 3370,110"></path>
-            <path class="fiber-pulse" d="M -230,110 Q -30,210 170,110 Q 370,210 570,110 Q 770,210 970,110 Q 1170,210 1370,110 Q 1570,210 1770,110 Q 1970,210 2170,110 Q 2370,210 2570,110 Q 2770,210 2970,110 Q 3170,210 3370,110" style="animation-delay: -1.5s;"></path>
+            <path class="fiber-pulse" d="M -230,110 Q -30,210 170,110 Q 370,210 570,110 Q 770,210 970,110 Q 1170,210 1370,110 Q 1570,210 1770,110 Q 1970,210 2170,110 Q 2370,210 2570,110 Q 2770,210 2970,110 Q 3170,210 3370,110" style="animation-animation-delay: -1.5s;"></path>
             
             <use href="#tower" x="150" y="40" /> <use href="#tower" x="550" y="40" /> <use href="#tower" x="950" y="40" /> <use href="#tower" x="1350" y="40" />
             <use href="#tower" x="1750" y="40" /> <use href="#tower" x="2150" y="40" /> <use href="#tower" x="2550" y="40" /> <use href="#tower" x="2950" y="40" />
@@ -648,29 +638,26 @@
             
             <div class="modal-split">
                 <div>
-                    <h4 id="modalLeftTitle" style="color: var(--text-primary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 1.5rem; font-size: 1rem;">Scope & Architecture</h4>
+                    <h4 id="modalLeftTitle" style="color: var(--text-primary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 1.5rem; font-size: 1.1rem;">Scope & Architecture</h4>
                     <ul id="modalLeftList" class="modal-list"></ul>
                 </div>
                 <div>
-                    <h4 id="modalRightTitle" style="color: var(--text-primary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 1.5rem; font-size: 1rem;">Execution & Outcomes</h4>
+                    <h4 id="modalRightTitle" style="color: var(--text-primary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 1.5rem; font-size: 1.1rem;">Execution & Outcomes</h4>
                     <ul id="modalRightList" class="modal-list"></ul>
                 </div>
             </div>
 
             <div id="modalLinksContainer" style="display: none; margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 2rem;">
-                <h4 style="color: var(--text-primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem; font-size: 1rem;">External References</h4>
+                <h4 style="color: var(--text-primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem; font-size: 1.1rem;">External References</h4>
                 <div id="modalLinks" style="display: flex; gap: 1rem; flex-wrap: wrap;"></div>
             </div>
-
         </div>
     </div>
 
     <script>
         try {
-            // 1. ICONS
             lucide.createIcons();
 
-            // 2. TERMINAL EMAIL FUNCTION
             function sendEmail(e) {
                 e.preventDefault();
                 const name = document.getElementById('senderName').value;
@@ -678,7 +665,6 @@
                 window.location.href = `mailto:ganesh.r.kalal24@gmail.com?subject=Incoming Transmission from ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}`;
             }
 
-            // 3. NATIVE SCROLL ANIMATIONS
             const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -709,7 +695,7 @@
 
             document.querySelectorAll('.fade-up, .scramble-text').forEach(el => observer.observe(el));
 
-            // 4. TRUE 3D PERSPECTIVE WIREFRAME BACKGROUND
+            // 4. TRUE 3D "GROWING CITY" CANVAS BACKGROUND
             const canvas = document.getElementById('bg-canvas');
             const ctx = canvas.getContext('2d');
             let w, h;
@@ -721,102 +707,134 @@
             window.addEventListener('resize', resize);
             resize();
 
-            // Create a 3D grid of points
-            const gridPoints = [];
-            const rows = 30;
-            const cols = 30;
-            const spacing = 150;
-            
-            for(let i=0; i<rows; i++) {
-                for(let j=0; j<cols; j++) {
-                    let x = (j - cols/2) * spacing;
-                    let z = i * spacing;
-                    // Generate occasional "buildings" (spikes in Y axis)
-                    let y = Math.random() > 0.85 ? Math.random() * -400 - 100 : Math.random() * -20;
-                    gridPoints.push({x, y, z, origY: y});
-                }
+            const city = [];
+            const gridSize = 24; // Wider grid to spread across screen
+            const spacing = 1.3;
+
+            function rand(min, max) { return Math.random() * (max - min) + min; }
+
+            // 3D Isometric projection mapping with scroll-based camera movement
+            function iso(x, y, z, scrollY) {
+                const scale = Math.min(w, h) * 0.022; // Scale it to fit beautifully
+                const sx = (x - y) * scale + w * 0.5;
+                // Add scrollY to simulate camera moving forward/down over the city
+                const sy = (x + y) * scale * 0.5 + h * 0.45 - z - (scrollY * 0.35);
+                return { x: sx, y: sy };
             }
 
-            let scrollOffset = 0;
-            window.addEventListener('scroll', () => {
-                scrollOffset = window.scrollY;
-            });
+            function seedCity() {
+                city.length = 0;
+                for(let gx=0; gx<gridSize; gx++) {
+                    for(let gy=0; gy<gridSize; gy++) {
+                        const cx = (gx - gridSize/2);
+                        const cy = (gy - gridSize/2);
+                        const dist = Math.sqrt(cx*cx + cy*cy);
+                        const heightMax = Math.max(20, 100 - dist * 6);
 
-            function animateBg() {
+                        // Randomly skip plots to make it look like a cityscape, not a solid block
+                        if(Math.random() < 0.25) continue;
+
+                        city.push({
+                            x: (gx - gridSize/2) * spacing,
+                            y: (gy - gridSize/2) * spacing,
+                            w: rand(0.5, 0.9),
+                            d: rand(0.5, 0.9),
+                            hTarget: rand(15, heightMax),
+                            h: 0, // Starts at ground level
+                            buildSpeed: rand(0.8, 1.6),
+                            phase: rand(0, Math.PI*2)
+                        });
+                    }
+                }
+            }
+            seedCity();
+
+            function strokeLine(a, b, alpha, width, color) {
+                ctx.globalAlpha = alpha;
+                ctx.lineWidth = width;
+                ctx.strokeStyle = color;
+                ctx.beginPath();
+                ctx.moveTo(a.x, a.y);
+                ctx.lineTo(b.x, b.y);
+                ctx.stroke();
+            }
+
+            let lastT = performance.now();
+            function animateBg(t) {
+                const dt = Math.min(0.05, (t - lastT) / 1000);
+                lastT = t;
+                const scrollY = window.scrollY;
+
                 const isLight = document.body.getAttribute('data-theme') === 'light';
-                ctx.fillStyle = isLight ? '#f8fafc' : '#020308'; 
+                const accentColor = isLight ? "2, 132, 199" : "0, 240, 255";
+                
+                ctx.fillStyle = isLight ? "rgba(248, 250, 252, 0.3)" : "rgba(2, 3, 8, 0.3)";
                 ctx.fillRect(0, 0, w, h);
 
-                const glowColor = isLight ? 'rgba(2, 132, 199, 0.15)' : 'rgba(0, 240, 255, 0.25)'; 
-                ctx.strokeStyle = glowColor;
-                ctx.lineWidth = 1;
-
-                const fov = 350;
-                const cameraY = -150; 
-                // Camera moves forward on Z axis based on scroll!
-                const cameraZ = -100 + (scrollOffset * 0.8);
-
-                ctx.beginPath();
-                
-                // Draw horizontal lines
-                for(let i=0; i<rows; i++) {
-                    let prevX, prevY;
-                    let lineValid = false;
+                // Draw the ground grid
+                ctx.globalAlpha = 0.15;
+                for(let i=-gridSize; i<=gridSize; i++) {
+                    let a = iso(-gridSize, i, 0, scrollY);
+                    let b = iso(gridSize, i, 0, scrollY);
+                    strokeLine(a, b, 0.15, 1, `rgb(${accentColor})`);
                     
-                    for(let j=0; j<cols; j++) {
-                        let pt = gridPoints[i * cols + j];
-                        
-                        // Relative to camera
-                        let dz = pt.z - cameraZ;
-                        
-                        // Loop the grid infinitely
-                        while(dz < 10) dz += (rows * spacing);
-                        while(dz > (rows * spacing)) dz -= (rows * spacing);
-                        
-                        if (dz > 10) {
-                            let scale = fov / dz;
-                            let sx = (pt.x * scale) + (w / 2);
-                            let sy = ((pt.y - cameraY) * scale) + (h / 1.5); // Center lower
-                            
-                            if (lineValid) {
-                                ctx.lineTo(sx, sy);
-                            } else {
-                                ctx.moveTo(sx, sy);
-                                lineValid = true;
-                            }
-                        } else {
-                            lineValid = false;
-                        }
-                    }
+                    let c = iso(i, -gridSize, 0, scrollY);
+                    let d = iso(i, gridSize, 0, scrollY);
+                    strokeLine(c, d, 0.15, 1, `rgb(${accentColor})`);
                 }
-                
-                // Draw vertical data streams (buildings)
-                for(let i=0; i<gridPoints.length; i++) {
-                    let pt = gridPoints[i];
-                    if (pt.origY < -100) { // If it's a building
-                        let dz = pt.z - cameraZ;
-                        while(dz < 10) dz += (rows * spacing);
-                        while(dz > (rows * spacing)) dz -= (rows * spacing);
-                        
-                        if (dz > 10) {
-                            let scale = fov / dz;
-                            let sx = (pt.x * scale) + (w / 2);
-                            let syTop = ((pt.y - cameraY) * scale) + (h / 1.5);
-                            let syBot = ((0 - cameraY) * scale) + (h / 1.5);
-                            
-                            ctx.moveTo(sx, syBot);
-                            ctx.lineTo(sx, syTop);
-                        }
-                    }
+
+                // Draw and animate the buildings
+                let completed = 0;
+                for(const b of city) {
+                    const wobble = 1 + Math.sin(t/1000 + b.phase) * 0.05;
+                    const target = b.hTarget * wobble;
+
+                    // Grow building
+                    b.h += (target - b.h) * (dt * b.buildSpeed * 2);
+                    if(Math.abs(target - b.h) < 1) completed++;
+
+                    const p0 = iso(b.x, b.y, 0, scrollY);
+                    const p1 = iso(b.x + b.w, b.y, 0, scrollY);
+                    const p2 = iso(b.x + b.w, b.y + b.d, 0, scrollY);
+                    const p3 = iso(b.x, b.y + b.d, 0, scrollY);
+
+                    const t0 = iso(b.x, b.y, b.h, scrollY);
+                    const t1 = iso(b.x + b.w, b.y, b.h, scrollY);
+                    const t2 = iso(b.x + b.w, b.y + b.d, b.h, scrollY);
+                    const t3 = iso(b.x, b.y + b.d, b.h, scrollY);
+
+                    const lineAlpha = isLight ? 0.4 : 0.6;
+                    const col = `rgb(${accentColor})`;
+
+                    // Vertical edges
+                    strokeLine(p0, t0, lineAlpha * 0.5, 1, col);
+                    strokeLine(p1, t1, lineAlpha * 0.8, 1.5, col); // Brightest edge facing camera
+                    strokeLine(p2, t2, lineAlpha * 0.5, 1, col);
+                    strokeLine(p3, t3, lineAlpha * 0.5, 1, col);
+
+                    // Top cap
+                    strokeLine(t0, t1, lineAlpha, 1, col);
+                    strokeLine(t1, t2, lineAlpha, 1, col);
+                    strokeLine(t2, t3, lineAlpha, 1, col);
+                    strokeLine(t3, t0, lineAlpha, 1, col);
+                    
+                    // Glowing Nodes on top
+                    ctx.fillStyle = `rgba(${accentColor}, 0.8)`;
+                    ctx.beginPath();
+                    ctx.arc(t1.x, t1.y, 1.5, 0, Math.PI*2);
+                    ctx.fill();
                 }
-                
-                ctx.stroke();
+
+                if(completed > city.length * 0.95) {
+                    for(const b of city){ b.h *= 0.1; }
+                    if(Math.random() < 0.2) seedCity(); // Reseed occasionally for variety
+                }
 
                 requestAnimationFrame(animateBg);
             }
             animateBg();
 
-            // 5. MODAL LOGIC (Deep CV Data Integration)
+            // 5. MODAL LOGIC WITH LINKS & DETAILED CV DATA
             const siteData = {
                 "p1": {
                     title: "Rio Tinto Bauxite Refinery Closure", tags: ["Mining", "Demolition", "Remediation"], meta: "Gove, NT | 2024 - Present | $300M+",
@@ -826,7 +844,7 @@
                     links: [ { title: "Rio Tinto Recycling Record Steel", url: "https://libertyindustrial.com/" } ]
                 },
                 "p2": {
-                    title: "ExxonMobil Refinery Decommissioning", tags: ["Oil & Gas", "Demolition"], meta: "Altona, VIC | 2024 - Present | $65M+",
+                    title: "ExxonMobil Refinery Decommissioning", tags: ["Oil & Gas", "Demolition"], meta: "Altona, VIC | 2024 - Present | $65M",
                     leftTitle: "Scope & Architecture", rightTitle: "Execution & Outcomes",
                     left: ["Project Engineer managing subcontractor packages and on-site civil/structural works.", "Prepared SOWs/RFQs and conducted technical & commercial evaluation of 15+ tender submissions.", "Supported the safe decommissioning of major refinery assets including stacks, LPG tanks, boilers and pipe racks."],
                     right: ["Reviewed and approved contractor designs.", "Negotiated and technically justified contract variations totaling $8M+.", "Supervised on-site concrete demolition works and coordinated statutory approvals with Hobsons Bay City Council."]
@@ -899,7 +917,6 @@
                     document.getElementById('modalLeftList').innerHTML = data.left.map(b => `<li>${b}</li>`).join('');
                     document.getElementById('modalRightList').innerHTML = data.right.map(b => `<li>${b}</li>`).join('');
 
-                    // Render Links if they exist
                     const linksContainer = document.getElementById('modalLinksContainer');
                     const linksDiv = document.getElementById('modalLinks');
                     if (data.links && data.links.length > 0) {
