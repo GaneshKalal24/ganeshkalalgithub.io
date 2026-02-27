@@ -3,26 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ganesh Kalal — Project Engineer</title>
+    <title>Ganesh Kalal | Project Engineer</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
     <style>
+        /* =========================================
+           RESTORED ORIGINAL GEMINI THEME
+        ========================================= */
         :root {
-            --bg: #0c0c0c;
-            --surface: #141414;
-            --surface2: #1c1c1c;
-            --border: #2a2a2a;
-            --accent: #e8ff3c;
-            --accent2: #ff4d00;
-            --text: #f0ede8;
-            --muted: #6b6560;
-            --mono: 'DM Mono', monospace;
-            --display: 'Bebas Neue', sans-serif;
-            --body: 'Syne', sans-serif;
+            --bg: #020308;
+            --surface: rgba(255, 255, 255, 0.03);
+            --surface2: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.1);
+            --accent: #00f0ff; /* The original Neon Cyan */
+            --accent-glow: rgba(0, 240, 255, 0.4);
+            --text: #ffffff;
+            --muted: #8892b0;
+            --mono: 'Space Grotesk', monospace;
+            --display: 'Space Grotesk', sans-serif;
+            --body: 'Inter', sans-serif;
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         html { scroll-behavior: smooth; }
 
         body {
@@ -31,41 +37,43 @@
             color: var(--text);
             overflow-x: hidden;
             cursor: none;
+            line-height: 1.6;
+        }
+
+        /* CODE-GENERATED BACKGROUND (No video required) */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: -100;
+            pointer-events: none;
         }
 
         /* Custom cursor */
         .cursor {
-            width: 12px; height: 12px;
-            background: var(--accent);
+            width: 8px; height: 8px;
+            background: var(--text);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            transition: transform 0.1s, width 0.2s, height 0.2s;
-            mix-blend-mode: difference;
         }
         .cursor-ring {
             width: 36px; height: 36px;
-            border: 1px solid rgba(232,255,60,0.4);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             z-index: 9998;
             transform: translate(-50%, -50%);
-            transition: transform 0.25s ease, width 0.3s, height 0.3s;
+            transition: width 0.3s, height 0.3s, border-color 0.3s;
         }
-
-        /* Noise overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-            background-size: 200px 200px;
-            pointer-events: none;
-            z-index: 9000;
-            opacity: 0.5;
+        .cursor-ring.hover {
+            width: 60px; height: 60px;
+            border-color: var(--accent);
+            background: rgba(0, 240, 255, 0.1);
+            backdrop-filter: blur(2px);
         }
 
         /* NAV */
@@ -78,53 +86,32 @@
             justify-content: space-between;
             padding: 1.5rem 3rem;
             border-bottom: 1px solid var(--border);
-            background: rgba(12,12,12,0.85);
+            background: rgba(2, 3, 8, 0.7);
             backdrop-filter: blur(20px);
         }
 
         .nav-logo {
             font-family: var(--mono);
-            font-size: 0.75rem;
-            color: var(--muted);
+            font-size: 0.9rem;
+            color: var(--text);
             letter-spacing: 0.15em;
             text-transform: uppercase;
+            font-weight: 700;
         }
         .nav-logo span { color: var(--accent); }
 
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
         .nav-links a {
             font-family: var(--mono);
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--muted);
             text-decoration: none;
             transition: color 0.2s;
+            font-weight: 600;
         }
-        .nav-links a:hover { color: var(--text); }
-
-        .nav-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: var(--muted);
-        }
-        .status-dot {
-            width: 6px; height: 6px;
-            background: #22c55e;
-            border-radius: 50%;
-            animation: pulse-dot 2s infinite;
-        }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
+        .nav-links a:hover { color: var(--accent); }
 
         /* HERO */
         .hero {
@@ -140,69 +127,41 @@
 
         .hero-label {
             font-family: var(--mono);
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--muted);
+            color: var(--accent);
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 1rem;
+            font-weight: 700;
         }
         .hero-label::before {
             content: '';
             display: block;
-            width: 24px;
-            height: 1px;
+            width: 30px; height: 2px;
             background: var(--accent);
         }
 
         .hero-title {
             font-family: var(--display);
-            font-size: clamp(5rem, 10vw, 11rem);
-            line-height: 0.9;
-            letter-spacing: 0.02em;
+            font-size: clamp(4rem, 8vw, 8rem);
+            line-height: 1;
+            letter-spacing: -0.02em;
             margin-bottom: 2rem;
-        }
-        .hero-title em {
-            font-style: normal;
-            color: var(--accent);
-            -webkit-text-stroke: 0px;
+            font-weight: 700;
         }
         .hero-title .outline {
-            -webkit-text-stroke: 1px var(--text);
             color: transparent;
-        }
-
-        .hero-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 2rem;
-            background: var(--accent);
-            color: var(--bg);
-            text-decoration: none;
-            font-family: var(--mono);
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            font-weight: 400;
-            transition: background 0.2s, transform 0.2s;
-            margin-top: 2rem;
-        }
-        .hero-cta:hover { background: #fff; transform: translateX(4px); }
-        .hero-cta svg { width: 14px; height: 14px; }
-
-        .hero-right {
-            padding-bottom: 1rem;
+            -webkit-text-stroke: 1px var(--muted);
         }
 
         .hero-desc {
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             color: var(--muted);
-            line-height: 1.8;
             margin-bottom: 3rem;
-            max-width: 420px;
+            max-width: 450px;
         }
 
         .hero-stats {
@@ -211,6 +170,9 @@
             gap: 1px;
             background: var(--border);
             border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
         }
         .stat {
             background: var(--surface);
@@ -218,83 +180,51 @@
         }
         .stat-num {
             font-family: var(--display);
-            font-size: 2.8rem;
-            color: var(--accent);
+            font-size: 2.5rem;
+            color: var(--text);
             line-height: 1;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
         }
         .stat-label {
             font-family: var(--mono);
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: var(--muted);
-        }
-
-        /* Decorative grid lines */
-        .grid-deco {
-            position: absolute;
-            top: 0; right: 0;
-            width: 50%;
-            height: 100%;
-            background-image:
-                linear-gradient(var(--border) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 60px 60px;
-            opacity: 0.4;
-            pointer-events: none;
+            color: var(--accent);
         }
 
         /* SECTIONS */
-        section {
-            padding: 6rem 3rem;
-            border-bottom: 1px solid var(--border);
-        }
+        section { padding: 8rem 3rem; border-bottom: 1px solid var(--border); }
+        .section-header { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 4rem; }
+        .section-num { font-family: var(--mono); font-size: 1rem; color: var(--accent); font-weight: 700;}
+        .section-title { font-family: var(--display); font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: -0.02em; line-height: 1; }
 
-        .section-header {
-            display: flex;
-            align-items: baseline;
-            gap: 1.5rem;
-            margin-bottom: 4rem;
-        }
-        .section-num {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: var(--muted);
-            letter-spacing: 0.1em;
-        }
-        .section-title {
-            font-family: var(--display);
-            font-size: clamp(3rem, 6vw, 6rem);
-            letter-spacing: 0.03em;
-            line-height: 1;
-        }
-        .section-title .accent { color: var(--accent); }
-
-        /* PROJECTS GRID */
+        /* PROJECTS GRID (Glassmorphism & Gradients) */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
-            grid-template-rows: auto;
-            gap: 1px;
-            background: var(--border);
+            gap: 1.5rem;
         }
 
         .project-card {
             background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
             padding: 2.5rem;
             text-decoration: none;
             color: var(--text);
-            transition: background 0.25s;
+            transition: transform 0.4s, border-color 0.4s;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            min-height: 320px;
+            justify-content: flex-end;
+            min-height: 400px;
+            backdrop-filter: blur(12px);
+            box-shadow: var(--glass-shadow);
         }
-        .project-card:hover { background: var(--surface2); }
-        .project-card:hover .card-arrow { transform: translate(4px, -4px); }
+        .project-card:hover { transform: translateY(-8px); border-color: var(--accent); }
 
         .project-card.span-7 { grid-column: span 7; }
         .project-card.span-5 { grid-column: span 5; }
@@ -302,564 +232,243 @@
         .project-card.span-8 { grid-column: span 8; }
 
         .card-img {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 0.4s;
+            position: absolute; inset: 0;
+            background-size: cover; background-position: center;
+            opacity: 0.2;
+            transition: opacity 0.4s, transform 0.6s;
+            z-index: 0;
         }
-        .project-card:hover .card-img { opacity: 0.08; }
+        .project-card::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(2,3,8,0.95) 0%, rgba(2,3,8,0.1) 100%);
+            z-index: 1;
+        }
+        .project-card:hover .card-img { opacity: 0.4; transform: scale(1.05); }
 
-        .card-top {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-        }
-
-        .card-tags {
-            display: flex;
-            gap: 0.4rem;
-            flex-wrap: wrap;
-        }
+        .card-content { position: relative; z-index: 2; }
+        
+        .card-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
         .card-tag {
-            font-family: var(--mono);
-            font-size: 0.65rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--muted);
-            border: 1px solid var(--border);
-            padding: 0.2rem 0.6rem;
-        }
-        .card-tag.hot {
-            background: var(--accent);
-            color: var(--bg);
-            border-color: var(--accent);
+            font-family: var(--mono); font-size: 0.75rem; letter-spacing: 1px;
+            text-transform: uppercase; color: var(--bg); background: var(--accent);
+            padding: 0.3rem 0.8rem; border-radius: 99px; font-weight: 700;
         }
 
-        .card-arrow {
-            font-family: var(--mono);
-            font-size: 1.2rem;
-            color: var(--muted);
-            transition: transform 0.25s;
-        }
-
-        .card-bottom {}
-        .card-num {
-            font-family: var(--mono);
-            font-size: 0.65rem;
-            color: var(--muted);
-            letter-spacing: 0.1em;
-            margin-bottom: 0.75rem;
-        }
-        .card-title {
-            font-family: var(--display);
-            font-size: 2.4rem;
-            line-height: 1;
-            letter-spacing: 0.03em;
-            margin-bottom: 0.75rem;
-        }
-        .card-desc {
-            font-size: 0.9rem;
-            color: var(--muted);
-            line-height: 1.7;
-            max-width: 380px;
-        }
-
-        .card-metric {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
-            display: flex;
-            gap: 2rem;
-        }
-        .metric-val {
-            font-family: var(--display);
-            font-size: 2rem;
-            color: var(--accent);
-            line-height: 1;
-        }
-        .metric-label {
-            font-family: var(--mono);
-            font-size: 0.6rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-top: 0.2rem;
-        }
+        .card-num { font-family: var(--mono); font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; }
+        .card-title { font-family: var(--display); font-size: 2.2rem; line-height: 1.2; margin-bottom: 1rem; font-weight: 700;}
+        .card-desc { font-size: 1rem; color: var(--muted); line-height: 1.6; }
 
         /* TIMELINE */
-        .timeline-wrap {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 6rem;
-        }
-
-        .timeline-nav {
-            position: sticky;
-            top: 8rem;
-            height: fit-content;
-        }
-        .timeline-nav p {
-            font-family: var(--mono);
-            font-size: 0.75rem;
-            color: var(--muted);
-            line-height: 1.8;
-        }
-
-        .timeline {
-            display: flex;
-            flex-direction: column;
-        }
-
+        .timeline-wrap { display: grid; grid-template-columns: 1fr 2fr; gap: 6rem; }
+        .timeline-nav p { font-family: var(--mono); font-size: 1rem; color: var(--muted); line-height: 1.8; }
+        .timeline { display: flex; flex-direction: column; }
         .tl-item {
-            padding: 3rem 0;
-            border-top: 1px solid var(--border);
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 2rem;
-            opacity: 0.5;
-            transition: opacity 0.3s;
+            padding: 3rem; background: var(--surface); border: 1px solid var(--border);
+            border-radius: 24px; margin-bottom: 1.5rem; backdrop-filter: blur(12px);
+            transition: border-color 0.3s;
         }
-        .tl-item:hover { opacity: 1; }
-        .tl-item.active { opacity: 1; }
-
-        .tl-year {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            color: var(--muted);
-            padding-top: 0.3rem;
-            white-space: nowrap;
-        }
-
-        .tl-content {}
-        .tl-company {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-        .tl-role {
-            font-family: var(--display);
-            font-size: 2.2rem;
-            letter-spacing: 0.03em;
-            line-height: 1;
-            margin-bottom: 1.5rem;
-        }
-        .tl-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-        }
-        .tl-list li {
-            font-size: 0.9rem;
-            color: var(--muted);
-            line-height: 1.6;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-        }
-        .tl-list li::before {
-            content: '—';
-            color: var(--border);
-            flex-shrink: 0;
-            margin-top: 0.05em;
-        }
+        .tl-item:hover { border-color: var(--accent); }
+        .tl-year { font-family: var(--mono); font-size: 1rem; color: var(--accent); font-weight: 700; margin-bottom: 1rem; }
+        .tl-role { font-family: var(--display); font-size: 2rem; line-height: 1; margin-bottom: 0.5rem; font-weight: 700;}
+        .tl-company { font-family: var(--mono); font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; }
+        .tl-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+        .tl-list li { font-size: 1rem; color: var(--text); display: flex; gap: 0.75rem; }
+        .tl-list li::before { content: '▹'; color: var(--accent); }
 
         /* SKILLS */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1px;
-            background: var(--border);
-        }
-
-        .skill-cell {
-            background: var(--surface);
-            padding: 2rem;
-        }
-        .skill-cell-label {
-            font-family: var(--mono);
-            font-size: 0.65rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-        .skill-items {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .skill-item {
-            font-size: 0.9rem;
-            color: var(--muted);
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-        .skill-item::before {
-            content: '';
-            width: 4px;
-            height: 4px;
-            background: var(--border);
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
+        .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .skill-cell { background: var(--surface); border: 1px solid var(--border); padding: 2rem; border-radius: 24px; backdrop-filter: blur(12px); }
+        .skill-cell-label { font-family: var(--mono); font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; font-weight: 700;}
+        .skill-items { display: flex; flex-direction: column; gap: 0.8rem; }
+        .skill-item { font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 0.6rem; }
 
         /* FOOTER */
-        footer {
-            padding: 4rem 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+        footer { padding: 4rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); }
+        .footer-name { font-family: var(--display); font-size: 2.5rem; color: var(--text); font-weight: 700;}
+        .footer-links { display: flex; gap: 2rem; }
+        .footer-links a { font-family: var(--mono); font-size: 0.9rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--accent); }
 
-        .footer-name {
-            font-family: var(--display);
-            font-size: 3rem;
-            letter-spacing: 0.05em;
-            color: var(--muted);
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            text-align: right;
-        }
-        .footer-links a {
-            font-family: var(--mono);
-            font-size: 0.75rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--muted);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .footer-links a:hover { color: var(--text); }
-
-        /* Horizontal marquee */
-        .marquee-wrap {
-            overflow: hidden;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 0;
-            background: var(--surface);
-        }
-        .marquee-inner {
-            display: flex;
-            gap: 3rem;
-            animation: marquee 30s linear infinite;
-            white-space: nowrap;
-        }
-        .marquee-inner span {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--muted);
-            flex-shrink: 0;
-        }
-        .marquee-inner span.accent-mark { color: var(--accent); }
-        @keyframes marquee {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-        }
-
-        /* Animations */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        /* Cyberpunk Scramble Font */
+        .scramble-text { font-family: monospace; }
 
         @media (max-width: 1024px) {
-            .hero { grid-template-columns: 1fr; }
-            .project-card.span-7,
-            .project-card.span-5,
-            .project-card.span-4,
-            .project-card.span-8 { grid-column: span 12; }
-            .timeline-wrap { grid-template-columns: 1fr; gap: 0; }
-            .timeline-nav { position: static; }
+            .hero { grid-template-columns: 1fr; padding-top: 8rem; }
+            .project-card.span-7, .project-card.span-5, .project-card.span-4, .project-card.span-8 { grid-column: span 12; }
+            .timeline-wrap { grid-template-columns: 1fr; gap: 2rem; }
             .skills-grid { grid-template-columns: repeat(2, 1fr); }
             nav { padding: 1.25rem 1.5rem; }
-            .hero { padding: 10rem 1.5rem 4rem; }
             section { padding: 4rem 1.5rem; }
-            footer { padding: 3rem 1.5rem; flex-direction: column; gap: 2rem; align-items: flex-start; }
         }
-
         @media (max-width: 600px) {
             .nav-links { display: none; }
             .hero-stats { grid-template-columns: 1fr; }
             .skills-grid { grid-template-columns: 1fr; }
-            .hero-title { font-size: 4.5rem; }
         }
     </style>
 </head>
 <body>
 
+<canvas id="bg-canvas"></canvas>
+
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- NAV -->
 <nav>
-    <div class="nav-logo">GK<span>.</span>ENG — Portfolio v2025</div>
+    <div class="nav-logo">GK<span>.</span>ENG</div>
     <ul class="nav-links">
         <li><a href="#projects">Projects</a></li>
         <li><a href="#career">Career</a></li>
-        <li><a href="#skills">Competencies</a></li>
+        <li><a href="#skills">Arsenal</a></li>
     </ul>
-    <div class="nav-status">
-        <div class="status-dot"></div>
-        <span>Available for Projects — Melbourne VIC</span>
-    </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
-    <div class="grid-deco"></div>
-
     <div class="hero-left">
-        <div class="hero-label">Project Engineer — Structural & Civil</div>
+        <div class="hero-label scramble-text" data-text="Melbourne VIC • Telecom • Civil">Melbourne VIC • Telecom • Civil</div>
         <h1 class="hero-title">
             <span class="outline">GANESH</span><br>
-            <em>KALAL</em>
+            <span class="scramble-text" data-text="KALAL">KALAL</span>
         </h1>
-        <a href="#projects" class="hero-cta">
-            View Projects
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-        </a>
     </div>
 
     <div class="hero-right">
         <p class="hero-desc">
-            Delivering Tier-1 projects with structural precision. Specialising in 5G rollouts, statutory approvals, industrial closures, and complex brownfield execution across Melbourne and beyond.
+            Delivering Tier-1 projects with structural precision. Specialising in 5G rollouts, statutory approvals, industrial closures, and complex brownfield execution.
         </p>
 
         <div class="hero-stats">
             <div class="stat">
                 <div class="stat-num">150+</div>
-                <div class="stat-label">Telecom Upgrades</div>
+                <div class="stat-label">Telecom Sites</div>
             </div>
             <div class="stat">
-                <div class="stat-num">$100M</div>
-                <div class="stat-label">Project Value</div>
+                <div class="stat-num">$100M+</div>
+                <div class="stat-label">Portfolio Value</div>
             </div>
             <div class="stat">
-                <div class="stat-num">4yr</div>
-                <div class="stat-label">Industry Exp.</div>
+                <div class="stat-num">Zero</div>
+                <div class="stat-label">QA Defects</div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-    <div class="marquee-inner">
-        <span>AS1170.2 Compliance</span><span class="accent-mark">✦</span>
-        <span>5G Infrastructure</span><span class="accent-mark">✦</span>
-        <span>Industrial Demolition</span><span class="accent-mark">✦</span>
-        <span>Structural Engineering</span><span class="accent-mark">✦</span>
-        <span>VicRoads Certified</span><span class="accent-mark">✦</span>
-        <span>AS 5100 Bridges</span><span class="accent-mark">✦</span>
-        <span>EOT Administration</span><span class="accent-mark">✦</span>
-        <span>Lattice Tower Design</span><span class="accent-mark">✦</span>
-        <!-- Duplicate for seamless loop -->
-        <span>AS1170.2 Compliance</span><span class="accent-mark">✦</span>
-        <span>5G Infrastructure</span><span class="accent-mark">✦</span>
-        <span>Industrial Demolition</span><span class="accent-mark">✦</span>
-        <span>Structural Engineering</span><span class="accent-mark">✦</span>
-        <span>VicRoads Certified</span><span class="accent-mark">✦</span>
-        <span>AS 5100 Bridges</span><span class="accent-mark">✦</span>
-        <span>EOT Administration</span><span class="accent-mark">✦</span>
-        <span>Lattice Tower Design</span><span class="accent-mark">✦</span>
-    </div>
-</div>
-
-<!-- PROJECTS -->
 <section id="projects">
-    <div class="section-header fade-up">
+    <div class="section-header">
         <span class="section-num">01</span>
-        <h2 class="section-title">Key <span class="accent">Projects</span></h2>
+        <h2 class="section-title scramble-text" data-text="Key Projects">Key Projects</h2>
     </div>
 
-    <div class="projects-grid fade-up">
-
+    <div class="projects-grid">
         <a href="#" class="project-card span-7">
             <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1544006659-f0b21884ce1d?auto=format&fit=crop&w=1200&q=80');"></div>
-            <div class="card-top">
+            <div class="card-content">
                 <div class="card-tags">
-                    <span class="card-tag hot">Current</span>
                     <span class="card-tag">Telecom</span>
                     <span class="card-tag">Structural</span>
                 </div>
-                <div class="card-arrow">↗</div>
-            </div>
-            <div class="card-bottom">
-                <div class="card-num">Project 01 / 2023–2024</div>
-                <div class="card-title">National 5G Rollout</div>
+                <div class="card-num">Victoria | 2023 - 2024 | $50M</div>
+                <h3 class="card-title">National 5G Rollout</h3>
                 <p class="card-desc">Delivered 150+ lattice tower and pole upgrades for Indara's national 5G expansion, ensuring full AS1170.2 structural compliance across diverse site conditions.</p>
-                <div class="card-metric">
-                    <div>
-                        <div class="metric-val">150+</div>
-                        <div class="metric-label">Sites Delivered</div>
-                    </div>
-                    <div>
-                        <div class="metric-val">12mo</div>
-                        <div class="metric-label">Programme</div>
-                    </div>
-                </div>
             </div>
         </a>
 
         <a href="#" class="project-card span-5">
             <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1534398079543-7ae6d016b86c?auto=format&fit=crop&w=800&q=80');"></div>
-            <div class="card-top">
+            <div class="card-content">
                 <div class="card-tags">
                     <span class="card-tag">Industrial</span>
                     <span class="card-tag">Demolition</span>
                 </div>
-                <div class="card-arrow">↗</div>
-            </div>
-            <div class="card-bottom">
-                <div class="card-num">Project 02 / 2024–Present</div>
-                <div class="card-title">Tier-1 Industrial Closures</div>
-                <p class="card-desc">End-to-end delivery at Liberty Industrial involving massive brownfield deconstruction scopes.</p>
-                <div class="card-metric">
-                    <div>
-                        <div class="metric-val">142k</div>
-                        <div class="metric-label">Tonnes Steel</div>
-                    </div>
-                    <div>
-                        <div class="metric-val">300k</div>
-                        <div class="metric-label">Tonnes Concrete</div>
-                    </div>
-                </div>
+                <div class="card-num">VIC & NT | 2024 - Present | $365M+</div>
+                <h3 class="card-title">Tier-1 Industrial Closures</h3>
+                <p class="card-desc">End-to-end delivery at Liberty Industrial involving massive brownfield deconstruction scopes, handling 142,000 tonnes of steel.</p>
             </div>
         </a>
 
         <a href="#" class="project-card span-4">
             <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=800&q=80');"></div>
-            <div class="card-top">
+            <div class="card-content">
                 <div class="card-tags">
                     <span class="card-tag">Civil</span>
                     <span class="card-tag">QA</span>
                 </div>
-                <div class="card-arrow">↗</div>
-            </div>
-            <div class="card-bottom">
-                <div class="card-num">Project 03 / 2022</div>
-                <div class="card-title">West Gate Freeway</div>
+                <div class="card-num">Melbourne, VIC | 2022 - 2023</div>
+                <h3 class="card-title">West Gate Freeway</h3>
                 <p class="card-desc">Quality-critical infrastructure delivery ensuring VicRoads and AS 5100 compliance across major freeway works.</p>
             </div>
         </a>
 
         <a href="#" class="project-card span-8">
             <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1582298538104-e3facf70a256?auto=format&fit=crop&w=1200&q=80');"></div>
-            <div class="card-top">
+            <div class="card-content">
                 <div class="card-tags">
                     <span class="card-tag">Metro</span>
                     <span class="card-tag">Infrastructure</span>
-                    <span class="card-tag">India</span>
                 </div>
-                <div class="card-arrow">↗</div>
-            </div>
-            <div class="card-bottom">
-                <div class="card-num">Project 04 / 2019–2021</div>
-                <div class="card-title">Mumbai Metro Lines 4 & 5</div>
+                <div class="card-num">Mumbai, India | 2018 - 2019</div>
+                <h3 class="card-title">Mumbai Metro Lines 4 & 5</h3>
                 <p class="card-desc">Civil Site Engineer supporting independent verification and quality assurance on elevated viaduct construction — complex, high-stakes urban rail infrastructure.</p>
-                <div class="card-metric">
-                    <div>
-                        <div class="metric-val">2</div>
-                        <div class="metric-label">Metro Lines</div>
-                    </div>
-                    <div>
-                        <div class="metric-val">IV&V</div>
-                        <div class="metric-label">Role Scope</div>
-                    </div>
-                </div>
             </div>
         </a>
-
     </div>
 </section>
 
-<!-- CAREER -->
 <section id="career">
-    <div class="section-header fade-up">
+    <div class="section-header">
         <span class="section-num">02</span>
-        <h2 class="section-title">Career <span class="accent">Trajectory</span></h2>
+        <h2 class="section-title scramble-text" data-text="Career Trajectory">Career Trajectory</h2>
     </div>
 
     <div class="timeline-wrap">
-        <div class="timeline-nav fade-up">
-            <p>Four years of progressive responsibility across structural, civil, and industrial engineering disciplines. Each role building on the last — from graduate designer to full project accountability.</p>
+        <div class="timeline-nav">
+            <p>Years of progressive responsibility across structural, civil, and industrial engineering disciplines. Each role building on the last — from graduate designer to full project accountability.</p>
         </div>
 
-        <div class="timeline fade-up">
-
-            <div class="tl-item active">
-                <div class="tl-year">03/2024<br>Present</div>
-                <div class="tl-content">
-                    <div class="tl-company">Liberty Industrial</div>
-                    <div class="tl-role">Project Engineer</div>
-                    <ul class="tl-list">
-                        <li>End-to-end delivery of $100M+ industrial decommissioning and demolition projects.</li>
-                        <li>Administered variations totalling $8M+, progress claims, and extension of time events.</li>
-                        <li>Managed subcontractor interfaces, programme controls, and client reporting.</li>
-                        <li>Coordinated EPA and WorkSafe statutory approvals across multiple jurisdictions.</li>
-                    </ul>
-                </div>
+        <div class="timeline">
+            <div class="tl-item">
+                <div class="tl-year">03/2024 — Present</div>
+                <div class="tl-role">Project Engineer</div>
+                <div class="tl-company">Liberty Industrial | Altona VIC / Gove NT</div>
+                <ul class="tl-list">
+                    <li>End-to-end delivery of $100M+ industrial decommissioning and demolition projects.</li>
+                    <li>Administered variations totalling $8M+, progress claims, and EOT events.</li>
+                    <li>Managed subcontractor interfaces, programme controls, and client reporting.</li>
+                </ul>
             </div>
 
             <div class="tl-item">
-                <div class="tl-year">04/2023<br>03/2024</div>
-                <div class="tl-content">
-                    <div class="tl-company">Indara</div>
-                    <div class="tl-role">Structural Project Engineer</div>
-                    <ul class="tl-list">
-                        <li>Delivered 150+ telecom infrastructure upgrades as part of a national 5G expansion programme.</li>
-                        <li>Managed civil interfaces for foundations, fibre backhaul, and ground-based installations.</li>
-                        <li>Ensured AS1170.2 wind code compliance across lattice tower and monopole structures.</li>
-                        <li>Coordinated structural assessments with external consultants and council approvals.</li>
-                    </ul>
-                </div>
+                <div class="tl-year">04/2023 — 03/2024</div>
+                <div class="tl-role">Structural Project Engineer</div>
+                <div class="tl-company">Indara | Melbourne VIC</div>
+                <ul class="tl-list">
+                    <li>Delivered 150+ telecom infrastructure upgrades as part of a national 5G expansion.</li>
+                    <li>Managed civil interfaces for foundations, fibre backhaul, and ground installations.</li>
+                    <li>Ensured AS1170.2 wind code compliance across lattice tower structures.</li>
+                </ul>
             </div>
 
             <div class="tl-item">
-                <div class="tl-year">11/2021<br>03/2023</div>
-                <div class="tl-content">
-                    <div class="tl-company">Clive Steele Partners</div>
-                    <div class="tl-role">Graduate Structural Engineer</div>
-                    <ul class="tl-list">
-                        <li>Designed steel framing and reinforced concrete structures to AS 4100 and AS 3600.</li>
-                        <li>Conducted site inspections and signed off QA hold points on infrastructure projects.</li>
-                        <li>Contributed to West Gate Freeway civil works in a QA capacity.</li>
-                    </ul>
-                </div>
+                <div class="tl-year">11/2021 — 03/2023</div>
+                <div class="tl-role">Graduate Structural Engineer</div>
+                <div class="tl-company">Clive Steele Partners | Clayton VIC</div>
+                <ul class="tl-list">
+                    <li>Designed steel framing and reinforced concrete structures to AS 4100 and AS 3600.</li>
+                    <li>Conducted site inspections and signed off QA hold points on infrastructure projects.</li>
+                </ul>
             </div>
-
         </div>
     </div>
 </section>
 
-<!-- SKILLS -->
 <section id="skills">
-    <div class="section-header fade-up">
+    <div class="section-header">
         <span class="section-num">03</span>
-        <h2 class="section-title">Core <span class="accent">Competencies</span></h2>
+        <h2 class="section-title scramble-text" data-text="Core Competencies">Core Competencies</h2>
     </div>
 
-    <div class="skills-grid fade-up">
+    <div class="skills-grid">
         <div class="skill-cell">
             <div class="skill-cell-label">Structural</div>
             <div class="skill-items">
@@ -867,7 +476,6 @@
                 <div class="skill-item">AS 4100 Steel</div>
                 <div class="skill-item">AS 3600 Concrete</div>
                 <div class="skill-item">Lattice Tower Assessment</div>
-                <div class="skill-item">Foundation Engineering</div>
             </div>
         </div>
         <div class="skill-cell">
@@ -877,7 +485,6 @@
                 <div class="skill-item">VicRoads Standards</div>
                 <div class="skill-item">Elevated Viaducts</div>
                 <div class="skill-item">QA Hold Points</div>
-                <div class="skill-item">Site Supervision</div>
             </div>
         </div>
         <div class="skill-cell">
@@ -885,9 +492,8 @@
             <div class="skill-items">
                 <div class="skill-item">Variation Administration</div>
                 <div class="skill-item">EOT Management</div>
-                <div class="skill-item">Progress Claims</div>
                 <div class="skill-item">Programme Control</div>
-                <div class="skill-item">Subcontractor Management</div>
+                <div class="skill-item">Subcontractor Mgt.</div>
             </div>
         </div>
         <div class="skill-cell">
@@ -896,25 +502,22 @@
                 <div class="skill-item">EPA Approvals</div>
                 <div class="skill-item">WorkSafe Victoria</div>
                 <div class="skill-item">Council DA Process</div>
-                <div class="skill-item">Statutory Compliance</div>
                 <div class="skill-item">Risk Assessment</div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
     <div class="footer-name">GANESH KALAL</div>
     <div class="footer-links">
-        <a href="mailto:ganesh@email.com">ganesh@email.com</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">Download CV</a>
+        <a href="mailto:ganesh.r.kalal24@gmail.com">ganesh.r.kalal24@gmail.com</a>
+        <a href="https://www.linkedin.com/in/ganesh-kalal/" target="_blank">LinkedIn</a>
     </div>
 </footer>
 
 <script>
-    // Custom cursor
+    // 1. CUSTOM CURSOR
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursorRing');
     let mx = 0, my = 0, rx = 0, ry = 0;
@@ -926,47 +529,100 @@
     });
 
     function animateRing() {
-        rx += (mx - rx) * 0.12;
-        ry += (my - ry) * 0.12;
+        rx += (mx - rx) * 0.15;
+        ry += (my - ry) * 0.15;
         ring.style.left = rx + 'px';
         ring.style.top = ry + 'px';
         requestAnimationFrame(animateRing);
     }
     animateRing();
 
-    document.querySelectorAll('a, button').forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursor.style.width = '6px';
-            cursor.style.height = '6px';
-            ring.style.width = '52px';
-            ring.style.height = '52px';
-        });
-        el.addEventListener('mouseleave', () => {
-            cursor.style.width = '12px';
-            cursor.style.height = '12px';
-            ring.style.width = '36px';
-            ring.style.height = '36px';
-        });
+    document.querySelectorAll('a, button, .project-card, .tl-item').forEach(el => {
+        el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+        el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
     });
 
-    // Scroll-triggered fade-ups
+    // 2. CYBERPUNK TEXT SCRAMBLE
+    const chars = '!<>-_\\\\/[]{}—=+*^?#________';
+    function scramble(el) {
+        const original = el.getAttribute('data-text');
+        if(!original) return;
+        let iter = 0; const maxIter = 15;
+        const interval = setInterval(() => {
+            el.innerText = original.split('').map((c, i) => {
+                if(c === ' ') return ' ';
+                if(i < (iter/maxIter)*original.length) return c;
+                return chars[Math.floor(Math.random() * chars.length)];
+            }).join('');
+            iter++;
+            if(iter > maxIter) clearInterval(interval);
+        }, 40);
+    }
+
     const observer = new IntersectionObserver(entries => {
-        entries.forEach((entry, i) => {
+        entries.forEach(entry => {
             if (entry.isIntersecting) {
-                setTimeout(() => entry.target.classList.add('visible'), i * 100);
+                if(entry.target.classList.contains('scramble-text')) scramble(entry.target);
+                observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.5 });
 
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    document.querySelectorAll('.scramble-text').forEach(el => observer.observe(el));
 
-    // Timeline hover activation
-    document.querySelectorAll('.tl-item').forEach(item => {
-        item.addEventListener('mouseenter', () => {
-            document.querySelectorAll('.tl-item').forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
+    // 3. FIBER OPTIC DATA STREAM BACKGROUND (Replaces the broken video)
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    
+    function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * w;
+            this.y = Math.random() * h;
+            // Particles flow upwards like data streams
+            this.speedY = -(Math.random() * 2 + 0.5);
+            this.size = Math.random() * 1.5 + 0.5;
+            this.alpha = Math.random() * 0.5 + 0.1;
+        }
+        update() {
+            this.y += this.speedY;
+            // Slight horizontal wave motion
+            this.x += Math.sin(this.y * 0.01) * 0.5;
+            
+            if (this.y < 0) {
+                this.y = h;
+                this.x = Math.random() * w;
+            }
+        }
+        draw() {
+            ctx.fillStyle = `rgba(0, 240, 255, ${this.alpha})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    const particles = Array.from({ length: 150 }, () => new Particle());
+
+    function animateBg() {
+        // Deep space dark background with slight trailing effect
+        ctx.fillStyle = 'rgba(2, 3, 8, 0.3)';
+        ctx.fillRect(0, 0, w, h);
+        
+        particles.forEach(p => {
+            p.update();
+            p.draw();
         });
-    });
+        requestAnimationFrame(animateBg);
+    }
+    animateBg();
 </script>
 </body>
 </html>
